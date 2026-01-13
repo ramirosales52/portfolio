@@ -3,118 +3,458 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ============================================
+   TUI Grid System - Portfolio
+   ============================================ */
+
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* Font - JetBrains Mono loaded via Google Fonts in index.html */
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  
+  /* Colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Fennel Fiesta palette (emerald-based) */
+  --fennel-fiesta-50: oklch(0.98 0.021 160.987);
+  --fennel-fiesta-100: oklch(0.953 0.051 160.987);
+  --fennel-fiesta-200: oklch(0.911 0.091 160.987);
+  --fennel-fiesta-300: oklch(0.854 0.14 160.987);
+  --fennel-fiesta-400: oklch(0.779 0.173 160.987);
+  --fennel-fiesta-500: oklch(0.709 0.167 160.987);
+  --fennel-fiesta-600: oklch(0.607 0.142 160.987);
+  --fennel-fiesta-700: oklch(0.517 0.116 160.987);
+  --fennel-fiesta-800: oklch(0.44 0.093 160.987);
+  --fennel-fiesta-900: oklch(0.385 0.075 160.987);
+  --fennel-fiesta-950: oklch(0.267 0.05 160.987);
+
+  /* Theme colors - pure black background */
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.95 0 0);
+  --muted: oklch(0.12 0 0);
+  --muted-foreground: oklch(0.5 0 0);
+  --border: oklch(0.25 0 0);
+  --accent: var(--fennel-fiesta-400);
+  --accent-foreground: oklch(0 0 0);
+  
+  /* Grid sizing */
+  --grid-border: 1px;
+  --cell-padding: 1.5rem;
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+/* Light mode (optional) */
+.light {
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.1 0 0);
+  --muted: oklch(0.95 0 0);
+  --muted-foreground: oklch(0.4 0 0);
+  --border: oklch(0.85 0 0);
+  --accent: var(--fennel-fiesta-500);
+  --accent-foreground: oklch(0.99 0 0);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
+  
+  html {
+    @apply overflow-x-hidden;
+    font-family: var(--font-mono);
+  }
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased overflow-x-hidden;
+    font-feature-settings: "liga" 1, "calt" 1;
+  }
+  
+  #root {
+    @apply overflow-x-hidden;
+  }
+  
+  ::selection {
+    @apply bg-accent text-accent-foreground;
+  }
+}
+
+/* ============================================
+   TUI Grid Utilities
+   ============================================ */
+
+/* Base grid cell borders */
+.tui-border-t { border-top: var(--grid-border) solid var(--border); }
+.tui-border-b { border-bottom: var(--grid-border) solid var(--border); }
+.tui-border-l { border-left: var(--grid-border) solid var(--border); }
+.tui-border-r { border-right: var(--grid-border) solid var(--border); }
+.tui-border { border: var(--grid-border) solid var(--border); }
+
+/* Cross/corner decorations - positioned at intersections */
+.tui-cross {
+  position: relative;
+}
+
+.tui-cross::before {
+  content: "+";
+  position: absolute;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--border);
+  pointer-events: none;
+}
+
+/* Corner positions */
+.tui-cross-tl::before { top: -0.45em; left: -0.3em; }
+.tui-cross-tr::before { top: -0.45em; right: -0.3em; }
+.tui-cross-bl::before { bottom: -0.45em; left: -0.3em; }
+.tui-cross-br::before { bottom: -0.45em; right: -0.3em; }
+
+/* SVG-based corners (more precise) */
+.tui-corner {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  color: oklch(0.65 0 0);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Position corners centered on the intersection - overflow:hidden will clip the outside half */
+.tui-corner-tl { top: -5px; left: -5px; }
+.tui-corner-tr { top: -5px; right: -5px; }
+.tui-corner-bl { bottom: -5px; left: -5px; }
+.tui-corner-br { bottom: -5px; right: -5px; }
+
+/* Full-width sections with continuous borders */
+.tui-section {
+  position: relative;
+  border-top: var(--grid-border) solid var(--border);
+  border-bottom: var(--grid-border) solid var(--border);
+}
+
+.tui-section + .tui-section {
+  border-top: none;
+}
+
+/* Grid container */
+.tui-grid {
+  display: grid;
+  width: 100%;
+}
+
+/* Dashed variant */
+.tui-dashed {
+  border-style: dashed;
+}
+
+/* Cell with padding */
+.tui-cell {
+  padding: var(--cell-padding);
+}
+
+/* Content container - centered with side borders */
+.container-content {
+  max-width: 64rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-left: var(--grid-border) solid var(--border);
+  border-right: var(--grid-border) solid var(--border);
+  overflow: hidden;
+}
+
+/* Divider with diagonal stripes pattern */
+.tui-divider {
+  height: 10px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 4px,
+    var(--border) 4px,
+    var(--border) 5px
+  );
+}
+
+@media (max-width: 640px) {
+  .container-content {
+    border-left: none;
+    border-right: none;
+  }
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+
+.text-display {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.text-heading {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.text-body {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.text-small {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.text-label {
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: "█";
+  animation: blink 1s step-end infinite;
+  color: var(--accent);
+}
+
+/* Scanline effect (optional) */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    oklch(0 0 0 / 0.03) 2px,
+    oklch(0 0 0 / 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* ============================================
+   Hover & Interaction Effects
+   ============================================ */
+
+/* Project card hover effect */
+.project-card {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
+}
+
+.project-card:hover {
+  background-color: oklch(0.08 0 0);
+}
+
+.project-card:hover .project-title {
+  color: var(--accent);
+}
+
+.project-card:active {
+  transform: scale(0.98);
+}
+
+/* Link hover with underline animation */
+.link-hover {
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.link-hover::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--accent);
+  transition: width 0.2s ease;
+}
+
+.link-hover:hover {
+  color: var(--accent);
+}
+
+.link-hover:hover::after {
+  width: 100%;
+}
+
+/* Nav link hover */
+.nav-link {
+  transition: color 0.15s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--foreground);
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  left: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-left: 4px solid var(--accent);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.nav-link:hover::before {
+  opacity: 1;
+}
+
+/* Button/CTA styles */
+.tui-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  transition: all 0.15s ease;
+  cursor: pointer;
+}
+
+.tui-button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+/* Focus states for accessibility */
+.tui-button:focus-visible,
+.project-card:focus-visible,
+.link-hover:focus-visible,
+.nav-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Smooth page transitions */
+* {
+  scroll-behavior: smooth;
+}
+
+/* ============================================
+   Modal Styles
+   ============================================ */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: oklch(0 0 0 / 0.9);
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.modal-backdrop[data-state="open"] {
+  opacity: 1;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--background);
+  border: 1px solid var(--border);
+  z-index: 51;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.modal-content[data-state="open"] {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.modal-close:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ============================================
+   Responsive / Mobile Styles
+   ============================================ */
+
+@media (max-width: 640px) {
+  :root {
+    --cell-padding: 1rem;
+  }
+  
+  .text-display {
+    font-size: 1.75rem;
+  }
+  
+  .text-heading {
+    font-size: 1.125rem;
+  }
+  
+  /* Hide desktop nav indicator on mobile */
+  .nav-link::before {
+    display: none;
+  }
+  
+  /* Hide right borders on mobile (single column) */
+  .border-r {
+    border-right: none;
+  }
+  
+  /* Hide corner crosses on mobile */
+  .tui-corner {
+    display: none;
   }
 }
