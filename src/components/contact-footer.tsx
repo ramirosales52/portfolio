@@ -39,11 +39,11 @@ export function ContactFooter({ className }: ContactFooterProps) {
       <div className="container-content relative">
         {/* Dither Background - white color, no mouse interaction */}
         <Dither
-          waveAmplitude={0.06}
-          waveFrequency={3.6}
+          waveAmplitude={0}
+          waveFrequency={0}
           waveSpeed={0.02}
           waveColor={[1, 1, 1]}
-          colorNum={4}
+          colorNum={5}
           pixelSize={2}
           enableMouseInteraction={false}
           mouseRadius={0.2}

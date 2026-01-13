@@ -160,7 +160,7 @@
 
 /* Content container - centered with side borders */
 .container-content {
-  max-width: 64rem;
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
   border-left: var(--grid-border) solid var(--border);
