@@ -312,30 +312,10 @@
 /* Nav link hover */
 .nav-link {
   transition: color 0.15s ease;
-  position: relative;
 }
 
 .nav-link:hover {
   color: var(--foreground);
-}
-
-.nav-link::before {
-  content: "";
-  position: absolute;
-  left: -0.75rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0;
-  height: 0;
-  border-top: 4px solid transparent;
-  border-bottom: 4px solid transparent;
-  border-left: 4px solid var(--accent);
-  opacity: 0;
-  transition: opacity 0.15s ease;
-}
-
-.nav-link:hover::before {
-  opacity: 1;
 }
 
 /* Button/CTA styles */

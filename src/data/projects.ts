@@ -62,6 +62,59 @@ export const projects: Project[] = [
     links: [
       { label: "Código Fuente", href: "#" }
     ]
+  },
+  {
+    id: "delta",
+    number: "04",
+    title: "Proyecto Delta",
+    description: "Sistema de gestión de inventario con IA",
+    tech: "Python / FastAPI / TensorFlow",
+    longDescription: "Un sistema inteligente de gestión de inventario que utiliza machine learning para predecir demanda y optimizar stock. Integración con múltiples proveedores y alertas automáticas.",
+    features: [
+      "Predicción de demanda con ML",
+      "Integración con proveedores via API",
+      "Dashboard de analytics en tiempo real",
+      "Sistema de alertas inteligentes"
+    ],
+    links: [
+      { label: "Ver Demo", href: "#" }
+    ]
+  },
+  {
+    id: "epsilon",
+    number: "05",
+    title: "Proyecto Epsilon",
+    description: "App móvil de finanzas personales",
+    tech: "React Native / Firebase / Plaid",
+    longDescription: "Aplicación móvil para gestión de finanzas personales con sincronización bancaria automática, categorización inteligente de gastos y metas de ahorro.",
+    features: [
+      "Sincronización bancaria automática",
+      "Categorización con IA",
+      "Metas de ahorro gamificadas",
+      "Notificaciones personalizadas"
+    ],
+    links: [
+      { label: "App Store", href: "#" },
+      { label: "Play Store", href: "#" }
+    ]
+  },
+  {
+    id: "zeta",
+    number: "06",
+    title: "Proyecto Zeta",
+    description: "Plataforma de e-learning interactiva",
+    tech: "Next.js / Prisma / Stripe",
+    longDescription: "Plataforma educativa con cursos interactivos, sistema de progreso, certificaciones y pagos integrados. Incluye editor de contenido para instructores.",
+    features: [
+      "Cursos interactivos con video",
+      "Sistema de certificaciones",
+      "Pagos con Stripe",
+      "Analytics para instructores"
+    ],
+    links: [
+      { label: "Ver Demo", href: "#" },
+      { label: "Código Fuente", href: "#" }
+    ]
   }
 ]
 

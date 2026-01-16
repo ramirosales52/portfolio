@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { Container, TuiSection } from "@/components/tui-grid"
 import { ContactFooter } from "@/components/contact-footer"
+import { ScrambleText } from "@/components/scramble-text"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -11,7 +12,7 @@ export function Layout({ children }: LayoutProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   return (
-    <div className="min-h-dvh">
+    <div className="min-h-dvh relative">
       {/* Header */}
       <TuiSection>
         <Container className="tui-cell">
@@ -22,10 +23,25 @@ export function Layout({ children }: LayoutProps) {
             </Link>
             
             {/* Desktop nav */}
-            <nav className="hidden sm:flex gap-6 text-small text-muted-foreground">
-              <a href="/#trabajo" className="nav-link">trabajo</a>
-              <a href="/#sobre-mi" className="nav-link">sobre mí</a>
-              <a href="/#contacto" className="nav-link">contacto</a>
+            <nav className="hidden sm:flex gap-8 text-muted-foreground">
+              <ScrambleText 
+                as="a" 
+                href="/#trabajo" 
+                text="Trabajo" 
+                className="nav-link text-sm"
+              />
+              <ScrambleText 
+                as="a" 
+                href="/#sobre-mi" 
+                text="Sobre mí" 
+                className="nav-link text-sm"
+              />
+              <ScrambleText 
+                as="a" 
+                href="/#contacto" 
+                text="Contacto" 
+                className="nav-link text-sm"
+              />
             </nav>
 
             {/* Mobile menu button - only visible on small screens */}
@@ -74,24 +90,24 @@ export function Layout({ children }: LayoutProps) {
             <div className="space-y-4">
               <a 
                 href="/#trabajo" 
-                className="block text-heading link-hover"
+                className="block text-heading link-hover uppercase"
                 onClick={() => setMobileNavOpen(false)}
               >
-                trabajo
+                Trabajo
               </a>
               <a 
                 href="/#sobre-mi" 
-                className="block text-heading link-hover"
+                className="block text-heading link-hover uppercase"
                 onClick={() => setMobileNavOpen(false)}
               >
-                sobre mí
+                Sobre mí
               </a>
               <a 
                 href="/#contacto" 
-                className="block text-heading link-hover"
+                className="block text-heading link-hover uppercase"
                 onClick={() => setMobileNavOpen(false)}
               >
-                contacto
+                Contacto
               </a>
             </div>
           </nav>

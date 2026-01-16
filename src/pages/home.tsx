@@ -43,7 +43,7 @@ export default function HomePage() {
                 Creando experiencias digitales con código limpio y diseño cuidado.
               </p>
             </GridCell>
-            <GridCell className="tui-cell">
+            <GridCell className="tui-cell flex flex-col justify-center">
               <div className="text-small text-muted-foreground space-y-2">
                 <p><span className="text-accent">$</span> whoami</p>
                 <p className="text-foreground">Desarrollador full-stack</p>
