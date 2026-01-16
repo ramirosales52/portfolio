@@ -47,11 +47,11 @@ export default function ProjectPage() {
               borders={["right"]}
             >
               <span className="text-label">{project.number}</span>
-              <h1 className="text-display mt-2">{project.title}</h1>
+              <h1 className="text-display text-balance mt-2">{project.title}</h1>
               <p className="text-small text-accent mt-4">{project.tech}</p>
             </GridCell>
             <GridCell className="tui-cell">
-              <p className="text-body text-muted-foreground">
+              <p className="text-body text-muted-foreground text-pretty">
                 {project.longDescription}
               </p>
               
@@ -92,7 +92,7 @@ export default function ProjectPage() {
               >
                 <div className="flex items-start gap-3">
                   <span className="text-accent">+</span>
-                  <p className="text-body text-muted-foreground">{feature}</p>
+                  <p className="text-body text-muted-foreground text-pretty">{feature}</p>
                 </div>
               </GridCell>
             ))}
@@ -111,7 +111,7 @@ export default function ProjectPage() {
               {prevProject ? (
                 <Link to={`/proyectos/${prevProject.id}`} className="block group">
                   <span className="text-label">anterior</span>
-                  <p className="text-heading mt-1 group-hover:text-accent transition-colors">
+                  <p className="text-heading text-balance mt-1 group-hover:text-accent transition-colors">
                     {prevProject.title}
                   </p>
                 </Link>
@@ -123,7 +123,7 @@ export default function ProjectPage() {
               {nextProject ? (
                 <Link to={`/proyectos/${nextProject.id}`} className="block group">
                   <span className="text-label">siguiente</span>
-                  <p className="text-heading mt-1 group-hover:text-accent transition-colors">
+                  <p className="text-heading text-balance mt-1 group-hover:text-accent transition-colors">
                     {nextProject.title}
                   </p>
                 </Link>

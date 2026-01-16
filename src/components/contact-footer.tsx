@@ -54,10 +54,10 @@ export function ContactFooter({ className }: ContactFooterProps) {
           {/* Two column layout: header left, form right */}
           <div className="grid grid-cols-1 md:grid-cols-[1fr_1.5fr] gap-8">
             {/* Left: Header */}
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center bg-background/90 border border-border p-6">
               <span className="text-label">contacto</span>
-              <h2 className="text-heading mt-2">Trabajemos juntos</h2>
-              <p className="text-body text-muted-foreground mt-4">
+              <h2 className="text-heading text-balance mt-2">Trabajemos juntos</h2>
+              <p className="text-body text-muted-foreground text-pretty mt-4">
                 Hablemos sobre tu próximo proyecto.
               </p>
               
@@ -89,7 +89,7 @@ export function ContactFooter({ className }: ContactFooterProps) {
             </div>
 
             {/* Right: Form with background */}
-            <div className="bg-background/90 backdrop-blur-sm border border-border p-6">
+            <div className="bg-background/90 border border-border p-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>

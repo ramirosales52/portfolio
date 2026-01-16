@@ -1,9 +1,31 @@
+import { useState, useRef } from "react"
 import { Link } from "react-router-dom"
+import { motion, AnimatePresence, useReducedMotion } from "motion/react"
 import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
 import { Layout } from "@/components/layout"
 import { projects } from "@/data/projects"
 
+const INITIAL_PROJECTS = 3
+
 export default function HomePage() {
+  const [showAll, setShowAll] = useState(false)
+  const sectionRef = useRef<HTMLDivElement>(null)
+  const prefersReducedMotion = useReducedMotion()
+  
+  const visibleProjects = showAll ? projects : projects.slice(0, INITIAL_PROJECTS)
+
+  const handleToggle = () => {
+    if (!showAll) {
+      setShowAll(true)
+      setTimeout(() => {
+        sectionRef.current?.scrollIntoView({ behavior: 'smooth' })
+      }, 50)
+    } else {
+      sectionRef.current?.scrollIntoView({ behavior: 'smooth' })
+      setShowAll(false)
+    }
+  }
+
   return (
     <Layout>
       {/* Hero */}
@@ -14,10 +36,10 @@ export default function HomePage() {
               className="tui-cell" 
               borders={["right"]}
             >
-              <p className="text-display">
+              <p className="text-display text-balance">
                 Desarrollador<span className="text-accent">.</span>
               </p>
-              <p className="text-body text-muted-foreground mt-4 max-w-md">
+              <p className="text-body text-muted-foreground text-pretty mt-4 max-w-md">
                 Creando experiencias digitales con código limpio y diseño cuidado.
               </p>
             </GridCell>
@@ -53,7 +75,7 @@ export default function HomePage() {
               <span className="text-label">sobre mí</span>
             </GridCell>
             <GridCell className="tui-cell">
-              <p className="text-body text-muted-foreground max-w-2xl">
+              <p className="text-body text-muted-foreground text-pretty max-w-2xl">
                 Soy un desarrollador apasionado por crear soluciones elegantes a problemas complejos. 
                 Con experiencia en desarrollo full-stack, me enfoco en construir aplicaciones 
                 performantes, accesibles y fáciles de usar.
@@ -75,34 +97,88 @@ export default function HomePage() {
 
       {/* Proyectos */}
       <TuiSection id="trabajo">
-        <Container>
-          <div className="tui-cell border-b border-border">
-            <span className="text-label">trabajos destacados</span>
-          </div>
-          
-          <TuiGrid cols={3} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project, index) => (
-              <GridCell 
-                key={project.id}
-                className="tui-cell project-card flex flex-col justify-between min-h-[200px] border-b lg:last:border-b-0 sm:[&:nth-last-child(-n+2)]:border-b-0 lg:[&:nth-last-child(-n+3)]:border-b-0" 
-                borders={index < projects.length - 1 ? ["right"] : []}
+        <div ref={sectionRef}>
+          <Container className="flex flex-col">
+            {/* Header con título y botón cerrar cuando expandido */}
+            <div className="tui-cell border-b border-border flex items-center justify-between shrink-0">
+              <span className="text-label">
+                {showAll ? "proyectos" : "trabajos destacados"}
+              </span>
+              
+              <AnimatePresence>
+                {showAll && (
+                  <motion.button
+                    initial={prefersReducedMotion ? false : { opacity: 0, x: 10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 10 }}
+                    transition={{ duration: 0.15, ease: "easeOut" }}
+                    onClick={handleToggle}
+                    className="flex items-center gap-2 text-small text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <span className="text-accent">-</span>
+                    <span>Cerrar</span>
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </div>
+            
+            {/* Grid de proyectos */}
+            <div>
+              <TuiGrid cols={3} className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                <AnimatePresence mode="popLayout">
+                  {visibleProjects.map((project, index) => (
+                    <motion.div
+                      key={project.id}
+                      initial={prefersReducedMotion ? false : { opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ 
+                        duration: 0.15, 
+                        delay: index >= INITIAL_PROJECTS && showAll ? (index - INITIAL_PROJECTS) * 0.03 : 0,
+                        ease: "easeOut"
+                      }}
+                    >
+                      <GridCell 
+                        className="tui-cell project-card flex flex-col justify-between min-h-[200px] border-b" 
+                        borders={(index + 1) % 3 !== 0 ? ["right"] : []}
+                      >
+                        <Link to={`/proyectos/${project.id}`} className="flex flex-col justify-between h-full">
+                          <div>
+                            <span className="text-label">{project.number}</span>
+                            <h3 className="text-heading text-balance mt-2 project-title transition-colors">{project.title}</h3>
+                            <p className="text-small text-muted-foreground text-pretty mt-2">
+                              {project.description}
+                            </p>
+                          </div>
+                          <div className="text-small text-accent mt-4">
+                            {project.tech}
+                          </div>
+                        </Link>
+                      </GridCell>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </TuiGrid>
+            </div>
+
+            {/* Ver todos / Ver menos button */}
+            <div className="border-t border-border shrink-0">
+              <button
+                onClick={handleToggle}
+                className="w-full tui-cell flex items-center justify-center gap-2 text-small text-muted-foreground hover:text-foreground transition-colors"
               >
-                <Link to={`/proyectos/${project.id}`} className="flex flex-col justify-between h-full">
-                  <div>
-                    <span className="text-label">{project.number}</span>
-                    <h3 className="text-heading mt-2 project-title transition-colors">{project.title}</h3>
-                    <p className="text-small text-muted-foreground mt-2">
-                      {project.description}
-                    </p>
-                  </div>
-                  <div className="text-small text-accent mt-4">
-                    {project.tech}
-                  </div>
-                </Link>
-              </GridCell>
-            ))}
-          </TuiGrid>
-        </Container>
+                <motion.span
+                  animate={{ rotate: showAll ? 45 : 0 }}
+                  transition={{ duration: 0.15, ease: "easeOut" }}
+                  className="text-accent inline-block"
+                >
+                  +
+                </motion.span>
+                <span>{showAll ? "Ver menos" : `Ver todos (${projects.length})`}</span>
+              </button>
+            </div>
+          </Container>
+        </div>
       </TuiSection>
     </Layout>
   )

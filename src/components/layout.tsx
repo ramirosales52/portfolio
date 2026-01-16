@@ -11,14 +11,14 @@ export function Layout({ children }: LayoutProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-dvh">
       {/* Header */}
       <TuiSection>
         <Container className="tui-cell">
           <div className="flex items-center justify-between">
             <Link to="/" className="block">
               <span className="text-label">portafolio</span>
-              <h1 className="text-heading mt-1">Ramiro</h1>
+              <h1 className="text-heading text-balance mt-1">Ramiro</h1>
             </Link>
             
             {/* Desktop nav */}
@@ -58,7 +58,7 @@ export function Layout({ children }: LayoutProps) {
             className="fixed inset-0 bg-black/70 z-40"
             onClick={() => setMobileNavOpen(false)}
           />
-          <nav className="fixed top-0 right-0 bottom-0 w-full max-w-[280px] bg-background border-l border-border p-6 z-50">
+          <nav className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-background border-l border-border p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] z-50">
             <div className="flex justify-between items-center mb-8">
               <span className="text-label">menú</span>
               <button 
