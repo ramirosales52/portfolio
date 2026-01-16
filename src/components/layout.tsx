@@ -18,34 +18,38 @@ export function Layout({ children }: LayoutProps) {
         <Container className="tui-cell">
           <div className="flex items-center justify-between">
             <Link to="/" className="block">
-              <span className="text-label">portafolio</span>
-              <h1 className="text-heading text-balance mt-1">Ramiro</h1>
+              <ScrambleText 
+                as="h1" 
+                text="Ramiro" 
+                className="text-heading text-balance"
+                loop
+              />
             </Link>
-            
+
             {/* Desktop nav */}
             <nav className="hidden sm:flex gap-8 text-muted-foreground">
-              <ScrambleText 
-                as="a" 
-                href="/#trabajo" 
-                text="Trabajo" 
+              <ScrambleText
+                as="a"
+                href="/#trabajo"
+                text="Trabajo"
                 className="nav-link text-sm"
               />
-              <ScrambleText 
-                as="a" 
-                href="/#sobre-mi" 
-                text="Sobre mí" 
+              <ScrambleText
+                as="a"
+                href="/#sobre-mi"
+                text="Sobre mí"
                 className="nav-link text-sm"
               />
-              <ScrambleText 
-                as="a" 
-                href="/#contacto" 
-                text="Contacto" 
+              <ScrambleText
+                as="a"
+                href="/#contacto"
+                text="Contacto"
                 className="nav-link text-sm"
               />
             </nav>
 
             {/* Mobile menu button - only visible on small screens */}
-            <button 
+            <button
               className="tui-button inline-flex sm:!hidden"
               onClick={() => setMobileNavOpen(true)}
               aria-label="Abrir menú"
@@ -70,14 +74,14 @@ export function Layout({ children }: LayoutProps) {
       {/* Mobile nav overlay */}
       {mobileNavOpen && (
         <>
-          <div 
+          <div
             className="fixed inset-0 bg-black/70 z-40"
             onClick={() => setMobileNavOpen(false)}
           />
           <nav className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-background border-l border-border p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] z-50">
             <div className="flex justify-between items-center mb-8">
               <span className="text-label">menú</span>
-              <button 
+              <button
                 className="tui-button"
                 onClick={() => setMobileNavOpen(false)}
                 aria-label="Cerrar menú"
@@ -88,22 +92,22 @@ export function Layout({ children }: LayoutProps) {
               </button>
             </div>
             <div className="space-y-4">
-              <a 
-                href="/#trabajo" 
+              <a
+                href="/#trabajo"
                 className="block text-heading link-hover uppercase"
                 onClick={() => setMobileNavOpen(false)}
               >
                 Trabajo
               </a>
-              <a 
-                href="/#sobre-mi" 
+              <a
+                href="/#sobre-mi"
                 className="block text-heading link-hover uppercase"
                 onClick={() => setMobileNavOpen(false)}
               >
                 Sobre mí
               </a>
-              <a 
-                href="/#contacto" 
+              <a
+                href="/#contacto"
                 className="block text-heading link-hover uppercase"
                 onClick={() => setMobileNavOpen(false)}
               >

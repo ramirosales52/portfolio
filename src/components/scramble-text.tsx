@@ -3,9 +3,11 @@ import { useState, useCallback, useRef, useEffect } from "react"
 interface ScrambleTextProps {
   text: string
   className?: string
-  as?: "span" | "a"
+  as?: "span" | "a" | "h1"
   href?: string
   onClick?: () => void
+  /** Keep scrambling while hovering */
+  loop?: boolean
 }
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*"
@@ -15,7 +17,8 @@ export function ScrambleText({
   className, 
   as: Component = "span",
   href,
-  onClick 
+  onClick,
+  loop = false
 }: ScrambleTextProps) {
   const [displayText, setDisplayText] = useState(text.toUpperCase())
   const [isAnimating, setIsAnimating] = useState(false)
@@ -23,11 +26,13 @@ export function ScrambleText({
   const iterationRef = useRef(0)
 
   const scramble = useCallback(() => {
-    if (isAnimating) return
+    if (isAnimating && !loop) return
     
     setIsAnimating(true)
     iterationRef.current = 0
     const finalText = text.toUpperCase()
+    
+    if (intervalRef.current) clearInterval(intervalRef.current)
     
     intervalRef.current = setInterval(() => {
       setDisplayText(
@@ -37,8 +42,8 @@ export function ScrambleText({
             // Keep spaces as spaces
             if (char === " ") return " "
             
-            // Reveal characters progressively
-            if (index < iterationRef.current) {
+            // Reveal characters progressively (only if not looping)
+            if (!loop && index < iterationRef.current) {
               return finalText[index]
             }
             
@@ -50,14 +55,30 @@ export function ScrambleText({
       
       iterationRef.current += 0.5
       
-      // Stop when all characters are revealed
-      if (iterationRef.current >= finalText.length) {
+      // Stop when all characters are revealed (only if not looping)
+      if (!loop && iterationRef.current >= finalText.length) {
         if (intervalRef.current) clearInterval(intervalRef.current)
         setDisplayText(finalText)
         setIsAnimating(false)
       }
     }, 30)
-  }, [text, isAnimating])
+  }, [text, isAnimating, loop])
+
+  const stopScramble = useCallback(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current)
+    setDisplayText(text.toUpperCase())
+    setIsAnimating(false)
+  }, [text])
+
+  const handleMouseEnter = useCallback(() => {
+    scramble()
+  }, [scramble])
+
+  const handleMouseLeave = useCallback(() => {
+    if (loop) {
+      stopScramble()
+    }
+  }, [loop, stopScramble])
 
   // Cleanup on unmount
   useEffect(() => {
@@ -68,7 +89,8 @@ export function ScrambleText({
 
   const props = {
     className,
-    onMouseEnter: scramble,
+    onMouseEnter: handleMouseEnter,
+    onMouseLeave: handleMouseLeave,
     onClick,
     ...(Component === "a" ? { href } : {})
   }
