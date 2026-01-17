@@ -26,6 +26,7 @@ uniform vec3 waveColor;
 uniform vec2 mousePos;
 uniform int enableMouseInteraction;
 uniform float mouseRadius;
+uniform float gradientStrength;
 
 vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
@@ -91,6 +92,13 @@ void main() {
     f -= 0.5 * effect;
   }
   vec3 col = mix(vec3(0.0), waveColor, f);
+
+  // Apply black gradient from left to right
+  float gradient = uv.x * 0.5 + 0.5; // Normalize uv.x from [-aspect, aspect] to [0, 1]
+  gradient = clamp(gradient, 0.0, 1.0);
+  vec3 gradientColor = vec3(0.0); // Black
+  col = mix(gradientColor, col, gradient * gradientStrength);
+
   gl_FragColor = vec4(col, 1.0);
 }
 `
@@ -177,6 +185,7 @@ interface DitheredWavesProps {
   disableAnimation: boolean
   enableMouseInteraction: boolean
   mouseRadius: number
+  gradientStrength: number
 }
 
 function DitheredWaves({
@@ -188,7 +197,8 @@ function DitheredWaves({
   pixelSize,
   disableAnimation,
   enableMouseInteraction,
-  mouseRadius
+  mouseRadius,
+  gradientStrength
 }: DitheredWavesProps) {
   const mesh = useRef<THREE.Mesh>(null)
   const mouseRef = useRef(new THREE.Vector2())
@@ -203,7 +213,8 @@ function DitheredWaves({
     waveColor: new THREE.Uniform(new THREE.Color(...waveColor)),
     mousePos: new THREE.Uniform(new THREE.Vector2(0, 0)),
     enableMouseInteraction: new THREE.Uniform(enableMouseInteraction ? 1 : 0),
-    mouseRadius: new THREE.Uniform(mouseRadius)
+    mouseRadius: new THREE.Uniform(mouseRadius),
+    gradientStrength: new THREE.Uniform(0.5)
   })
 
   useEffect(() => {
@@ -235,6 +246,7 @@ function DitheredWaves({
 
     u.enableMouseInteraction.value = enableMouseInteraction ? 1 : 0
     u.mouseRadius.value = mouseRadius
+    u.gradientStrength.value = gradientStrength
 
     if (enableMouseInteraction) {
       u.mousePos.value.copy(mouseRef.current)
@@ -287,6 +299,7 @@ export interface DitherProps {
   disableAnimation?: boolean
   enableMouseInteraction?: boolean
   mouseRadius?: number
+  gradientStrength?: number
   className?: string
 }
 
@@ -300,6 +313,7 @@ export function Dither({
   disableAnimation = false,
   enableMouseInteraction = true,
   mouseRadius = 1,
+  gradientStrength = 0.5,
   className = ''
 }: DitherProps) {
   return (
@@ -308,7 +322,12 @@ export function Dither({
       camera={{ position: [0, 0, 6] }}
       dpr={1}
       gl={{ antialias: true, preserveDrawingBuffer: true }}
-      style={{ position: 'absolute', inset: 0 }}
+      style={{
+        width: '100%',
+        height: '100%',
+        display: 'block',
+        position: 'relative'
+      }}
     >
       <DitheredWaves
         waveSpeed={waveSpeed}
@@ -320,6 +339,7 @@ export function Dither({
         disableAnimation={disableAnimation}
         enableMouseInteraction={enableMouseInteraction}
         mouseRadius={mouseRadius}
+        gradientStrength={gradientStrength}
       />
     </Canvas>
   )

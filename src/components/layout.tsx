@@ -3,6 +3,25 @@ import { Link } from "react-router-dom"
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
 
+/**
+ * SVG cross icon for grid intersections
+ */
+function Cross({ className }: { className?: string }) {
+  return (
+    <svg
+      className={`tui-corner ${className || ''}`}
+      width="11"
+      height="11"
+      viewBox="0 0 11 11"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <line x1="5.5" y1="0" x2="5.5" y2="11" stroke="currentColor" strokeWidth="1" />
+      <line x1="0" y1="5.5" x2="11" y2="5.5" stroke="currentColor" strokeWidth="1" />
+    </svg>
+  )
+}
+
 interface LayoutProps {
   children: React.ReactNode
 }
@@ -22,8 +41,12 @@ export function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-dvh">
       {/* Fixed Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-30 bg-background/80 backdrop-blur-sm border-b border-border">
-        <div className="container-content">
+      <header className="fixed top-0 left-0 right-0 z-30 bg-background/80 backdrop-blur-lg border-b border-border">
+        <div className="container-content relative">
+          <Cross className="tui-corner-tl hidden sm:block" />
+          <Cross className="tui-corner-tr hidden sm:block" />
+          <Cross className="tui-corner-bl hidden sm:block" />
+          <Cross className="tui-corner-br hidden sm:block" />
           <div className="flex items-center justify-between px-6 py-4">
             {/* Logo - aparece con scramble cuando scrolleas */}
             <div className="w-24">

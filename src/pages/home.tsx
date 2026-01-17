@@ -6,6 +6,7 @@ import { useNav } from "@/components/nav-context"
 import { Container, TuiSection, TuiGrid, GridCell } from "@/components/tui-grid"
 import { projects } from "@/data/projects"
 import { ContactFooter } from "@/components/contact-footer"
+import { Dither } from "@/components/dither"
 
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -49,14 +50,23 @@ export default function HomePage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0">
-        <Container corners={["bl", "br"]} className="h-full">
-          <div className="tui-cell h-full flex flex-col justify-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold">
+      <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0 relative">
+        <Container corners={["bl", "br"]} className="h-full relative">
+          <div className="tui-cell h-full flex flex-col justify-center relative">
+            <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
+              <Dither
+                waveColor={[0.8, 0.8, 0.8]}
+                waveSpeed={0.03}
+                gradientStrength={0.7}
+                enableMouseInteraction={false}
+                className="w-full h-full"
+              />
+            </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold relative z-10">
               RAMIRO
             </h1>
-            
-            <div className="flex gap-6 mt-8 text-muted-foreground">
+
+            <div className="flex gap-6 mt-8 text-muted-foreground relative z-10">
               <ScrambleText
                 as="a"
                 href="https://github.com/ramiro"
