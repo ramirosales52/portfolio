@@ -266,22 +266,23 @@
    Hover & Interaction Effects
    ============================================ */
 
-/* Project card hover effect */
+/* Project card wrapper - just for grid borders */
+.project-card-wrapper {
+  /* Grid borders handled by GridCell */
+}
+
+/* Project card hover effect - uses outline to avoid overflow clip */
 .project-card {
-  transition: background-color 0.2s ease, transform 0.2s ease;
   cursor: pointer;
+  transition: outline-color 0.2s ease;
+  outline: 1px solid transparent;
+  outline-offset: -1px;
 }
 
 .project-card:hover {
-  background-color: oklch(0.08 0 0);
-}
-
-.project-card:hover .project-title {
-  color: var(--accent);
-}
-
-.project-card:active {
-  transform: scale(0.98);
+  outline-color: var(--foreground);
+  position: relative;
+  z-index: 1;
 }
 
 /* Link hover with underline animation */

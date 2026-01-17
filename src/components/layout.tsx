@@ -1,8 +1,7 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
-import { Container, TuiSection } from "@/components/tui-grid"
-import { ContactFooter } from "@/components/contact-footer"
 import { ScrambleText } from "@/components/scramble-text"
+import { useNav } from "@/components/nav-context"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -10,45 +9,63 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [logoScrambleKey, setLogoScrambleKey] = useState(0)
+  const { showLogoInNav, activeSection } = useNav()
+
+  // Control del scramble del logo - cada vez que aparece
+  useEffect(() => {
+    if (showLogoInNav) {
+      setLogoScrambleKey(prev => prev + 1)
+    }
+  }, [showLogoInNav])
 
   return (
-    <div className="min-h-dvh relative">
-      {/* Header */}
-      <TuiSection>
-        <Container className="tui-cell">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="block">
-              <ScrambleText 
-                as="h1" 
-                text="Ramiro" 
-                className="text-heading text-balance"
-                loop
-              />
-            </Link>
+    <div className="min-h-dvh">
+      {/* Fixed Navbar */}
+      <header className="fixed top-0 left-0 right-0 z-30 bg-background/80 backdrop-blur-sm border-b border-border">
+        <div className="container-content">
+          <div className="flex items-center justify-between px-6 py-4">
+            {/* Logo - aparece con scramble cuando scrolleas */}
+            <div className="w-24">
+              <Link
+                to="/"
+                className="block text-lg font-semibold transition-opacity duration-200"
+                style={{
+                  opacity: showLogoInNav ? 1 : 0,
+                  pointerEvents: showLogoInNav ? 'auto' : 'none'
+                }}
+                onClick={(e) => {
+                  e.preventDefault()
+                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                }}
+              >
+                <ScrambleText
+                  text="RAMIRO"
+                  autoScramble={logoScrambleKey}
+                  loop={false}
+                />
+              </Link>
+            </div>
 
             {/* Desktop nav */}
-            <nav className="hidden sm:flex gap-8 text-muted-foreground">
+            <nav className="hidden sm:flex gap-8">
               <ScrambleText
                 as="a"
-                href="/#trabajo"
-                text="Trabajo"
-                className="nav-link text-sm"
+                href="#proyectos"
+                text="Proyectos"
+                className={`nav-link text-sm transition-colors duration-200 ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
+                  }`}
               />
               <ScrambleText
                 as="a"
-                href="/#sobre-mi"
-                text="Sobre mí"
-                className="nav-link text-sm"
-              />
-              <ScrambleText
-                as="a"
-                href="/#contacto"
+                href="#contacto"
                 text="Contacto"
-                className="nav-link text-sm"
+                className={`nav-link text-sm transition-colors duration-200 ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
+                  }`}
               />
             </nav>
 
-            {/* Mobile menu button - only visible on small screens */}
+            {/* Mobile menu button */}
             <button
               className="tui-button inline-flex sm:!hidden"
               onClick={() => setMobileNavOpen(true)}
@@ -61,15 +78,8 @@ export function Layout({ children }: LayoutProps) {
               </svg>
             </button>
           </div>
-        </Container>
-      </TuiSection>
-
-      {/* Divider after header */}
-      <TuiSection>
-        <Container corners={[]}>
-          <div className="tui-divider" />
-        </Container>
-      </TuiSection>
+        </div>
+      </header>
 
       {/* Mobile nav overlay */}
       {mobileNavOpen && (
@@ -80,7 +90,7 @@ export function Layout({ children }: LayoutProps) {
           />
           <nav className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-background border-l border-border p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] z-50">
             <div className="flex justify-between items-center mb-8">
-              <span className="text-label">menú</span>
+              <span className="text-label">MENÚ</span>
               <button
                 className="tui-button"
                 onClick={() => setMobileNavOpen(false)}
@@ -93,22 +103,17 @@ export function Layout({ children }: LayoutProps) {
             </div>
             <div className="space-y-4">
               <a
-                href="/#trabajo"
-                className="block text-heading link-hover uppercase"
+                href="#proyectos"
+                className={`block text-heading uppercase ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
+                  }`}
                 onClick={() => setMobileNavOpen(false)}
               >
-                Trabajo
+                Proyectos
               </a>
               <a
-                href="/#sobre-mi"
-                className="block text-heading link-hover uppercase"
-                onClick={() => setMobileNavOpen(false)}
-              >
-                Sobre mí
-              </a>
-              <a
-                href="/#contacto"
-                className="block text-heading link-hover uppercase"
+                href="#contacto"
+                className={`block text-heading uppercase ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
+                  }`}
                 onClick={() => setMobileNavOpen(false)}
               >
                 Contacto
@@ -122,9 +127,6 @@ export function Layout({ children }: LayoutProps) {
       <main>
         {children}
       </main>
-
-      {/* Contact Footer with Dither background */}
-      <ContactFooter />
     </div>
   )
 }

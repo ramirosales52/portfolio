@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils"
+import { forwardRef } from "react"
 
 /**
  * SVG cross icon for grid intersections
@@ -112,7 +113,7 @@ export function TuiGrid({ children, className, cols = 1 }: TuiGridProps) {
   )
 }
 
-interface TuiSectionProps {
+interface TuiSectionProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode
   className?: string
   /** Show crosses at outer corners */
@@ -125,21 +126,23 @@ interface TuiSectionProps {
  * Full-width section with top/bottom borders.
  * Corner crosses are disabled by default since sections span full viewport.
  */
-export function TuiSection({ children, className, showCorners = false, id }: TuiSectionProps) {
-  return (
-    <section id={id} className={cn("tui-section relative", className)}>
-      {showCorners && (
-        <>
-          <Cross className="tui-corner-tl" />
-          <Cross className="tui-corner-tr" />
-          <Cross className="tui-corner-bl" />
-          <Cross className="tui-corner-br" />
-        </>
-      )}
-      {children}
-    </section>
-  )
-}
+export const TuiSection = forwardRef<HTMLElement, TuiSectionProps>(
+  function TuiSection({ children, className, showCorners = false, id, ...props }, ref) {
+    return (
+      <section ref={ref} id={id} className={cn("tui-section relative", className)} {...props}>
+        {showCorners && (
+          <>
+            <Cross className="tui-corner-tl" />
+            <Cross className="tui-corner-tr" />
+            <Cross className="tui-corner-bl" />
+            <Cross className="tui-corner-br" />
+          </>
+        )}
+        {children}
+      </section>
+    )
+  }
+)
 
 interface TuiRowProps {
   children: React.ReactNode
