@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { Layout } from "@/components/layout"
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
-import { Container, TuiSection, TuiGrid, GridCell } from "@/components/tui-grid"
+import { Container, TuiSection } from "@/components/tui-grid"
 import { projects } from "@/data/projects"
 import { ContactFooter } from "@/components/contact-footer"
 import { Dither } from "@/components/dither"
@@ -96,44 +96,41 @@ export default function HomePage() {
       {/* Proyectos Section */}
       <TuiSection ref={proyectosRef} data-section="proyectos" id="proyectos" className="min-h-dvh">
         <Container>
-          <TuiGrid cols={3} className="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 min-h-dvh">
+          <div className="space-y-16">
             {projects.map((project, index) => {
-              const colCount = 3
-              const isLastInRow = (index + 1) % colCount === 0
-              const totalRows = Math.ceil(projects.length / colCount)
-              const currentRow = Math.floor(index / colCount)
-              const isLastRow = currentRow === totalRows - 1
-              
-              const borders: ("right" | "bottom")[] = []
-              if (!isLastInRow) borders.push("right")
-              if (!isLastRow) borders.push("bottom")
-              
+              const isEven = index % 2 === 0
               return (
-                <GridCell
+                <div
                   key={project.id}
-                  borders={borders}
-                  corners={[]}
-                  className="project-card-wrapper"
+                  className={`flex ${isEven ? 'flex-row' : 'flex-row-reverse'} items-center gap-8 pb-16 ${index < projects.length - 1 ? 'border-b border-border' : ''}`}
                 >
-                  <Link
-                    to={`/proyectos/${project.id}`}
-                    className="project-card tui-cell flex flex-col justify-between min-h-[250px] h-full"
-                  >
-                    <div>
-                      <span className="text-label">{project.number}</span>
-                      <h3 className="text-xl mt-2">{project.title}</h3>
-                      <p className="text-sm text-muted-foreground mt-3">
-                        {project.description}
-                      </p>
-                    </div>
-                    <div className="text-sm text-accent mt-4">
-                      {project.tech}
-                    </div>
-                  </Link>
-                </GridCell>
+                  {/* Content */}
+                  <div className="flex-1 tui-cell">
+                    <Link
+                      to={`/proyectos/${project.id}`}
+                      className="project-card block group"
+                    >
+                      <div>
+                        <span className="text-label">{project.number}</span>
+                        <h3 className="text-2xl mt-2 group-hover:text-accent transition-colors">{project.title}</h3>
+                        <p className="text-muted-foreground mt-4 leading-relaxed">
+                          {project.description}
+                        </p>
+                        <div className="text-accent mt-4">
+                          {project.tech}
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+
+                  {/* Visual placeholder - could be image/mockup in future */}
+                  <div className="flex-1 h-64 bg-muted/20 border border-border rounded flex items-center justify-center">
+                    <span className="text-muted-foreground text-sm">Mockup</span>
+                  </div>
+                </div>
               )
             })}
-          </TuiGrid>
+          </div>
         </Container>
       </TuiSection>
 
