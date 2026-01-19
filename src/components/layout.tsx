@@ -72,20 +72,24 @@ export function Layout({ children }: LayoutProps) {
 
             {/* Desktop nav */}
             <nav className="hidden sm:flex gap-8">
-              <ScrambleText
-                as="a"
-                href="#proyectos"
-                text="Proyectos"
-                className={`nav-link text-sm transition-colors duration-200 ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
+              <button
+                className={`nav-link text-sm transition-colors duration-200 cursor-pointer ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}
-              />
-              <ScrambleText
-                as="a"
-                href="#contacto"
-                text="Contacto"
-                className={`nav-link text-sm transition-colors duration-200 ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
+                onClick={() => {
+                  document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
+                <ScrambleText text="Proyectos" />
+              </button>
+              <button
+                className={`nav-link text-sm transition-colors duration-200 cursor-pointer ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
                   }`}
-              />
+                onClick={() => {
+                  document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })
+                }}
+              >
+                <ScrambleText text="Contacto" />
+              </button>
             </nav>
 
             {/* Mobile menu button */}
@@ -125,22 +129,30 @@ export function Layout({ children }: LayoutProps) {
               </button>
             </div>
             <div className="space-y-4">
-              <a
-                href="#proyectos"
-                className={`block text-heading uppercase ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
+              <button
+                className={`block text-heading uppercase text-left cursor-pointer ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}
-                onClick={() => setMobileNavOpen(false)}
+                onClick={() => {
+                  setMobileNavOpen(false)
+                  setTimeout(() => {
+                    document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' })
+                  }, 300) // Delay to allow mobile menu to close
+                }}
               >
                 Proyectos
-              </a>
-              <a
-                href="#contacto"
-                className={`block text-heading uppercase ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
+              </button>
+              <button
+                className={`block text-heading uppercase text-left cursor-pointer ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
                   }`}
-                onClick={() => setMobileNavOpen(false)}
+                onClick={() => {
+                  setMobileNavOpen(false)
+                  setTimeout(() => {
+                    document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })
+                  }, 300) // Delay to allow mobile menu to close
+                }}
               >
                 Contacto
-              </a>
+              </button>
             </div>
           </nav>
         </>

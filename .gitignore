@@ -24,4 +24,7 @@ dist-ssr
 *.sw?
 
 .claude
+.opencode
+.crush
 CLAUDE.md
+AGENTS.md

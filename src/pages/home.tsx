@@ -96,38 +96,41 @@ export default function HomePage() {
       {/* Proyectos Section */}
       <TuiSection ref={proyectosRef} data-section="proyectos" id="proyectos" className="min-h-dvh">
         <Container>
-          <div className="space-y-16">
+          <div>
             {projects.map((project, index) => {
               const isEven = index % 2 === 0
+              const isFirst = index === 0
               return (
-                <div
-                  key={project.id}
-                  className={`flex ${isEven ? 'flex-row' : 'flex-row-reverse'} items-center gap-8 pb-16 ${index < projects.length - 1 ? 'border-b border-border' : ''}`}
+                <Link
+                  to={`/proyectos/${project.id}`}
+                  className={`block pb-16 border border-transparent hover:border-accent transition-colors ${index < projects.length - 1 ? 'border-b-border' : ''}`}
                 >
-                  {/* Content */}
-                  <div className="flex-1 tui-cell">
-                    <Link
-                      to={`/proyectos/${project.id}`}
-                      className="project-card block group"
-                    >
-                      <div>
-                        <span className="text-label">{project.number}</span>
-                        <h3 className="text-2xl mt-2 group-hover:text-accent transition-colors">{project.title}</h3>
-                        <p className="text-muted-foreground mt-4 leading-relaxed">
-                          {project.description}
-                        </p>
-                        <div className="text-accent mt-4">
-                          {project.tech}
+                  <div
+                    key={project.id}
+                    className={`flex ${isEven ? 'flex-row' : 'flex-row-reverse'} items-center gap-8`}
+                  >
+                    {/* Content */}
+                    <div className="flex-1 tui-cell">
+                      <div className="project-card">
+                        <div>
+                          <span className="text-label">{project.number}</span>
+                          <h3 className="text-2xl mt-2">{project.title}</h3>
+                          <p className="text-muted-foreground mt-4 leading-relaxed">
+                            {project.description}
+                          </p>
+                          <div className="text-accent mt-4">
+                            {project.tech}
+                          </div>
                         </div>
                       </div>
-                    </Link>
-                  </div>
+                    </div>
 
-                  {/* Visual placeholder - could be image/mockup in future */}
-                  <div className="flex-1 h-64 bg-muted/20 border border-border rounded flex items-center justify-center">
-                    <span className="text-muted-foreground text-sm">Mockup</span>
+                    {/* Visual placeholder - could be image/mockup in future */}
+                    <div className={`flex-1 h-64 bg-muted/20 border border-border rounded flex items-center justify-center ${isFirst ? '' : 'pt-0'}`}>
+                      <span className="text-muted-foreground text-sm">Mockup</span>
+                    </div>
                   </div>
-                </div>
+                </Link>
               )
             })}
           </div>

@@ -271,18 +271,9 @@
   /* Grid borders handled by GridCell */
 }
 
-/* Project card hover effect - uses outline to avoid overflow clip */
+/* Project card hover effect - disabled for new layout */
 .project-card {
   cursor: pointer;
-  transition: outline-color 0.2s ease;
-  outline: 1px solid transparent;
-  outline-offset: -1px;
-}
-
-.project-card:hover {
-  outline-color: var(--foreground);
-  position: relative;
-  z-index: 1;
 }
 
 /* Link hover with underline animation */
