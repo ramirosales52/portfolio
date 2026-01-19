@@ -73,20 +73,22 @@ export function Layout({ children }: LayoutProps) {
             {/* Desktop nav */}
             <nav className="hidden sm:flex gap-8">
               <button
-                className={`nav-link text-sm transition-colors duration-200 cursor-pointer ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
+                className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}
                 onClick={() => {
                   document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' })
                 }}
+                type="button"
               >
                 <ScrambleText text="Proyectos" />
               </button>
               <button
-                className={`nav-link text-sm transition-colors duration-200 cursor-pointer ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
+                className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
                   }`}
                 onClick={() => {
                   document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })
                 }}
+                type="button"
               >
                 <ScrambleText text="Contacto" />
               </button>
@@ -97,8 +99,9 @@ export function Layout({ children }: LayoutProps) {
               className="tui-button inline-flex sm:!hidden"
               onClick={() => setMobileNavOpen(true)}
               aria-label="Abrir menú"
+              type="button"
             >
-              <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true">
                 <rect width="16" height="1.5" />
                 <rect y="5" width="16" height="1.5" />
                 <rect y="10" width="16" height="1.5" />
@@ -122,15 +125,16 @@ export function Layout({ children }: LayoutProps) {
                 className="tui-button"
                 onClick={() => setMobileNavOpen(false)}
                 aria-label="Cerrar menú"
+                type="button"
               >
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
                   <path d="M1 1L13 13M1 13L13 1" stroke="currentColor" strokeWidth="1.5" />
                 </svg>
               </button>
             </div>
             <div className="space-y-4">
               <button
-                className={`block text-heading uppercase text-left cursor-pointer ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
+                className={`block text-heading uppercase text-left cursor-pointer touch-manipulation ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}
                 onClick={() => {
                   setMobileNavOpen(false)
@@ -138,11 +142,12 @@ export function Layout({ children }: LayoutProps) {
                     document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' })
                   }, 300) // Delay to allow mobile menu to close
                 }}
+                type="button"
               >
                 Proyectos
               </button>
               <button
-                className={`block text-heading uppercase text-left cursor-pointer ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
+                className={`block text-heading uppercase text-left cursor-pointer touch-manipulation ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
                   }`}
                 onClick={() => {
                   setMobileNavOpen(false)
@@ -150,6 +155,7 @@ export function Layout({ children }: LayoutProps) {
                     document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })
                   }, 300) // Delay to allow mobile menu to close
                 }}
+                type="button"
               >
                 Contacto
               </button>
@@ -159,7 +165,7 @@ export function Layout({ children }: LayoutProps) {
       )}
 
       {/* Main content */}
-      <main>
+      <main id="main-content">
         {children}
       </main>
     </div>

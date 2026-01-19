@@ -1,0 +1,21 @@
+{
+  "name": "Ramiro - Portfolio",
+  "short_name": "Ramiro",
+  "description": "Portfolio de Ramiro, desarrollador full-stack especializado en React, TypeScript y Node.js",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "categories": ["portfolio", "developer", "web"],
+  "lang": "es",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

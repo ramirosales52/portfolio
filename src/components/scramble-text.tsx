@@ -32,6 +32,12 @@ export function ScrambleText({
   const scramble = useCallback(() => {
     if (isAnimating && !loop) return
 
+    // Respect prefers-reduced-motion
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplayText(text.toUpperCase())
+      return
+    }
+
     setIsAnimating(true)
     iterationRef.current = 0
     const finalText = text.toUpperCase()

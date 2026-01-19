@@ -1,12 +1,14 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, Suspense, lazy } from "react"
 import { Link } from "react-router-dom"
 import { Layout } from "@/components/layout"
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
 import { Container, TuiSection } from "@/components/tui-grid"
 import { projects } from "@/data/projects"
-import { ContactFooter } from "@/components/contact-footer"
-import { Dither } from "@/components/dither"
+
+// Lazy load heavy components
+const Dither = lazy(() => import("@/components/dither").then(module => ({ default: module.Dither })))
+const ContactFooter = lazy(() => import("@/components/contact-footer").then(module => ({ default: module.ContactFooter })))
 
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -54,13 +56,15 @@ export default function HomePage() {
         <Container corners={["bl", "br"]} className="h-full relative">
           <div className="tui-cell h-full flex flex-col justify-center relative">
             <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
-              <Dither
-                waveColor={[0.8, 0.8, 0.8]}
-                waveSpeed={0.03}
-                gradientStrength={0.7}
-                enableMouseInteraction={false}
-                className="w-full h-full"
-              />
+              <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
+                <Dither
+                  waveColor={[0.8, 0.8, 0.8]}
+                  waveSpeed={0.03}
+                  gradientStrength={0.7}
+                  enableMouseInteraction={false}
+                  className="w-full h-full"
+                />
+              </Suspense>
             </div>
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold relative z-10">
               RAMIRO
@@ -142,7 +146,9 @@ export default function HomePage() {
 
       {/* Contacto Section */}
       <TuiSection ref={contactoRef} data-section="contacto" id="contacto" className="min-h-dvh">
-        <ContactFooter />
+        <Suspense fallback={<div className="tui-cell h-64 flex items-center justify-center">Cargando...</div>}>
+          <ContactFooter />
+        </Suspense>
       </TuiSection>
     </Layout>
   )
