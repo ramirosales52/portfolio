@@ -85,7 +85,6 @@ body {
   color: var(--foreground);
   overflow-x: hidden;
   /* Mobile UX improvements */
-  overscroll-behavior: none;
   -webkit-tap-highlight-color: transparent;
 }
   
