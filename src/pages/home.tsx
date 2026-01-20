@@ -9,6 +9,7 @@ import { projects } from "@/data/projects"
 // Lazy load heavy components
 const Dither = lazy(() => import("@/components/dither").then(module => ({ default: module.Dither })))
 const ContactFooter = lazy(() => import("@/components/contact-footer").then(module => ({ default: module.ContactFooter })))
+const TechAnimation = lazy(() => import("@/components/tech-animation").then(module => ({ default: module.TechAnimation })))
 
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -142,6 +143,13 @@ export default function HomePage() {
             <p className="text-muted-foreground mt-3 max-w-lg">
               Una selección de proyectos que demuestran mis habilidades en desarrollo web moderno.
             </p>
+          </div>
+
+          {/* Tech Stack Animation */}
+          <div className="mb-16">
+            <Suspense fallback={<div className="w-full h-96 bg-muted/10 rounded-lg flex items-center justify-center">Cargando animación...</div>}>
+              <TechAnimation />
+            </Suspense>
           </div>
 
           <div>
