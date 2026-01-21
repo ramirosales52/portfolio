@@ -1,4 +1,7 @@
 import { Container, TuiGrid, GridCell } from "@/components/tui-grid"
+import { Suspense } from "react"
+import LetterGlitch from '@/components/letter-glitch'
+import { cn } from "@/lib/utils"
 
 interface ContactFooterProps {
   className?: string
@@ -6,10 +9,21 @@ interface ContactFooterProps {
 
 export function ContactFooter({ className }: ContactFooterProps) {
   return (
-    <footer className={className}>
+    <footer className={cn("flex flex-col h-full", className)}>
       {/* Contact section - 4 corners */}
-      <Container corners={["tl", "tr", "bl", "br"]}>
-        <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-2 min-h-[calc(100dvh-3rem)]">
+      <Container corners={["tl", "tr", "bl", "br"]} className="h-[calc(100dvh-var(--navbar-height))]">
+        <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
+          <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
+            <LetterGlitch
+              glitchSpeed={50}
+              centerVignette={true}
+              outerVignette={false}
+              smooth={true}
+            />
+          </Suspense>
+        </div>
+
+        <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-2 h-full">
           <GridCell borders={["right"]} corners={[]} className="hidden md:block">
             <div className="tui-cell h-full flex flex-col justify-center">
               <h2 className="text-heading text-balance">
@@ -20,30 +34,30 @@ export function ContactFooter({ className }: ContactFooterProps) {
               </p>
             </div>
           </GridCell>
-          
+
           <GridCell corners={[]}>
             <div className="tui-cell h-full flex flex-col justify-center">
               <h2 className="text-heading text-balance md:hidden mb-4">
                 Trabajemos juntos
               </h2>
-              <a 
-                href="mailto:hola@ramiro.dev" 
+              <a
+                href="mailto:hola@ramiro.dev"
                 className="text-xl sm:text-2xl link-hover inline-block"
               >
                 hola@ramiro.dev
               </a>
-              
+
               <div className="mt-8 space-y-2 text-small">
-                <a 
-                  href="https://github.com/ramiro" 
+                <a
+                  href="https://github.com/ramiro"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-muted-foreground link-hover"
                 >
                   <span className="text-accent">-&gt;</span> github
                 </a>
-                <a 
-                  href="https://linkedin.com/in/ramiro" 
+                <a
+                  href="https://linkedin.com/in/ramiro"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="block text-muted-foreground link-hover"

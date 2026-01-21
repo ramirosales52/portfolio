@@ -37,7 +37,7 @@ export default function HomePage() {
           }
         })
       },
-      { 
+      {
         threshold: 0.5,
         rootMargin: "-80px 0px 0px 0px"
       }
@@ -53,8 +53,8 @@ export default function HomePage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0 relative">
-        <Container corners={["bl", "br"]} className="h-full relative">
+      <TuiSection ref={heroRef} data-section="hero" className="h-dvh pt-[var(--navbar-height)] border-t-0 relative">
+        <Container corners={["bl", "br"]} className="h-[calc(100dvh-var(--navbar-height))] relative">
           <div className="tui-cell h-full flex flex-col justify-center relative">
             {/* Decorative vertical line */}
             <div className="absolute left-8 top-1/4 bottom-1/4 w-px bg-border/30 hidden lg:block"></div>
@@ -74,30 +74,16 @@ export default function HomePage() {
               RAMIRO
             </h1>
 
-            {/* Separator */}
-            <div className="text-accent text-lg tracking-wider mt-6 relative z-10">
-              /////////////////////
-            </div>
-
             {/* Description */}
-            <p className="text-muted-foreground text-sm sm:text-base max-w-md leading-relaxed mt-6 relative z-10">
-              Desarrollador web apasionado por crear experiencias digitales únicas.
-              <br className="hidden sm:block" />
-              Buscando mi primera experiencia profesional en desarrollo full-stack.
+            <p className="text-muted-foreground text-sm sm:text-base max-w-md leading-relaxed mt-4 relative z-10">
+              web/mobile developer.
             </p>
 
-            {/* Skills/Tech stack */}
-            <div className="flex flex-wrap gap-3 mt-6 relative z-10">
-              <span className="text-xs bg-accent/10 text-accent px-3 py-1 rounded border border-accent/20">
-                React
-              </span>
-              <span className="text-xs bg-accent/10 text-accent px-3 py-1 rounded border border-accent/20">
-                TypeScript
-              </span>
-              <span className="text-xs bg-accent/10 text-accent px-3 py-1 rounded border border-accent/20">
-                Node.js
-              </span>
+            {/* Separator */}
+            <div className="text-lg tracking-wider relative z-10 mt-4">
+              //////////////////
             </div>
+
 
             <div className="flex gap-6 mt-8 text-muted-foreground relative z-10">
               <ScrambleText
@@ -118,13 +104,6 @@ export default function HomePage() {
                 text="Ver CV"
                 className="nav-link text-sm"
               />
-            </div>
-
-            {/* Scroll indicator */}
-            <div className="mt-12 relative z-10 animate-bounce">
-              <div className="w-6 h-10 border-2 border-muted-foreground/30 rounded-full flex justify-center">
-                <div className="w-1 h-3 bg-muted-foreground/50 rounded-full mt-2 animate-pulse"></div>
-              </div>
             </div>
           </div>
         </Container>
@@ -181,17 +160,17 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                  {/* Visual placeholder - could be image/mockup in future */}
-                  <div className={`flex-1 h-64 bg-muted/20 border border-border rounded flex items-center justify-center relative overflow-hidden ${isFirst ? '' : 'pt-0'}`}>
-                    <span className="text-muted-foreground text-sm z-10 relative">Mockup</span>
-                    {/* Decorative pattern */}
-                    <div className="absolute inset-0 opacity-5">
-                      <div className="w-full h-full bg-gradient-to-br from-accent/20 via-transparent to-accent/10"></div>
-                      <div className="absolute inset-2 border border-accent/20 rounded"></div>
-                      <div className="absolute top-4 left-4 w-8 h-8 border border-accent/30 rounded-full"></div>
-                      <div className="absolute bottom-4 right-4 w-6 h-6 border border-accent/20 rounded"></div>
+                    {/* Visual placeholder - could be image/mockup in future */}
+                    <div className={`flex-1 h-64 bg-muted/20 border border-border rounded flex items-center justify-center relative overflow-hidden ${isFirst ? '' : 'pt-0'}`}>
+                      <span className="text-muted-foreground text-sm z-10 relative">Mockup</span>
+                      {/* Decorative pattern */}
+                      <div className="absolute inset-0 opacity-5">
+                        <div className="w-full h-full bg-gradient-to-br from-accent/20 via-transparent to-accent/10"></div>
+                        <div className="absolute inset-2 border border-accent/20 rounded"></div>
+                        <div className="absolute top-4 left-4 w-8 h-8 border border-accent/30 rounded-full"></div>
+                        <div className="absolute bottom-4 right-4 w-6 h-6 border border-accent/20 rounded"></div>
+                      </div>
                     </div>
-                  </div>
                   </div>
                 </Link>
               )
@@ -204,14 +183,8 @@ export default function HomePage() {
       <div className="tui-divider" />
 
       {/* Contacto Section */}
-      <TuiSection ref={contactoRef} data-section="contacto" id="contacto" className="min-h-dvh relative">
+      <TuiSection ref={contactoRef} data-section="contacto" id="contacto" className="h-dvh pt-[var(--navbar-height)]">
         <ContactFooter />
-        {/* Subtle footer decoration */}
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-muted-foreground/30 text-xs font-mono">
-          <span className="animate-pulse">●</span>
-          <span className="animate-pulse" style={{ animationDelay: '0.2s' }}>●</span>
-          <span className="animate-pulse" style={{ animationDelay: '0.4s' }}>●</span>
-        </div>
       </TuiSection>
     </Layout>
   )
