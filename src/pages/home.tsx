@@ -9,7 +9,6 @@ import { projects } from "@/data/projects"
 // Lazy load heavy components
 const Dither = lazy(() => import("@/components/dither").then(module => ({ default: module.Dither })))
 const ContactFooter = lazy(() => import("@/components/contact-footer").then(module => ({ default: module.ContactFooter })))
-const TechAnimation = lazy(() => import("@/components/tech-animation").then(module => ({ default: module.TechAnimation })))
 
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null)
@@ -53,8 +52,8 @@ export default function HomePage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <TuiSection ref={heroRef} data-section="hero" className="h-dvh pt-[var(--navbar-height)] border-t-0 relative">
-        <Container corners={["bl", "br"]} className="h-[calc(100dvh-var(--navbar-height))] relative">
+      <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0 relative">
+        <Container corners={["bl", "br"]} className="h-full relative pt-[var(--navbar-height)]">
           <div className="tui-cell h-full flex flex-col justify-center relative">
             {/* Decorative vertical line */}
             <div className="absolute left-8 top-1/4 bottom-1/4 w-px bg-border/30 hidden lg:block"></div>
@@ -124,13 +123,6 @@ export default function HomePage() {
             </p>
           </div>
 
-          {/* Tech Stack Animation */}
-          <div className="mb-16">
-            <Suspense fallback={<div className="w-full h-96 bg-muted/10 rounded-lg flex items-center justify-center">Cargando animación...</div>}>
-              <TechAnimation />
-            </Suspense>
-          </div>
-
           <div>
             {projects.map((project, index) => {
               const isEven = index % 2 === 0
@@ -183,7 +175,7 @@ export default function HomePage() {
       <div className="tui-divider" />
 
       {/* Contacto Section */}
-      <TuiSection ref={contactoRef} data-section="contacto" id="contacto" className="h-dvh pt-[var(--navbar-height)]">
+      <TuiSection ref={contactoRef} data-section="contacto" id="contacto" className="h-dvh">
         <ContactFooter />
       </TuiSection>
     </Layout>

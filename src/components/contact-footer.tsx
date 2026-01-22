@@ -6,12 +6,10 @@ import { cn } from "@/lib/utils"
 interface ContactFooterProps {
   className?: string
 }
-
-export function ContactFooter({ className }: ContactFooterProps) {
   return (
-    <footer className={cn("flex flex-col h-full", className)}>
+    <div className={cn("flex flex-col h-full w-full", className)}>
       {/* Contact section - 4 corners */}
-      <Container corners={["tl", "tr", "bl", "br"]} className="h-[calc(100dvh-var(--navbar-height))]">
+      <Container corners={["tl", "tr", "bl", "br"]} className="flex-1">
         <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
           <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
             <LetterGlitch
@@ -97,6 +95,6 @@ export function ContactFooter({ className }: ContactFooterProps) {
           </div>
         </div>
       </Container>
-    </footer>
+    </div>
   )
 }
