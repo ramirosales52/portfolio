@@ -1,4 +1,4 @@
-import { useEffect, useRef, Suspense, lazy } from "react"
+import { useEffect, useRef, useCallback, Suspense, lazy } from "react"
 import { Link } from "react-router-dom"
 import { Layout } from "@/components/layout"
 import { ScrambleText } from "@/components/scramble-text"
@@ -16,6 +16,18 @@ export default function HomePage() {
   const contactoRef = useRef<HTMLDivElement>(null)
   const { setShowLogoInNav, setActiveSection } = useNav()
 
+  const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.getAttribute("data-section")
+        if (sectionId) {
+          setActiveSection(sectionId)
+          setShowLogoInNav(sectionId !== "hero")
+        }
+      }
+    })
+  }, [setActiveSection, setShowLogoInNav])
+
   // Observer para detectar sección activa y mostrar logo
   useEffect(() => {
     const sections = [
@@ -25,17 +37,7 @@ export default function HomePage() {
     ]
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const sectionId = entry.target.getAttribute("data-section")
-            if (sectionId) {
-              setActiveSection(sectionId)
-              setShowLogoInNav(sectionId !== "hero")
-            }
-          }
-        })
-      },
+      observerCallback,
       {
         threshold: 0.5,
         rootMargin: "-80px 0px 0px 0px"
@@ -47,7 +49,7 @@ export default function HomePage() {
     })
 
     return () => observer.disconnect()
-  }, [setShowLogoInNav, setActiveSection])
+  }, [observerCallback])
 
   return (
     <Layout>
@@ -129,11 +131,11 @@ export default function HomePage() {
               const isFirst = index === 0
               return (
                 <Link
+                  key={project.id}
                   to={`/proyectos/${project.id}`}
                   className={`block pb-16 border border-transparent hover:border-accent transition-colors ${index < projects.length - 1 ? 'border-b-border' : ''}`}
                 >
                   <div
-                    key={project.id}
                     className={`flex ${isEven ? 'flex-row' : 'flex-row-reverse'} items-center gap-8`}
                   >
                     {/* Content */}
