@@ -1,6 +1,4 @@
 import { Container, TuiGrid, GridCell } from "@/components/tui-grid"
-import { Suspense } from "react"
-import LetterGlitch from '@/components/letter-glitch'
 import { cn } from "@/lib/utils"
 
 interface ContactFooterProps {
@@ -11,18 +9,7 @@ export function ContactFooter({ className }: ContactFooterProps) {
   return (
     <div className={cn("flex flex-col h-full w-full", className)}>
       {/* Contact section - 4 corners */}
-      <Container corners={["tl", "tr", "bl", "br"]} className="flex-1">
-        <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
-          <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
-            <LetterGlitch
-              glitchSpeed={50}
-              centerVignette={true}
-              outerVignette={false}
-              smooth={true}
-            />
-          </Suspense>
-        </div>
-
+      <Container corners={["tl", "tr", "bl", "br"]} className="w-full flex-1">
         <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-2 h-full">
           <GridCell borders={["right"]} corners={[]} className="hidden md:block">
             <div className="tui-cell h-full flex flex-col justify-center">
@@ -34,6 +21,40 @@ export function ContactFooter({ className }: ContactFooterProps) {
               </p>
             </div>
           </GridCell>
+
+          <GridCell corners={[]}>
+            <div className="tui-cell h-full flex flex-col justify-center">
+              <h2 className="text-heading text-balance md:hidden mb-4">
+                Trabajemos juntos
+              </h2>
+              <a
+                href="mailto:hola@ramiro.dev"
+                className="text-xl sm:text-2xl link-hover inline-block"
+              >
+                hola@ramiro.dev
+              </a>
+
+              <div className="mt-8 space-y-2 text-small">
+                <a
+                  href="https://github.com/ramiro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-muted-foreground link-hover"
+                >
+                  <span className="text-accent">-&gt;</span> github
+                </a>
+                <a
+                  href="https://linkedin.com/in/ramiro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-muted-foreground link-hover"
+                >
+                  <span className="text-accent">-&gt;</span> linkedin
+                </a>
+              </div>
+            </div>
+          </GridCell>
+        </TuiGrid>
       </Container>
 
       {/* Divider */}
