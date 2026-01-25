@@ -11,22 +11,16 @@ export function ContactFooter({ className }: ContactFooterProps) {
       {/* Contact section - 4 corners */}
       <Container corners={["tl", "tr", "bl", "br"]} className="w-full flex-1">
         <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-2 h-full">
-          <GridCell borders={["right"]} corners={[]} className="hidden md:block">
+          <GridCell borders={["right"]} corners={[]}>
             <div className="tui-cell h-full flex flex-col justify-center">
               <h2 className="text-heading text-balance">
                 Trabajemos juntos
               </h2>
-              <p className="text-body text-muted-foreground text-pretty mt-4">
-                Hablemos sobre tu próximo proyecto.
-              </p>
             </div>
           </GridCell>
 
-          <GridCell corners={[]}>
+          <GridCell>
             <div className="tui-cell h-full flex flex-col justify-center">
-              <h2 className="text-heading text-balance md:hidden mb-4">
-                Trabajemos juntos
-              </h2>
               <a
                 href="mailto:hola@ramiro.dev"
                 className="text-xl sm:text-2xl link-hover inline-block"
@@ -55,35 +49,12 @@ export function ContactFooter({ className }: ContactFooterProps) {
             </div>
           </GridCell>
         </TuiGrid>
-      </Container>
 
-      {/* Divider */}
-      <div className="tui-divider" />
-
-      {/* Copyright bar - 4 corners */}
-      <Container corners={["tl", "tr", "bl", "br"]}>
-        <div className="tui-cell flex items-center justify-between text-small text-muted-foreground">
+        <div className="tui-cell flex items-center justify-between text-small text-muted-foreground border-t border-border">
           <span>(C) 2025 Ramiro</span>
-          <div className="flex gap-6">
-            <a
-              href="https://github.com/ramiro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-link"
-            >
-              Github
-            </a>
-            <a
-              href="https://linkedin.com/in/ramiro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="nav-link"
-            >
-              LinkedIn
-            </a>
-          </div>
         </div>
       </Container>
+
     </div>
   )
 }
