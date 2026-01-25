@@ -49,12 +49,11 @@ export function ContactFooter({ className }: ContactFooterProps) {
             </div>
           </GridCell>
         </TuiGrid>
-
-        <div className="tui-cell flex items-center justify-between text-small text-muted-foreground border-t border-border">
-          <span>(C) 2025 Ramiro</span>
-        </div>
       </Container>
 
+      <div className="tui-cell flex items-center justify-between text-small text-muted-foreground border-t border-border">
+        <span>(C) 2025 Ramiro</span>
+      </div>
     </div>
   )
 }
