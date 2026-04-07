@@ -27,6 +27,8 @@ uniform vec2 mousePos;
 uniform int enableMouseInteraction;
 uniform float mouseRadius;
 uniform float gradientStrength;
+uniform vec3 baseColor;
+uniform vec3 gradientColor;
 
 vec4 mod289(vec4 x) { return x - floor(x * (1.0/289.0)) * 289.0; }
 vec4 permute(vec4 x) { return mod289(((x * 34.0) + 1.0) * x); }
@@ -91,12 +93,11 @@ void main() {
     float effect = 1.0 - smoothstep(0.0, mouseRadius, dist);
     f -= 0.5 * effect;
   }
-  vec3 col = mix(vec3(0.0), waveColor, f);
+  vec3 col = mix(baseColor, waveColor, f);
 
-  // Apply black gradient from left to right
+  // Apply gradient from left to right
   float gradient = uv.x * 0.5 + 0.5; // Normalize uv.x from [-aspect, aspect] to [0, 1]
   gradient = clamp(gradient, 0.0, 1.0);
-  vec3 gradientColor = vec3(0.0); // Black
   col = mix(gradientColor, col, gradient * gradientStrength);
 
   gl_FragColor = vec4(col, 1.0);
@@ -180,6 +181,8 @@ interface DitheredWavesProps {
   waveFrequency: number
   waveAmplitude: number
   waveColor: [number, number, number]
+  baseColor: [number, number, number]
+  gradientColor: [number, number, number]
   colorNum: number
   pixelSize: number
   disableAnimation: boolean
@@ -193,6 +196,8 @@ function DitheredWaves({
   waveFrequency,
   waveAmplitude,
   waveColor,
+  baseColor,
+  gradientColor,
   colorNum,
   pixelSize,
   disableAnimation,
@@ -211,6 +216,8 @@ function DitheredWaves({
     waveFrequency: new THREE.Uniform(waveFrequency),
     waveAmplitude: new THREE.Uniform(waveAmplitude),
     waveColor: new THREE.Uniform(new THREE.Color(...waveColor)),
+    baseColor: new THREE.Uniform(new THREE.Color(...baseColor)),
+    gradientColor: new THREE.Uniform(new THREE.Color(...gradientColor)),
     mousePos: new THREE.Uniform(new THREE.Vector2(0, 0)),
     enableMouseInteraction: new THREE.Uniform(enableMouseInteraction ? 1 : 0),
     mouseRadius: new THREE.Uniform(mouseRadius),
@@ -228,6 +235,8 @@ function DitheredWaves({
   }, [size, gl])
 
   const prevColor = useRef([...waveColor])
+  const prevBaseColor = useRef([...baseColor])
+  const prevGradientColor = useRef([...gradientColor])
   useFrame(({ clock }) => {
     const u = waveUniformsRef.current
 
@@ -242,6 +251,16 @@ function DitheredWaves({
     if (!prevColor.current.every((v, i) => v === waveColor[i])) {
       u.waveColor.value.set(...waveColor)
       prevColor.current = [...waveColor]
+    }
+
+    if (!prevBaseColor.current.every((v, i) => v === baseColor[i])) {
+      u.baseColor.value.set(...baseColor)
+      prevBaseColor.current = [...baseColor]
+    }
+
+    if (!prevGradientColor.current.every((v, i) => v === gradientColor[i])) {
+      u.gradientColor.value.set(...gradientColor)
+      prevGradientColor.current = [...gradientColor]
     }
 
     u.enableMouseInteraction.value = enableMouseInteraction ? 1 : 0
@@ -294,6 +313,8 @@ export interface DitherProps {
   waveFrequency?: number
   waveAmplitude?: number
   waveColor?: [number, number, number]
+  baseColor?: [number, number, number]
+  gradientColor?: [number, number, number]
   colorNum?: number
   pixelSize?: number
   disableAnimation?: boolean
@@ -308,6 +329,8 @@ export function Dither({
   waveFrequency = 3,
   waveAmplitude = 0.3,
   waveColor = [0.5, 0.5, 0.5],
+  baseColor = [0, 0, 0],
+  gradientColor = [0, 0, 0],
   colorNum = 4,
   pixelSize = 2,
   disableAnimation = false,
@@ -334,6 +357,8 @@ export function Dither({
         waveFrequency={waveFrequency}
         waveAmplitude={waveAmplitude}
         waveColor={waveColor}
+        baseColor={baseColor}
+        gradientColor={gradientColor}
         colorNum={colorNum}
         pixelSize={pixelSize}
         disableAnimation={disableAnimation}

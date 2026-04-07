@@ -1,9 +1,10 @@
-import { useEffect, useRef, useCallback, Suspense, lazy } from "react"
+import { useEffect, useRef, useCallback, Suspense, lazy, useMemo } from "react"
 import { Link } from "react-router-dom"
 import { Layout } from "@/components/layout"
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
-import { Container, TuiSection } from "@/components/tui-grid"
+import { useTheme } from "@/components/theme-context"
+import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
 import { projects } from "@/data/projects"
 
 // Lazy load heavy components
@@ -15,6 +16,23 @@ export default function HomePage() {
   const proyectosRef = useRef<HTMLDivElement>(null)
   const contactoRef = useRef<HTMLDivElement>(null)
   const { setShowLogoInNav, setActiveSection } = useNav()
+  const { theme } = useTheme()
+
+  // Theme-aware dither colors
+  const ditherColors = useMemo(() => {
+    if (theme === "light") {
+      return {
+        waveColor: [0.2, 0.2, 0.2] as [number, number, number],
+        baseColor: [1, 1, 1] as [number, number, number],
+        gradientColor: [1, 1, 1] as [number, number, number],
+      }
+    }
+    return {
+      waveColor: [0.8, 0.8, 0.8] as [number, number, number],
+      baseColor: [0, 0, 0] as [number, number, number],
+      gradientColor: [0, 0, 0] as [number, number, number],
+    }
+  }, [theme])
 
   const observerCallback = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
@@ -63,7 +81,9 @@ export default function HomePage() {
             <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
               <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
                 <Dither
-                  waveColor={[0.8, 0.8, 0.8]}
+                  waveColor={ditherColors.waveColor}
+                  baseColor={ditherColors.baseColor}
+                  gradientColor={ditherColors.gradientColor}
                   waveSpeed={0.03}
                   gradientStrength={0.7}
                   enableMouseInteraction={false}
@@ -114,62 +134,63 @@ export default function HomePage() {
       <div className="tui-divider" />
 
       {/* Proyectos Section */}
-      <TuiSection ref={proyectosRef} data-section="proyectos" id="proyectos" className="min-h-dvh">
+      <TuiSection ref={proyectosRef} data-section="proyectos" id="proyectos">
         <Container>
           {/* Section header */}
-          <div className="tui-cell border-b border-border pb-8 mb-12">
+          <div className="tui-cell border-b border-border">
             <span className="text-label">TRABAJOS</span>
-            <h2 className="text-2xl sm:text-3xl mt-2">Proyectos Destacados</h2>
-            <p className="text-muted-foreground mt-3 max-w-lg">
-              Una selección de proyectos que demuestran mis habilidades en desarrollo web moderno.
-            </p>
           </div>
 
-          <div>
+          {/* Project cards - 2 column grid */}
+          <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-2">
             {projects.map((project, index) => {
-              const isEven = index % 2 === 0
-              const isFirst = index === 0
+              const isLeft = index % 2 === 0
+              const isTopRow = index < 2
               return (
-                <Link
+                <GridCell
                   key={project.id}
-                  to={`/proyectos/${project.id}`}
-                  className={`block pb-16 border border-transparent hover:border-accent transition-colors ${index < projects.length - 1 ? 'border-b-border' : ''}`}
+                  borders={[
+                    ...(isLeft ? ["right" as const] : []),
+                    ...(!isTopRow ? ["top" as const] : []),
+                  ]}
+                  corners={
+                    isLeft
+                      ? [
+                          ...(!isTopRow ? ["tr" as const] : []),
+                          "br" as const,
+                        ]
+                      : [
+                          ...(!isTopRow ? ["tl" as const] : []),
+                          "bl" as const,
+                        ]
+                  }
                 >
-                  <div
-                    className={`flex ${isEven ? 'flex-row' : 'flex-row-reverse'} items-center gap-8`}
+                  <Link
+                    to={`/proyectos/${project.id}`}
+                    className="group block tui-cell h-full"
                   >
-                    {/* Content */}
-                    <div className="flex-1 tui-cell">
-                      <div className="project-card">
-                        <div>
-                          <span className="text-label">{project.number}</span>
-                          <h3 className="text-2xl mt-2">{project.title}</h3>
-                          <p className="text-muted-foreground mt-4 leading-relaxed">
-                            {project.description}
-                          </p>
-                          <div className="text-accent mt-4">
-                            {project.tech}
-                          </div>
-                        </div>
-                      </div>
+                    <div className="flex items-baseline justify-between gap-4 mb-3">
+                      <span className="text-label tabular-nums">
+                        {project.number}
+                      </span>
+                      <span className="text-label truncate hidden sm:block">
+                        {project.tech}
+                      </span>
                     </div>
-
-                    {/* Visual placeholder - could be image/mockup in future */}
-                    <div className={`flex-1 h-64 bg-muted/20 border border-border rounded flex items-center justify-center relative overflow-hidden ${isFirst ? '' : 'pt-0'}`}>
-                      <span className="text-muted-foreground text-sm z-10 relative">Mockup</span>
-                      {/* Decorative pattern */}
-                      <div className="absolute inset-0 opacity-5">
-                        <div className="w-full h-full bg-gradient-to-br from-accent/20 via-transparent to-accent/10"></div>
-                        <div className="absolute inset-2 border border-accent/20 rounded"></div>
-                        <div className="absolute top-4 left-4 w-8 h-8 border border-accent/30 rounded-full"></div>
-                        <div className="absolute bottom-4 right-4 w-6 h-6 border border-accent/20 rounded"></div>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
+                    <h3 className="text-heading text-balance group-hover:text-accent transition-colors duration-150">
+                      {project.title}
+                    </h3>
+                    <p className="text-small text-muted-foreground text-pretty mt-2 line-clamp-3">
+                      {project.description}
+                    </p>
+                    <span className="inline-block text-small text-accent mt-4 group-hover:translate-x-1 transition-transform duration-150">
+                      Ver proyecto →
+                    </span>
+                  </Link>
+                </GridCell>
               )
             })}
-          </div>
+          </TuiGrid>
         </Container>
       </TuiSection>
 
@@ -177,7 +198,7 @@ export default function HomePage() {
       <div className="tui-divider" />
 
       {/* Contacto Section */}
-      <TuiSection ref={contactoRef} data-section="contacto" id="contacto" className="h-dvh">
+      <TuiSection ref={contactoRef} data-section="contacto" id="contacto" className="h-[calc(100dvh-var(--navbar-height))]">
         <ContactFooter />
       </TuiSection>
     </Layout>

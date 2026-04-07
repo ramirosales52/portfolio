@@ -2,6 +2,7 @@ import { StrictMode, useEffect } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { NavProvider } from './components/nav-context'
+import { ThemeProvider } from './components/theme-context'
 import { ErrorBoundary } from './components/error-boundary'
 import { trackPageView, initGA } from './lib/analytics'
 import './index.css'
@@ -29,12 +30,14 @@ createRoot(document.getElementById('root')!).render(
     <ErrorBoundary>
       <BrowserRouter>
         <AnalyticsTracker />
-        <NavProvider>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/proyectos/:id" element={<ProjectPage />} />
-          </Routes>
-        </NavProvider>
+        <ThemeProvider>
+          <NavProvider>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/proyectos/:id" element={<ProjectPage />} />
+            </Routes>
+          </NavProvider>
+        </ThemeProvider>
       </BrowserRouter>
     </ErrorBoundary>
   </StrictMode>,

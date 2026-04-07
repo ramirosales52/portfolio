@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
+import { useTheme } from "@/components/theme-context"
 
 /**
  * SVG cross icon for grid intersections
@@ -30,6 +31,7 @@ export function Layout({ children }: LayoutProps) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [logoScrambleKey, setLogoScrambleKey] = useState(0)
   const { showLogoInNav, activeSection } = useNav()
+  const { theme, toggleTheme } = useTheme()
 
   // Control del scramble del logo - cada vez que aparece
   useEffect(() => {
@@ -71,7 +73,7 @@ export function Layout({ children }: LayoutProps) {
             </div>
 
             {/* Desktop nav */}
-            <nav className="hidden sm:flex gap-8">
+            <nav className="hidden sm:flex items-center gap-8">
               <button
                 className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}
@@ -91,6 +93,30 @@ export function Layout({ children }: LayoutProps) {
                 type="button"
               >
                 <ScrambleText text="Contacto" />
+              </button>
+              <button
+                onClick={toggleTheme}
+                type="button"
+                className="nav-link text-muted-foreground cursor-pointer touch-manipulation"
+                aria-label={theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+              >
+                {theme === "dark" ? (
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="8" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="8" y1="0.5" x2="8" y2="2.5" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="8" y1="13.5" x2="8" y2="15.5" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="0.5" y1="8" x2="2.5" y2="8" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="13.5" y1="8" x2="15.5" y2="8" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="2.7" y1="2.7" x2="4.1" y2="4.1" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="11.9" y1="11.9" x2="13.3" y2="13.3" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="2.7" y1="13.3" x2="4.1" y2="11.9" stroke="currentColor" strokeWidth="1.2" />
+                    <line x1="11.9" y1="4.1" x2="13.3" y2="2.7" stroke="currentColor" strokeWidth="1.2" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M14 9.5A6.5 6.5 0 0 1 6.5 2 6.5 6.5 0 1 0 14 9.5Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+                  </svg>
+                )}
               </button>
             </nav>
 
@@ -159,6 +185,33 @@ export function Layout({ children }: LayoutProps) {
               >
                 Contacto
               </button>
+              <div className="pt-4 border-t border-border">
+                <button
+                  onClick={toggleTheme}
+                  type="button"
+                  className="flex items-center gap-3 text-muted-foreground cursor-pointer touch-manipulation"
+                  aria-label={theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+                >
+                  {theme === "dark" ? (
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <circle cx="8" cy="8" r="3.5" stroke="currentColor" strokeWidth="1.2" />
+                      <line x1="8" y1="0.5" x2="8" y2="2.5" stroke="currentColor" strokeWidth="1.2" />
+                      <line x1="8" y1="13.5" x2="8" y2="15.5" stroke="currentColor" strokeWidth="1.2" />
+                      <line x1="0.5" y1="8" x2="2.5" y2="8" stroke="currentColor" strokeWidth="1.2" />
+                      <line x1="13.5" y1="8" x2="15.5" y2="8" stroke="currentColor" strokeWidth="1.2" />
+                      <line x1="2.7" y1="2.7" x2="4.1" y2="4.1" stroke="currentColor" strokeWidth="1.2" />
+                      <line x1="11.9" y1="11.9" x2="13.3" y2="13.3" stroke="currentColor" strokeWidth="1.2" />
+                      <line x1="2.7" y1="13.3" x2="4.1" y2="11.9" stroke="currentColor" strokeWidth="1.2" />
+                      <line x1="11.9" y1="4.1" x2="13.3" y2="2.7" stroke="currentColor" strokeWidth="1.2" />
+                    </svg>
+                  ) : (
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                      <path d="M14 9.5A6.5 6.5 0 0 1 6.5 2 6.5 6.5 0 1 0 14 9.5Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
+                    </svg>
+                  )}
+                  <span className="text-sm">{theme === "dark" ? "Tema claro" : "Tema oscuro"}</span>
+                </button>
+              </div>
             </div>
           </nav>
         </>

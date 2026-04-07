@@ -11,57 +11,72 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "alpha",
+    id: "facturacil",
     number: "01",
-    title: "Proyecto Alpha",
-    description: "Aplicación full-stack construida con React y Node.js",
-    tech: "React / Node / PostgreSQL",
-    longDescription: "Una aplicación full-stack completa con sincronización de datos en tiempo real, autenticación de usuarios y un dashboard responsive. Construida con tecnologías web modernas y buenas prácticas.",
+    title: "Facturacil",
+    description: "App de escritorio para facturacion electronica integrada con ARCA (AFIP). Genera facturas A/B y tickets con PDF, busqueda de contribuyentes y gestion de comprobantes.",
+    tech: "Electron / React / NestJS / SQLite",
+    longDescription: "Aplicacion de escritorio para Windows que permite emitir facturas electronicas (A, B y tickets) integrada directamente con ARCA a traves de AfipSDK. Genera PDFs listos para imprimir en A4 o formato ticket 80mm, almacena todos los comprobantes emitidos localmente y permite consultar contribuyentes por CUIT o DNI en tiempo real.",
     features: [
-      "Actualización de datos en tiempo real con WebSocket",
-      "Sistema de autenticación basado en JWT",
-      "PostgreSQL con Prisma ORM",
-      "Dashboard responsive con gráficos"
+      "Emision de Facturas A/B y Tickets con autorizacion CAE de ARCA",
+      "Generacion de PDF en formato A4 y ticket 80mm con codigo QR reglamentario",
+      "Busqueda de contribuyentes por CUIT/DNI contra padrones de AFIP",
+      "Historial de comprobantes emitidos con filtros por fecha, tipo y documento",
+      "Calculo automatico de IVA con multiples alicuotas por item",
+      "Gestion de certificados digitales para entorno de desarrollo y produccion"
     ],
-    links: [
-      { label: "Ver Demo", href: "#" },
-      { label: "Código Fuente", href: "#" }
-    ]
+    links: [{ label: "Facturacil", href: "https://facturacil.com.ar" }]
   },
   {
-    id: "beta",
+    id: "salonix",
     number: "02",
-    title: "Proyecto Beta",
-    description: "Herramienta de colaboración en tiempo real para equipos remotos",
-    tech: "TypeScript / WebSocket / Redis",
-    longDescription: "Una plataforma de colaboración que permite a equipos remotos trabajar juntos sin problemas. Incluye edición de documentos en tiempo real, integración con videoconferencias y gestión de tareas.",
+    title: "Salonix",
+    description: "App de escritorio para gestion de turnos de salon de belleza. Agenda inteligente, gestion de clientes y tratamientos, con recordatorios automaticos por WhatsApp.",
+    tech: "Electron / React / NestJS / SQLite",
+    longDescription: "Sistema de gestion integral para salones de belleza. Permite administrar turnos con recomendacion automatica de horarios segun disponibilidad y duracion de tratamientos, gestionar clientes con historial de pagos y deudas, y enviar recordatorios y confirmaciones de turnos automaticamente por WhatsApp.",
     features: [
-      "Edición colaborativa en tiempo real",
-      "Indicadores de presencia y cursores",
-      "Mensajería pub/sub con Redis",
-      "Encriptación de extremo a extremo"
+      "Agenda de turnos con recomendacion automatica segun disponibilidad y duracion",
+      "Gestion de clientes con historial de pagos y seguimiento de deudas",
+      "Integracion con WhatsApp para recordatorios y confirmacion de turnos automatica",
+      "Calendario visual con horarios configurables por temporada y dias especiales",
+      "Catalogo de tratamientos con historial de precios",
+      "Dashboard con estadisticas diarias de turnos, ingresos y confirmaciones pendientes"
     ],
-    links: [
-      { label: "Ver Demo", href: "#" },
-      { label: "Código Fuente", href: "#" }
-    ]
+    links: []
   },
   {
-    id: "gamma",
+    id: "patitas",
     number: "03",
-    title: "Proyecto Gamma",
-    description: "Herramienta CLI para productividad de desarrolladores",
-    tech: "Rust / CLI / Open Source",
-    longDescription: "Una herramienta de línea de comandos ultrarrápida diseñada para optimizar flujos de trabajo de desarrollo. Maneja scaffolding de proyectos, generación de código y testing automatizado con configuración mínima.",
+    title: "Patitas",
+    description: "App movil para adopcion de mascotas y reporte de perdidos/encontrados. Con mapa interactivo, moderacion por IA y dinamica tipo red social.",
+    tech: "Expo / React Native / NestJS / Docker",
+    longDescription: "Aplicacion movil tipo red social enfocada en adopcion de mascotas y reporte de animales perdidos o encontrados. Integra Google Maps para visualizar ubicaciones, utiliza inteligencia artificial para moderar publicaciones asegurando que solo se suban mascotas, y ofrece una experiencia similar a Instagram para interactuar con las publicaciones.",
     features: [
-      "Tiempo de ejecución sub-milisegundo",
-      "Sistema de plugins para extensibilidad",
-      "Soporte multiplataforma",
-      "Sintaxis de comandos intuitiva"
+      "Feed tipo red social para publicaciones de adopcion y reportes",
+      "Mapa interactivo con Google Maps para ubicar mascotas",
+      "Moderacion automatica con IA para validar contenido de publicaciones",
+      "Sistema de reportes de mascotas perdidas y encontradas",
+      "Backend con NestJS containerizado con Docker",
+      "Interfaz nativa con Expo y React Native"
     ],
-    links: [
-      { label: "Código Fuente", href: "#" }
-    ]
+    links: []
+  },
+  {
+    id: "gastos",
+    number: "04",
+    title: "Gastos",
+    description: "Web app para gestion de gastos e ingresos con reportes mensuales y anuales. Integra WhatsApp e IA para anotar movimientos por mensaje de texto.",
+    tech: "Vite / React / Node.js / SQLite",
+    longDescription: "Aplicacion web para el control de finanzas personales que permite registrar gastos e ingresos tanto desde la interfaz web como enviando mensajes por WhatsApp. Utiliza Google Gemini para interpretar lenguaje natural y extraer automaticamente monto, categoria y descripcion. Incluye dashboard con graficos y reportes detallados por mes y por anio.",
+    features: [
+      "Registro de gastos e ingresos por WhatsApp con interpretacion por IA (Gemini)",
+      "Dashboard con resumen financiero, graficos de tendencia y desglose por categoria",
+      "Reportes mensuales y anuales con graficos interactivos",
+      "Exportacion a CSV de gastos e ingresos",
+      "Estado de conexion del bot en tiempo real via Server-Sent Events",
+      "Soporte para multiples usuarios autorizados por numero de WhatsApp"
+    ],
+    links: []
   }
 ]
 
