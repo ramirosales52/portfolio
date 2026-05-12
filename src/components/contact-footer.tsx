@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from "react"
 import { Container } from "@/components/tui-grid"
 import { cn } from "@/lib/utils"
+import contactGif from "@/assets/4.gif"
 
 interface ContactFooterProps {
   className?: string
@@ -40,68 +41,49 @@ export function ContactFooter({ className }: ContactFooterProps) {
   return (
     <div className={cn("flex flex-col h-full w-full", className)}>
       <Container corners={["tl", "tr", "bl", "br"]} className="w-full flex-1">
-        <div className="tui-cell h-full flex flex-col justify-center items-center text-center max-w-2xl mx-auto">
-          {/* Label */}
-          <span className="text-label mb-6">CONTACTO</span>
+        <div className="h-full flex flex-col">
+          <div className="flex-1 flex items-center justify-center text-center px-6 py-10">
+            <div className="max-w-2xl">
+              <span className="text-label mb-6 block">CONTACTO</span>
+              <h2 className="text-display text-balance">trabajemos juntos</h2>
 
-          {/* Main heading */}
-          <h2 className="text-display text-balance">
-            Trabajemos juntos
-          </h2>
-
-          {/* Subtext */}
-          <p className="text-body text-muted-foreground text-pretty mt-4 max-w-md">
-            Si tenés un proyecto en mente o querés charlar sobre una idea, escribime.
-          </p>
-
-          {/* Email - obfuscated, revealed on interaction */}
-          <div className="mt-8">
-            {!emailRevealed ? (
-              <button
-                type="button"
-                onClick={handleRevealEmail}
-                className="tui-button text-base cursor-pointer"
-              >
-                <span className="text-accent">→</span>
-                Revelar email
-              </button>
-            ) : (
-              <div className="flex flex-col items-center gap-2">
-                <a
-                  href={getMailto()}
-                  className="text-xl sm:text-2xl link-hover"
-                >
-                  {getEmail()}
-                </a>
-                <button
-                  type="button"
-                  onClick={handleCopyEmail}
-                  className="text-small text-muted-foreground link-hover cursor-pointer"
-                >
-                  {copied ? "Copiado" : "Copiar email"}
-                </button>
+              <div className="mt-8">
+                {!emailRevealed ? (
+                  <button
+                    type="button"
+                    onClick={handleRevealEmail}
+                    className="tui-button text-base cursor-pointer"
+                  >
+                    <span className="text-accent">→</span>
+                    Revelar email
+                  </button>
+                ) : (
+                  <div className="flex flex-col items-center gap-2">
+                    <a
+                      href={getMailto()}
+                      className="text-xl sm:text-2xl link-hover"
+                    >
+                      {getEmail()}
+                    </a>
+                    <button
+                      type="button"
+                      onClick={handleCopyEmail}
+                      className="text-small text-muted-foreground link-hover cursor-pointer"
+                    >
+                      {copied ? "Copiado" : "Copiar email"}
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
+            </div>
           </div>
 
-          {/* Social links */}
-          <div className="flex gap-6 mt-8">
-            <a
-              href="https://github.com/ramiro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-small text-muted-foreground link-hover"
-            >
-              <span className="text-accent">→</span> Github
-            </a>
-            <a
-              href="https://linkedin.com/in/ramiro"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-small text-muted-foreground link-hover"
-            >
-              <span className="text-accent">→</span> LinkedIn
-            </a>
+          <div className="flex-1 border-t border-border">
+            <img
+              src={contactGif}
+              alt="Contacto"
+              className="h-full w-full object-cover"
+            />
           </div>
         </div>
       </Container>
