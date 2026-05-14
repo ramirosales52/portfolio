@@ -1,7 +1,28 @@
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Container } from "@/components/tui-grid"
 import { cn } from "@/lib/utils"
-import contactGif from "@/assets/4.gif"
+
+const footerGifs = [
+  "../assets/footer-gifs/1.gif",
+  "../assets/footer-gifs/2.gif",
+  "../assets/footer-gifs/3.gif",
+  "../assets/footer-gifs/5.gif",
+  "../assets/footer-gifs/7.gif",
+  "../assets/footer-gifs/8.gif",
+  "../assets/footer-gifs/9.gif",
+  "../assets/footer-gifs/10.gif",
+  "../assets/footer-gifs/13.gif",
+  "../assets/footer-gifs/15.gif",
+  "../assets/footer-gifs/16.gif",
+] as const
+
+const footerGifModules = import.meta.glob("../assets/footer-gifs/*.gif", {
+  eager: true,
+  import: "default",
+}) as Record<string, string>
+
+const footerGifUrls = footerGifs.map(path => footerGifModules[path])
+const footerGifStorageKey = "footer-gif-index"
 
 interface ContactFooterProps {
   className?: string
@@ -22,6 +43,17 @@ export function ContactFooter({ className }: ContactFooterProps) {
   const { getEmail, getMailto } = useObfuscatedEmail()
   const [emailRevealed, setEmailRevealed] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [gifIndex, setGifIndex] = useState(0)
+
+  useEffect(() => {
+    const lastIndex = Number(window.localStorage.getItem(footerGifStorageKey) ?? -1)
+    const nextIndex = Number.isFinite(lastIndex) && lastIndex >= 0
+      ? (lastIndex + 1) % footerGifUrls.length
+      : 0
+
+    window.localStorage.setItem(footerGifStorageKey, String(nextIndex))
+    setGifIndex(nextIndex)
+  }, [])
 
   const handleRevealEmail = useCallback(() => {
     setEmailRevealed(true)
@@ -42,7 +74,7 @@ export function ContactFooter({ className }: ContactFooterProps) {
     <div className={cn("flex flex-col h-full w-full", className)}>
       <Container corners={["tl", "tr", "bl", "br"]} className="w-full flex-1">
         <div className="h-full flex flex-col">
-          <div className="flex-1 flex items-center justify-center text-center px-6 py-10">
+          <div className="flex-[3] flex items-center justify-center text-center px-6 py-10">
             <div className="max-w-2xl">
               <span className="text-label mb-6 block">CONTACTO</span>
               <h2 className="text-display text-balance">trabajemos juntos</h2>
@@ -78,11 +110,11 @@ export function ContactFooter({ className }: ContactFooterProps) {
             </div>
           </div>
 
-          <div className="flex-1 border-t border-border">
+          <div className="flex-[7] border-t border-border overflow-hidden">
             <img
-              src={contactGif}
+              src={footerGifUrls[gifIndex]}
               alt="Contacto"
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover object-bottom"
             />
           </div>
         </div>

@@ -6,6 +6,7 @@ import { useNav } from "@/components/nav-context"
 import { useTheme } from "@/components/theme-context"
 import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
 import { projects } from "@/data/projects"
+import profileImage from "@/assets/profile.png"
 
 // Lazy load heavy components
 const Dither = lazy(() => import("@/components/dither").then(module => ({ default: module.Dither })))
@@ -75,8 +76,6 @@ export default function HomePage() {
       <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0 relative">
         <Container corners={["bl", "br"]} className="h-full relative pt-[var(--navbar-height)]">
           <div className="tui-cell h-full flex flex-col justify-center relative">
-            {/* Decorative vertical line */}
-            <div className="absolute left-8 top-1/4 bottom-1/4 w-px bg-border/30 hidden lg:block"></div>
 
             <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
               <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
@@ -86,27 +85,32 @@ export default function HomePage() {
                   gradientColor={ditherColors.gradientColor}
                   waveSpeed={0.03}
                   gradientStrength={0.7}
-                  enableMouseInteraction={false}
+                  enableMouseInteraction={true}
                   className="w-full h-full"
                 />
               </Suspense>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold relative z-10">
+            <img
+              src={profileImage}
+              alt="Ramiro"
+              className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-none border border-border -translate-y-22 relative z-10"
+            />
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold -translate-y-14 relative z-10">
               RAMIRO
             </h1>
 
             {/* Description */}
-            <p className="text-muted-foreground text-sm sm:text-base max-w-md leading-relaxed mt-4 relative z-10">
+            <p className="text-muted-foreground text-sm sm:text-base max-w-md leading-relaxed -translate-y-14 relative z-10">
               web/mobile developer.
             </p>
 
             {/* Separator */}
-            <div className="text-lg tracking-wider relative z-10 mt-4">
+            <div className="text-lg tracking-wider relative z-10 -translate-y-10">
               //////////////////
             </div>
 
 
-            <div className="flex gap-6 mt-8 text-muted-foreground relative z-10">
+            <div className="flex gap-6 mt-5 text-muted-foreground relative z-10 -translate-y-10">
               <ScrambleText
                 as="a"
                 href="https://github.com/ramiro"
@@ -156,13 +160,13 @@ export default function HomePage() {
                   corners={
                     isLeft
                       ? [
-                          ...(!isTopRow ? ["tr" as const] : []),
-                          "br" as const,
-                        ]
+                        ...(!isTopRow ? ["tr" as const] : []),
+                        "br" as const,
+                      ]
                       : [
-                          ...(!isTopRow ? ["tl" as const] : []),
-                          "bl" as const,
-                        ]
+                        ...(!isTopRow ? ["tl" as const] : []),
+                        "bl" as const,
+                      ]
                   }
                 >
                   <Link
