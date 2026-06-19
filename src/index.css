@@ -8,8 +8,8 @@
    ============================================ */
 
 @theme inline {
-  /* Font - IBM Plex Mono loaded via Google Fonts in index.html */
-  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  /* Font - Geist Mono loaded via Google Fonts in index.html */
+  --font-mono: "Geist Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
 
   /* Colors */
   --color-background: var(--background);
@@ -22,26 +22,13 @@
 }
 
 :root {
-  /* Fennel Fiesta palette (emerald-based) */
-  --fennel-fiesta-50: oklch(0.98 0.021 160.987);
-  --fennel-fiesta-100: oklch(0.953 0.051 160.987);
-  --fennel-fiesta-200: oklch(0.911 0.091 160.987);
-  --fennel-fiesta-300: oklch(0.854 0.14 160.987);
-  --fennel-fiesta-400: oklch(0.779 0.173 160.987);
-  --fennel-fiesta-500: oklch(0.709 0.167 160.987);
-  --fennel-fiesta-600: oklch(0.607 0.142 160.987);
-  --fennel-fiesta-700: oklch(0.517 0.116 160.987);
-  --fennel-fiesta-800: oklch(0.44 0.093 160.987);
-  --fennel-fiesta-900: oklch(0.385 0.075 160.987);
-  --fennel-fiesta-950: oklch(0.267 0.05 160.987);
-
   /* Theme colors - pure black background */
   --background: oklch(0 0 0);
   --foreground: oklch(0.95 0 0);
   --muted: oklch(0.12 0 0);
   --muted-foreground: oklch(0.5 0 0);
-  --border: oklch(0.25 0 0);
-  --accent: var(--fennel-fiesta-400);
+  --border: oklch(0.3 0 0);
+  --accent: oklch(0.7 0 0);
   --accent-foreground: oklch(0 0 0);
 
   /* Grid sizing */
@@ -59,7 +46,7 @@
   --muted: oklch(0.95 0 0);
   --muted-foreground: oklch(0.4 0 0);
   --border: oklch(0.85 0 0);
-  --accent: var(--fennel-fiesta-500);
+  --accent: oklch(0.25 0 0);
   --accent-foreground: oklch(0.99 0 0);
 }
 
@@ -69,7 +56,7 @@
   }
 
   html {
-    font-family: "IBM Plex Mono", monospace;
+    font-family: "Geist Mono", monospace;
     font-feature-settings: "liga" 1, "calt" 1;
     overflow-x: hidden;
   }

@@ -7,13 +7,57 @@ import { useTheme } from "@/components/theme-context"
 import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
 import { projects } from "@/data/projects"
 import profileImage from "@/assets/profile.png"
+import dockerLogo from "@/assets/logos/docker.svg"
+import expoLogo from "@/assets/logos/expo.svg"
+import gitLogo from "@/assets/logos/git.svg"
+import mongoLogo from "@/assets/logos/mongodb.svg"
+import mysqlLogo from "@/assets/logos/mysql.svg"
+import nestLogo from "@/assets/logos/nestjs.svg"
+import nodejsLogo from "@/assets/logos/nodejs.svg"
+import postgresLogo from "@/assets/logos/postgresql.svg"
+import postmanLogo from "@/assets/logos/postman.svg"
+import pythonLogo from "@/assets/logos/python.svg"
+import reactLogo from "@/assets/logos/react.svg"
+import tailwindLogo from "@/assets/logos/tailwindcss.svg"
+import typescriptLogo from "@/assets/logos/typescript.svg"
+import viteLogo from "@/assets/logos/vite.svg"
+import shadcnLogo from "@/assets/logos/shadcn-ui.svg"
+import shadcnLogoDark from "@/assets/logos/shadcn-ui_dark.svg"
+import opencodeLogo from "@/assets/logos/opencode.svg"
+import opencodeLogoDark from "@/assets/logos/opencode-dark.svg"
 
 // Lazy load heavy components
 const Dither = lazy(() => import("@/components/dither").then(module => ({ default: module.Dither })))
 const ContactFooter = lazy(() => import("@/components/contact-footer").then(module => ({ default: module.ContactFooter })))
 
+interface StackItem {
+  name: string
+  src: string
+  srcDark?: string
+}
+
+const stackItems: StackItem[] = [
+  { name: "React", src: reactLogo },
+  { name: "TypeScript", src: typescriptLogo },
+  { name: "Vite", src: viteLogo },
+  { name: "Tailwind CSS", src: tailwindLogo },
+  { name: "Node.js", src: nodejsLogo },
+  { name: "NestJS", src: nestLogo },
+  { name: "PostgreSQL", src: postgresLogo },
+  { name: "MongoDB", src: mongoLogo },
+  { name: "MySQL", src: mysqlLogo },
+  { name: "Docker", src: dockerLogo },
+  { name: "Git", src: gitLogo },
+  { name: "Expo", src: expoLogo },
+  { name: "Postman", src: postmanLogo },
+  { name: "Python", src: pythonLogo },
+  { name: "shadcn/ui", src: shadcnLogo, srcDark: shadcnLogoDark },
+  { name: "OpenCode", src: opencodeLogo, srcDark: opencodeLogoDark },
+]
+
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null)
+  const stackRef = useRef<HTMLDivElement>(null)
   const proyectosRef = useRef<HTMLDivElement>(null)
   const contactoRef = useRef<HTMLDivElement>(null)
   const { setShowLogoInNav, setActiveSection } = useNav()
@@ -51,6 +95,7 @@ export default function HomePage() {
   useEffect(() => {
     const sections = [
       { ref: heroRef, id: "hero" },
+      { ref: stackRef, id: "stack" },
       { ref: proyectosRef, id: "proyectos" },
       { ref: contactoRef, id: "contacto" }
     ]
@@ -137,6 +182,48 @@ export default function HomePage() {
       {/* Divider */}
       <div className="tui-divider" />
 
+      {/* Stack Section */}
+      <TuiSection ref={stackRef} data-section="stack" id="stack">
+        <Container>
+          <div className="tui-cell border-b border-border">
+            <span className="text-label">STACK</span>
+          </div>
+
+          <TuiGrid cols={4}>
+            {stackItems.map((item, index) => {
+              const colIndex = index % 4
+              const isTopRow = index < 4
+              const hasRightBorder = colIndex !== 3
+              const logoSrc = theme === "dark" && item.srcDark ? item.srcDark : item.src
+
+              return (
+                <GridCell
+                  key={item.name}
+                  borders={[
+                    ...(hasRightBorder ? ["right" as const] : []),
+                    ...(!isTopRow ? ["top" as const] : []),
+                  ]}
+                  className="flex flex-col items-center justify-center gap-2 min-h-24 sm:min-h-28 px-2"
+                >
+                  <img
+                    src={logoSrc}
+                    alt={item.name}
+                    className="h-8 w-8 sm:h-10 sm:w-10 object-contain"
+                    loading="lazy"
+                  />
+                  <span className="text-small text-muted-foreground text-center leading-tight">
+                    {item.name}
+                  </span>
+                </GridCell>
+              )
+            })}
+          </TuiGrid>
+        </Container>
+      </TuiSection>
+
+      {/* Divider */}
+      <div className="tui-divider" />
+
       {/* Proyectos Section */}
       <TuiSection ref={proyectosRef} data-section="proyectos" id="proyectos">
         <Container>
@@ -147,27 +234,11 @@ export default function HomePage() {
 
           {/* Project cards - 2 column grid */}
           <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-2">
-            {projects.map((project, index) => {
-              const isLeft = index % 2 === 0
-              const isTopRow = index < 2
+            {projects.map((project) => {
               return (
                 <GridCell
                   key={project.id}
-                  borders={[
-                    ...(isLeft ? ["right" as const] : []),
-                    ...(!isTopRow ? ["top" as const] : []),
-                  ]}
-                  corners={
-                    isLeft
-                      ? [
-                        ...(!isTopRow ? ["tr" as const] : []),
-                        "br" as const,
-                      ]
-                      : [
-                        ...(!isTopRow ? ["tl" as const] : []),
-                        "bl" as const,
-                      ]
-                  }
+                  className="border transition-colors duration-150 hover:[border-color:var(--foreground)]"
                 >
                   <Link
                     to={`/proyectos/${project.id}`}

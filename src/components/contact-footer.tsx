@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { Container } from "@/components/tui-grid"
 import { cn } from "@/lib/utils"
 
@@ -28,21 +28,8 @@ interface ContactFooterProps {
   className?: string
 }
 
-/** Assemble email from parts to avoid plain-text scraping */
-function useObfuscatedEmail() {
-  const parts = useRef({ user: "hola", domain: "ramiro", tld: "dev" })
-  const getEmail = useCallback(() => {
-    const { user, domain, tld } = parts.current
-    return `${user}@${domain}.${tld}`
-  }, [])
-  const getMailto = useCallback(() => `mailto:${getEmail()}`, [getEmail])
-  return { getEmail, getMailto }
-}
-
 export function ContactFooter({ className }: ContactFooterProps) {
-  const { getEmail, getMailto } = useObfuscatedEmail()
-  const [emailRevealed, setEmailRevealed] = useState(false)
-  const [copied, setCopied] = useState(false)
+  const [emailInput, setEmailInput] = useState("")
   const [gifIndex, setGifIndex] = useState(0)
 
   useEffect(() => {
@@ -55,57 +42,32 @@ export function ContactFooter({ className }: ContactFooterProps) {
     setGifIndex(nextIndex)
   }, [])
 
-  const handleRevealEmail = useCallback(() => {
-    setEmailRevealed(true)
-  }, [])
-
-  const handleCopyEmail = useCallback(async () => {
-    try {
-      await navigator.clipboard.writeText(getEmail())
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      // Fallback: open mailto
-      window.location.href = getMailto()
-    }
-  }, [getEmail, getMailto])
-
   return (
     <div className={cn("flex flex-col h-full w-full", className)}>
       <Container corners={["tl", "tr", "bl", "br"]} className="w-full flex-1">
         <div className="h-full flex flex-col">
-          <div className="flex-[3] flex items-center justify-center text-center px-6 py-10">
-            <div className="max-w-2xl">
-              <span className="text-label mb-6 block">CONTACTO</span>
-              <h2 className="text-display text-balance">trabajemos juntos</h2>
+          <div className="flex-[3] flex items-center justify-center text-center py-10">
+            <div>
+              <h2 className="text-display">trabajemos juntos :)</h2>
+              <p className="text-body text-muted-foreground mt-3 mb-8">
+                deja aca tu email
+              </p>
 
-              <div className="mt-8">
-                {!emailRevealed ? (
-                  <button
-                    type="button"
-                    onClick={handleRevealEmail}
-                    className="tui-button text-base cursor-pointer"
-                  >
-                    <span className="text-accent">→</span>
-                    Revelar email
-                  </button>
-                ) : (
-                  <div className="flex flex-col items-center gap-2">
-                    <a
-                      href={getMailto()}
-                      className="text-xl sm:text-2xl link-hover"
-                    >
-                      {getEmail()}
-                    </a>
-                    <button
-                      type="button"
-                      onClick={handleCopyEmail}
-                      className="text-small text-muted-foreground link-hover cursor-pointer"
-                    >
-                      {copied ? "Copiado" : "Copiar email"}
-                    </button>
-                  </div>
-                )}
+              <div className="flex gap-2 max-w-md mx-auto">
+                <input
+                  type="email"
+                  value={emailInput}
+                  onChange={e => setEmailInput(e.target.value)}
+                  placeholder="tu@email.com"
+                  className="flex-1 bg-transparent border border-border px-3 py-2 text-sm text-foreground outline-none focus:border-accent transition-colors duration-150"
+                />
+                <button
+                  type="button"
+                  className="tui-button shrink-0"
+                >
+                  <span>→</span>
+                  Enviar
+                </button>
               </div>
             </div>
           </div>
