@@ -6,7 +6,9 @@ const footerGifs = [
   "../assets/footer-gifs/1.gif",
   "../assets/footer-gifs/2.gif",
   "../assets/footer-gifs/3.gif",
+  "../assets/footer-gifs/4.gif",
   "../assets/footer-gifs/5.gif",
+  "../assets/footer-gifs/6.gif",
   "../assets/footer-gifs/7.gif",
   "../assets/footer-gifs/8.gif",
   "../assets/footer-gifs/9.gif",
@@ -84,7 +86,7 @@ export function ContactFooter({ className }: ContactFooterProps) {
 
       {/* Footer bar */}
       <div className="tui-cell flex items-center justify-between text-small text-muted-foreground border-t border-border">
-        <span>&copy; 2025 Ramiro</span>
+        <span>&copy; 2026 Ramiro</span>
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import { useParams, Link } from "react-router-dom"
-import { getProject, projects } from "@/data/projects"
+import { getProject } from "@/data/projects"
 import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
 import { Layout } from "@/components/layout"
 
@@ -22,15 +22,10 @@ export default function ProjectPage() {
     )
   }
 
-  const currentIndex = projects.findIndex(p => p.id === id)
-  const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null
-  const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null
-
   const techItems = project.tech.split(" / ")
 
   return (
     <Layout>
-      {/* Spacer for fixed navbar */}
       <div className="h-[var(--navbar-height)]" />
 
       {/* Back link */}
@@ -44,27 +39,24 @@ export default function ProjectPage() {
         </Container>
       </TuiSection>
 
-      {/* Project header - full width title area */}
+      {/* Header */}
       <TuiSection>
         <Container>
-          {/* Number + Title */}
-          <div className="tui-cell">
-            <div className="flex items-baseline gap-4 mb-4">
-              <span className="text-label tabular-nums">{project.number}</span>
-            </div>
-            <h1 className="text-display text-balance">{project.title}</h1>
+          <div className="tui-cell border-b border-border">
+            <span className="text-label tabular-nums">{project.number}</span>
+            <h1 className="text-display text-balance mt-3">{project.title}</h1>
           </div>
 
-          {/* Meta row: tech + links */}
-          <div className="tui-cell border-t border-border">
+          {/* Meta */}
+          <div className="tui-cell">
             <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
               <div>
                 <span className="text-label block mb-3">stack</span>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-1.5">
                   {techItems.map((tech, i) => (
                     <span
                       key={i}
-                      className="text-small px-2 py-1 border border-border text-muted-foreground"
+                      className="text-small px-1.5 py-0.5 border border-border text-muted-foreground"
                     >
                       {tech.trim()}
                     </span>
@@ -95,14 +87,51 @@ export default function ProjectPage() {
         </Container>
       </TuiSection>
 
+      {/* Screenshots / Preview */}
+      <TuiSection>
+        <Container>
+          <div className="tui-cell border-b border-border">
+            <span className="text-label">preview</span>
+          </div>
+          {project.images && project.images.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border">
+              {project.images.map((img, i) => (
+                <div key={i} className="min-h-[220px] sm:min-h-[280px] flex items-center justify-center overflow-hidden">
+                  <img
+                    src={img}
+                    alt={`${project.title} screenshot ${i + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border">
+              {[1, 2, 3, 4].map((i) => (
+                <div
+                  key={i}
+                  className="min-h-[180px] sm:min-h-[240px] flex items-center justify-center text-muted-foreground select-none"
+                >
+                  <div className="flex flex-col items-center gap-2">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                      <rect x="2" y="4" width="20" height="16" rx="2" />
+                      <circle cx="9" cy="10" r="2" />
+                      <path d="M22 14l-4-4-6 6-4-4-4 4" />
+                    </svg>
+                    <span className="text-small">screenshot</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </Container>
+      </TuiSection>
+
       {/* Description */}
       <TuiSection>
         <Container>
           <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-[auto_1fr]">
-            <GridCell
-              className="tui-cell"
-              borders={["right"]}
-            >
+            <GridCell className="tui-cell" borders={["right"]}>
               <span className="text-label">sobre el proyecto</span>
             </GridCell>
             <GridCell className="tui-cell">
@@ -149,42 +178,6 @@ export default function ProjectPage() {
                 </GridCell>
               )
             })}
-          </TuiGrid>
-        </Container>
-      </TuiSection>
-
-      {/* Prev/Next navigation */}
-      <TuiSection>
-        <Container>
-          <TuiGrid cols={2} className="grid-cols-2">
-            <GridCell
-              className="tui-cell"
-              borders={["right"]}
-              corners={["tr", "br"]}
-            >
-              {prevProject ? (
-                <Link to={`/proyectos/${prevProject.id}`} className="block group">
-                  <span className="text-label">← anterior</span>
-                  <p className="text-heading text-balance mt-2 group-hover:text-accent transition-colors duration-150">
-                    {prevProject.title}
-                  </p>
-                </Link>
-              ) : (
-                <div className="text-muted-foreground text-small">—</div>
-              )}
-            </GridCell>
-            <GridCell className="tui-cell text-right">
-              {nextProject ? (
-                <Link to={`/proyectos/${nextProject.id}`} className="block group">
-                  <span className="text-label">siguiente →</span>
-                  <p className="text-heading text-balance mt-2 group-hover:text-accent transition-colors duration-150">
-                    {nextProject.title}
-                  </p>
-                </Link>
-              ) : (
-                <div className="text-muted-foreground text-small">—</div>
-              )}
-            </GridCell>
           </TuiGrid>
         </Container>
       </TuiSection>

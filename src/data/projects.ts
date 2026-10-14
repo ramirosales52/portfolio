@@ -7,6 +7,7 @@ export interface Project {
   longDescription: string
   features: string[]
   links: { label: string; href: string }[]
+  images?: string[]
 }
 
 export const projects: Project[] = [
