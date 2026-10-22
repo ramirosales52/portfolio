@@ -1,8 +1,14 @@
-import { useState, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { useState, useEffect, useRef, useCallback } from "react"
+import { Link, useLocation, useNavigate, useNavigationType } from "react-router-dom"
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
 import { useTheme } from "@/components/theme-context"
+
+/**
+ * Scroll positions per history entry (keyed by location.key) so the browser
+ * "back" button restores where the user was instead of jumping to the top.
+ */
+const scrollPositions = new Map<string, number>()
 
 /**
  * SVG cross icon for grid intersections
@@ -32,6 +38,64 @@ export function Layout({ children }: LayoutProps) {
   const [logoScrambleKey, setLogoScrambleKey] = useState(0)
   const { showLogoInNav, activeSection } = useNav()
   const { theme, toggleTheme } = useTheme()
+  const headerRef = useRef<HTMLElement>(null)
+  const location = useLocation()
+  const navigate = useNavigate()
+  const navigationType = useNavigationType()
+  const isHome = location.pathname === "/"
+
+  // Keep --navbar-height in sync with the real header height so spacers,
+  // scroll offsets and 100dvh calcs never drift from the fixed header.
+  useEffect(() => {
+    const header = headerRef.current
+    if (!header) return
+
+    const syncHeight = () => {
+      document.documentElement.style.setProperty("--navbar-height", `${header.offsetHeight}px`)
+    }
+    syncHeight()
+
+    const observer = new ResizeObserver(syncHeight)
+    observer.observe(header)
+    return () => observer.disconnect()
+  }, [])
+
+  // Save the scroll position of the entry we are leaving (Layout unmounts
+  // on every route change, so cleanup runs before the new Layout mounts).
+  useEffect(() => {
+    return () => {
+      scrollPositions.set(location.key, window.scrollY)
+    }
+  }, [location.key])
+
+  // Scroll management on navigation: hash target if present, restored
+  // position on browser back/forward, top of the page otherwise.
+  useEffect(() => {
+    if (location.hash) {
+      const id = decodeURIComponent(location.hash.slice(1))
+      requestAnimationFrame(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })
+      })
+      return
+    }
+
+    if (navigationType === "POP") {
+      window.scrollTo({ top: scrollPositions.get(location.key) ?? 0, behavior: "instant" })
+    } else {
+      window.scrollTo({ top: 0, behavior: "instant" })
+    }
+  }, [location.key, location.hash, navigationType])
+
+  // Scroll to a section if it exists on the current page, otherwise
+  // navigate home with the hash so Layout scrolls to it there.
+  const goToSection = useCallback((id: string) => {
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" })
+    } else {
+      navigate({ pathname: "/", hash: `#${id}` })
+    }
+  }, [navigate])
 
   // Control del scramble del logo - cada vez que aparece
   useEffect(() => {
@@ -40,10 +104,13 @@ export function Layout({ children }: LayoutProps) {
     }
   }, [showLogoInNav])
 
+  // The logo doubles as the "back to home" affordance on detail pages
+  const logoVisible = !isHome || showLogoInNav
+
   return (
     <div className="min-h-dvh">
       {/* Fixed Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-30 bg-background/80 backdrop-blur-lg border-b border-border">
+      <header ref={headerRef} className="fixed top-0 left-0 right-0 z-30 bg-background/80 backdrop-blur-lg border-b border-border">
         <div className="container-content relative">
           <Cross className="tui-corner-tl hidden sm:block" />
           <Cross className="tui-corner-tr hidden sm:block" />
@@ -56,12 +123,14 @@ export function Layout({ children }: LayoutProps) {
                 to="/"
                 className="block text-lg font-semibold transition-opacity duration-200"
                 style={{
-                  opacity: showLogoInNav ? 1 : 0,
-                  pointerEvents: showLogoInNav ? 'auto' : 'none'
+                  opacity: logoVisible ? 1 : 0,
+                  pointerEvents: logoVisible ? 'auto' : 'none'
                 }}
                 onClick={(e) => {
-                  e.preventDefault()
-                  window.scrollTo({ top: 0, behavior: 'smooth' })
+                  if (isHome) {
+                    e.preventDefault()
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }
                 }}
               >
                 <ScrambleText
@@ -77,9 +146,7 @@ export function Layout({ children }: LayoutProps) {
               <button
                 className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}
-                onClick={() => {
-                  document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' })
-                }}
+                onClick={() => goToSection("proyectos")}
                 type="button"
               >
                 <ScrambleText text="Proyectos" />
@@ -87,9 +154,7 @@ export function Layout({ children }: LayoutProps) {
               <button
                 className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
                   }`}
-                onClick={() => {
-                  document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })
-                }}
+                onClick={() => goToSection("contacto")}
                 type="button"
               >
                 <ScrambleText text="Contacto" />
@@ -164,9 +229,7 @@ export function Layout({ children }: LayoutProps) {
                   }`}
                 onClick={() => {
                   setMobileNavOpen(false)
-                  setTimeout(() => {
-                    document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' })
-                  }, 300) // Delay to allow mobile menu to close
+                  setTimeout(() => goToSection("proyectos"), 300) // Delay to allow mobile menu to close
                 }}
                 type="button"
               >
@@ -177,9 +240,7 @@ export function Layout({ children }: LayoutProps) {
                   }`}
                 onClick={() => {
                   setMobileNavOpen(false)
-                  setTimeout(() => {
-                    document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })
-                  }, 300) // Delay to allow mobile menu to close
+                  setTimeout(() => goToSection("contacto"), 300) // Delay to allow mobile menu to close
                 }}
                 type="button"
               >

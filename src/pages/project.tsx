@@ -1,7 +1,9 @@
 import { useParams, Link } from "react-router-dom"
 import { getProject } from "@/data/projects"
 import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
+import { ContactFooter } from "@/components/contact-footer"
 import { Layout } from "@/components/layout"
+import { cn } from "@/lib/utils"
 
 export default function ProjectPage() {
   const { id } = useParams<{ id: string }>()
@@ -49,7 +51,7 @@ export default function ProjectPage() {
 
           {/* Meta */}
           <div className="tui-cell">
-            <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
+            <TuiGrid className={cn("grid-cols-1 gap-6", project.links.length > 0 && "md:grid-cols-[2fr_1fr]")}>
               <div>
                 <span className="text-label block mb-3">stack</span>
                 <div className="flex flex-wrap gap-1.5">
@@ -130,7 +132,7 @@ export default function ProjectPage() {
       {/* Description */}
       <TuiSection>
         <Container>
-          <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-[auto_1fr]">
+          <TuiGrid className="grid-cols-1 md:grid-cols-[auto_1fr]">
             <GridCell className="tui-cell" borders={["right"]}>
               <span className="text-label">sobre el proyecto</span>
             </GridCell>
@@ -149,16 +151,18 @@ export default function ProjectPage() {
           <div className="tui-cell border-b border-border">
             <span className="text-label">características</span>
           </div>
-          <TuiGrid cols={2} className="grid-cols-1 md:grid-cols-2">
+          <TuiGrid className="features-grid grid-cols-1 md:grid-cols-2">
             {project.features.map((feature, i) => {
               const isLeft = i % 2 === 0
               const isLastRow = i >= project.features.length - 2
+              // Odd count: the lone cell in the last row should not keep a right border
+              const isLoneLastCell = project.features.length % 2 === 1 && i === project.features.length - 1
               return (
                 <GridCell
                   key={i}
                   className="tui-cell"
                   borders={[
-                    ...(isLeft ? ["right" as const] : []),
+                    ...(isLeft && !isLoneLastCell ? ["right" as const] : []),
                     ...(!isLastRow ? ["bottom" as const] : []),
                   ]}
                   corners={
@@ -180,6 +184,11 @@ export default function ProjectPage() {
             })}
           </TuiGrid>
         </Container>
+      </TuiSection>
+
+      {/* Contacto */}
+      <TuiSection id="contacto" className="h-[calc(100dvh-var(--navbar-height))]">
+        <ContactFooter />
       </TuiSection>
     </Layout>
   )

@@ -90,7 +90,11 @@ export function GridCell({
 interface TuiGridProps {
   children: React.ReactNode
   className?: string
-  /** Number of columns (uses CSS grid) */
+  /**
+   * Number of columns (uses CSS grid).
+   * Only applied as an inline style when provided — omit it and use
+   * `grid-cols-*` classes instead so responsive breakpoints work.
+   */
   cols?: number | string
 }
 
@@ -98,15 +102,15 @@ interface TuiGridProps {
  * Grid container for TUI layout.
  * Children should be GridCell components.
  */
-export function TuiGrid({ children, className, cols = 1 }: TuiGridProps) {
-  const gridCols = typeof cols === "number" 
-    ? `repeat(${cols}, minmax(0, 1fr))` 
+export function TuiGrid({ children, className, cols }: TuiGridProps) {
+  const gridCols = typeof cols === "number"
+    ? `repeat(${cols}, minmax(0, 1fr))`
     : cols
 
   return (
-    <div 
+    <div
       className={cn("tui-grid", className)}
-      style={{ gridTemplateColumns: gridCols }}
+      style={gridCols ? { gridTemplateColumns: gridCols } : undefined}
     >
       {children}
     </div>

@@ -35,8 +35,9 @@
   --grid-border: 1px;
   --cell-padding: 1.5rem;
 
-  /* Navbar height for calculations */
-  --navbar-height: 71px;
+  /* Navbar height for calculations (kept in sync with the real header
+     height by a ResizeObserver in Layout; this is the no-JS fallback) */
+  --navbar-height: 61px;
 }
 
 /* Light mode (optional) */
@@ -200,7 +201,7 @@
 
 /* Scroll offset for fixed navbar */
 .tui-section[id] {
-  scroll-margin-top: 71px;
+  scroll-margin-top: var(--navbar-height);
 }
 
 .tui-section+.tui-section {
@@ -499,6 +500,12 @@
   /* Hide right borders on mobile (single column) */
   .border-r {
     border-right: none;
+  }
+
+  /* Features grid stacks to one column: keep dividers between all but the
+     last cell (the 2-column logic leaves the last row borderless) */
+  .features-grid > *:not(:last-child) {
+    border-bottom: var(--grid-border) solid var(--border);
   }
 
   /* Hide corner crosses on mobile */
