@@ -28,3 +28,4 @@ dist-ssr
 .crush
 CLAUDE.md
 AGENTS.md
+.gstack/
