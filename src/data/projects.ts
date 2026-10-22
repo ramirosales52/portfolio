@@ -8,6 +8,8 @@ export interface Project {
   features: string[]
   links: { label: string; href: string }[]
   images?: string[]
+  /** Preview image shown at the top of the card (optional) */
+  preview?: string
 }
 
 export const projects: Project[] = [
