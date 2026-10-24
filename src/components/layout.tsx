@@ -44,6 +44,17 @@ export function Layout({ children }: LayoutProps) {
   const navigationType = useNavigationType()
   const isHome = location.pathname === "/"
 
+  useEffect(() => {
+    if (!mobileNavOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileNavOpen(false)
+      }
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [mobileNavOpen])
+
   // Keep --navbar-height in sync with the real header height so spacers,
   // scroll offsets and 100dvh calcs never drift from the fixed header.
   useEffect(() => {
@@ -142,7 +153,23 @@ export function Layout({ children }: LayoutProps) {
             </div>
 
             {/* Desktop nav */}
-            <nav className="hidden sm:flex items-center gap-8">
+            <nav className="hidden sm:flex items-center gap-6">
+              <button
+                className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "sobre-mi" ? "text-foreground" : "text-muted-foreground"
+                  }`}
+                onClick={() => goToSection("sobre-mi")}
+                type="button"
+              >
+                <ScrambleText text="Sobre mí" />
+              </button>
+              <button
+                className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "experiencia" ? "text-foreground" : "text-muted-foreground"
+                  }`}
+                onClick={() => goToSection("experiencia")}
+                type="button"
+              >
+                <ScrambleText text="Experiencia" />
+              </button>
               <button
                 className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}
@@ -190,6 +217,8 @@ export function Layout({ children }: LayoutProps) {
               className="tui-button inline-flex sm:!hidden"
               onClick={() => setMobileNavOpen(true)}
               aria-label="Abrir menú"
+              aria-expanded={mobileNavOpen}
+              aria-controls="mobile-nav-menu"
               type="button"
             >
               <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor" aria-hidden="true">
@@ -209,7 +238,12 @@ export function Layout({ children }: LayoutProps) {
             className="fixed inset-0 bg-black/70 z-40"
             onClick={() => setMobileNavOpen(false)}
           />
-          <nav className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-background border-l border-border p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] z-50">
+          <nav
+            id="mobile-nav-menu"
+            className="fixed top-0 right-0 bottom-0 w-full max-w-xs bg-background border-l border-border p-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] z-50"
+            aria-modal="true"
+            role="dialog"
+          >
             <div className="flex justify-between items-center mb-8">
               <span className="text-label">MENÚ</span>
               <button
@@ -224,6 +258,28 @@ export function Layout({ children }: LayoutProps) {
               </button>
             </div>
             <div className="space-y-4">
+              <button
+                className={`block text-heading uppercase text-left cursor-pointer touch-manipulation ${activeSection === "sobre-mi" ? "text-foreground" : "text-muted-foreground"
+                  }`}
+                onClick={() => {
+                  setMobileNavOpen(false)
+                  setTimeout(() => goToSection("sobre-mi"), 300)
+                }}
+                type="button"
+              >
+                Sobre mí
+              </button>
+              <button
+                className={`block text-heading uppercase text-left cursor-pointer touch-manipulation ${activeSection === "experiencia" ? "text-foreground" : "text-muted-foreground"
+                  }`}
+                onClick={() => {
+                  setMobileNavOpen(false)
+                  setTimeout(() => goToSection("experiencia"), 300)
+                }}
+                type="button"
+              >
+                Experiencia
+              </button>
               <button
                 className={`block text-heading uppercase text-left cursor-pointer touch-manipulation ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}

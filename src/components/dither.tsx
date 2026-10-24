@@ -238,6 +238,9 @@ function DitheredWaves({
   const prevBaseColor = useRef([...baseColor])
   const prevGradientColor = useRef([...gradientColor])
   useFrame(({ clock }) => {
+    if (typeof window !== "undefined" && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return
+    }
     const u = waveUniformsRef.current
 
     if (!disableAnimation) {

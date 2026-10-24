@@ -6,7 +6,8 @@ import { useNav } from "@/components/nav-context"
 import { useTheme } from "@/components/theme-context"
 import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
 import { projects } from "@/data/projects"
-import profileImage from "@/assets/profile.png"
+import { site } from "@/data/site"
+import profileImage from "@/assets/profile.webp"
 import dockerLogo from "@/assets/logos/docker.svg"
 import expoLogo from "@/assets/logos/expo.svg"
 import gitLogo from "@/assets/logos/git.svg"
@@ -57,6 +58,8 @@ const stackItems: StackItem[] = [
 
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null)
+  const aboutRef = useRef<HTMLDivElement>(null)
+  const experienciaRef = useRef<HTMLDivElement>(null)
   const stackRef = useRef<HTMLDivElement>(null)
   const proyectosRef = useRef<HTMLDivElement>(null)
   const contactoRef = useRef<HTMLDivElement>(null)
@@ -95,6 +98,8 @@ export default function HomePage() {
   useEffect(() => {
     const sections = [
       { ref: heroRef, id: "hero" },
+      { ref: aboutRef, id: "sobre-mi" },
+      { ref: experienciaRef, id: "experiencia" },
       { ref: stackRef, id: "stack" },
       { ref: proyectosRef, id: "proyectos" },
       { ref: contactoRef, id: "contacto" }
@@ -119,7 +124,7 @@ export default function HomePage() {
     <Layout>
       {/* Hero Section */}
       <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0 relative">
-        <Container corners={["bl", "br"]} className="h-full relative pt-[var(--navbar-height)]">
+        <Container corners={["bl", "br"]} className="h-full relative">
           <div className="tui-cell h-full flex flex-col justify-center relative">
 
             <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
@@ -130,50 +135,175 @@ export default function HomePage() {
                   gradientColor={ditherColors.gradientColor}
                   waveSpeed={0.03}
                   gradientStrength={0.7}
-                  enableMouseInteraction={true}
+                  enableMouseInteraction={typeof window !== "undefined" && window.innerWidth >= 1024}
                   className="w-full h-full"
                 />
               </Suspense>
             </div>
             <img
               src={profileImage}
-              alt="Ramiro"
-              className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-none border border-border -translate-y-22 relative z-10"
+              alt="Ramiro Rosales"
+              width="144"
+              height="144"
+              className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-none border border-border relative z-10"
             />
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold -translate-y-14 relative z-10">
-              RAMIRO
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold mt-6 relative z-10">
+              RAMIRO ROSALES
             </h1>
 
             {/* Description */}
-            <p className="text-muted-foreground text-sm sm:text-base max-w-md leading-relaxed -translate-y-14 relative z-10">
-              web/mobile developer.
+            <p className="text-muted-foreground text-sm sm:text-base max-w-md leading-relaxed mt-3 relative z-10">
+              Desarrollador Full-Stack • Córdoba, Argentina • Disponible para oportunidades
             </p>
 
             {/* Separator */}
-            <div className="text-lg tracking-wider relative z-10 -translate-y-10">
+            <div className="text-lg tracking-wider relative z-10 mt-4">
               //////////////////
             </div>
 
 
-            <div className="flex gap-6 mt-5 text-muted-foreground relative z-10 -translate-y-10">
+            <div className="flex gap-6 mt-6 text-muted-foreground relative z-10">
               <ScrambleText
                 as="a"
-                href="https://github.com/ramiro"
+                href={site.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                ariaLabel="GitHub de Ramiro (abre en una pestaña nueva)"
                 text="Github"
                 className="nav-link text-sm"
               />
               <ScrambleText
                 as="a"
-                href="https://linkedin.com/in/ramiro"
+                href={site.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                ariaLabel="LinkedIn de Ramiro (abre en una pestaña nueva)"
                 text="LinkedIn"
                 className="nav-link text-sm"
               />
               <ScrambleText
                 as="a"
-                href="#"
+                href={site.cv}
+                target="_blank"
+                rel="noopener noreferrer"
+                ariaLabel="Ver CV en PDF (abre en una pestaña nueva)"
                 text="Ver CV"
                 className="nav-link text-sm"
               />
+            </div>
+          </div>
+        </Container>
+      </TuiSection>
+
+      {/* Divider */}
+      <div className="tui-divider" />
+
+      {/* Sobre mí Section */}
+      <TuiSection ref={aboutRef} data-section="sobre-mi" id="sobre-mi">
+        <Container>
+          <div className="tui-cell border-b border-border">
+            <span className="text-label">SOBRE MÍ</span>
+          </div>
+          <TuiGrid className="grid-cols-1 md:grid-cols-[auto_1fr]">
+            <GridCell className="tui-cell" borders={["right"]}>
+              <span className="text-label">info</span>
+            </GridCell>
+            <GridCell className="tui-cell">
+              <div className="flex flex-col gap-4 max-w-3xl">
+                <p className="text-body text-muted-foreground text-pretty leading-relaxed">
+                  Soy de Córdoba, Argentina. Estudiante de Ingeniería en Sistemas con experiencia en el desarrollo de aplicaciones web, móviles y de escritorio. Trabajo principalmente con React, React Native y NestJS, construyendo soluciones completas tanto en frontend como backend.
+                </p>
+                <p className="text-body text-muted-foreground text-pretty leading-relaxed">
+                  Me enfoco en desarrollar aplicaciones funcionales, eficientes y adaptadas a las necesidades del usuario, abarcando desde la idea inicial hasta la implementación final. También cuento con una sólida base en soporte técnico, lo que me permite tener una visión integral de los sistemas y resolver problemas de manera práctica.
+                </p>
+                <p className="text-body text-muted-foreground text-pretty leading-relaxed">
+                  Actualmente me encuentro en búsqueda de oportunidades para crecer profesionalmente en el área de desarrollo de software y el soporte IT, aportando valor en proyectos reales.
+                </p>
+                <div>
+                  <span className="text-label block mb-2">Tecnologías principales</span>
+                  <p className="text-small text-muted-foreground">
+                    React • React Native • NestJS • Node.js • JavaScript • TypeScript • SQL / NoSQL
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-x-4 gap-y-1 text-small text-muted-foreground">
+                  <span>Ubicación: Córdoba, Argentina</span>
+                  <span>Disponibilidad: Abierto a oportunidades</span>
+                </div>
+              </div>
+            </GridCell>
+          </TuiGrid>
+        </Container>
+      </TuiSection>
+
+      {/* Divider */}
+      <div className="tui-divider" />
+
+      {/* Experiencia Section */}
+      <TuiSection ref={experienciaRef} data-section="experiencia" id="experiencia">
+        <Container>
+          <div className="tui-cell border-b border-border">
+            <span className="text-label">EXPERIENCIA</span>
+          </div>
+          <div className="divide-y divide-border">
+            <div className="tui-cell">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
+                <div>
+                  <h3 className="text-heading">Desarrollador de páginas web autónomo</h3>
+                  <p className="text-small text-muted-foreground">Autónomo · Autónomo</p>
+                </div>
+                <div className="text-small text-muted-foreground text-right">
+                  <p>2023 – Actualidad</p>
+                  <p>Marcos Juárez, Córdoba, Argentina · Presencial</p>
+                </div>
+              </div>
+              <p className="text-body text-muted-foreground text-pretty max-w-3xl leading-relaxed mb-4">
+                Desarrollo de aplicaciones web, móviles y de escritorio con React, React Native y NestJS. Experiencia en diseño e implementación de APIs, bases de datos y soluciones escalables. Trabajo en proyectos personalizados, desde la idea hasta la implementación.
+              </p>
+              <div className="max-w-3xl">
+                <span className="text-label block mb-2">Proyectos destacados</span>
+                <div className="flex flex-col gap-3">
+                  <div>
+                    <p className="text-body">Aplicación de Facturación (ARCA)</p>
+                    <ul className="mt-1 space-y-1 text-small text-muted-foreground">
+                      <li>• Desarrollo de app de escritorio para emisión de facturas A y B</li>
+                      <li>• Consulta y validación de contribuyentes mediante CUIT/DNI</li>
+                      <li>• Generación de PDFs y tickets</li>
+                      <li>• Integración con impresoras térmicas</li>
+                      <li>• Historial de facturación con filtros y búsqueda</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-body">Sistema de Gestión para Salón de Belleza</p>
+                    <ul className="mt-1 space-y-1 text-small text-muted-foreground">
+                      <li>• Agenda de turnos con sugerencias automáticas</li>
+                      <li>• Gestión de clientes e historial de pagos</li>
+                      <li>• Envío automático de recordatorios vía WhatsApp</li>
+                      <li>• Control financiero y registro de pagos</li>
+                      <li>• Dashboard con métricas del negocio</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="tui-cell">
+              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
+                <div>
+                  <h3 className="text-heading">Técnico Informático Independiente</h3>
+                  <p className="text-small text-muted-foreground">Autónomo · Autónomo</p>
+                </div>
+                <div className="text-small text-muted-foreground text-right">
+                  <p>2018 – Actualidad</p>
+                  <p>Presencial</p>
+                </div>
+              </div>
+              <ul className="space-y-1 text-small text-muted-foreground max-w-3xl">
+                <li>• Reparación y mantenimiento de PCs</li>
+                <li>• Instalación y configuración de sistemas operativos</li>
+                <li>• Armado de computadoras personalizadas</li>
+                <li>• Limpieza y optimización de equipos</li>
+                <li>• Instalación de software y drivers</li>
+                <li>• Desbloqueo de notebooks (programa Conectar Igualdad)</li>
+              </ul>
             </div>
           </div>
         </Container>
@@ -210,6 +340,9 @@ export default function HomePage() {
                     alt={item.name}
                     className="h-8 w-8 sm:h-10 sm:w-10 object-contain"
                     loading="lazy"
+                    decoding="async"
+                    width="40"
+                    height="40"
                   />
                   <span className="text-small text-muted-foreground text-center leading-tight">
                     {item.name}

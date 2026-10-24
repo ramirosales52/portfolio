@@ -1,13 +1,72 @@
 import { useParams, Link } from "react-router-dom"
+import { lazy, Suspense, useEffect } from "react"
 import { getProject } from "@/data/projects"
 import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
-import { ContactFooter } from "@/components/contact-footer"
 import { Layout } from "@/components/layout"
 import { cn } from "@/lib/utils"
+
+const ContactFooter = lazy(() => import("@/components/contact-footer").then(module => ({ default: module.ContactFooter })))
 
 export default function ProjectPage() {
   const { id } = useParams<{ id: string }>()
   const project = id ? getProject(id) : undefined
+
+  useEffect(() => {
+    if (!project) return
+    const title = `${project.title} | Ramiro Rosales`
+    document.title = title
+    const desc = project.description
+    let metaDesc = document.querySelector('meta[name="description"]')
+    if (!metaDesc) {
+      metaDesc = document.createElement("meta")
+      metaDesc.setAttribute("name", "description")
+      document.head.appendChild(metaDesc)
+    }
+    metaDesc.setAttribute("content", desc)
+    const url = `https://ramiro-portfolio.vercel.app/proyectos/${project.id}`
+    let ogTitle = document.querySelector('meta[property="og:title"]')
+    if (!ogTitle) {
+      ogTitle = document.createElement("meta")
+      ogTitle.setAttribute("property", "og:title")
+      document.head.appendChild(ogTitle)
+    }
+    ogTitle.setAttribute("content", title)
+    let ogDesc = document.querySelector('meta[property="og:description"]')
+    if (!ogDesc) {
+      ogDesc = document.createElement("meta")
+      ogDesc.setAttribute("property", "og:description")
+      document.head.appendChild(ogDesc)
+    }
+    ogDesc.setAttribute("content", desc)
+    let ogUrl = document.querySelector('meta[property="og:url"]')
+    if (!ogUrl) {
+      ogUrl = document.createElement("meta")
+      ogUrl.setAttribute("property", "og:url")
+      document.head.appendChild(ogUrl)
+    }
+    ogUrl.setAttribute("content", url)
+    let twitterTitle = document.querySelector('meta[name="twitter:title"]')
+    if (!twitterTitle) {
+      twitterTitle = document.createElement("meta")
+      twitterTitle.setAttribute("name", "twitter:title")
+      document.head.appendChild(twitterTitle)
+    }
+    twitterTitle.setAttribute("content", title)
+    let twitterDesc = document.querySelector('meta[name="twitter:description"]')
+    if (!twitterDesc) {
+      twitterDesc = document.createElement("meta")
+      twitterDesc.setAttribute("name", "twitter:description")
+      document.head.appendChild(twitterDesc)
+    }
+    twitterDesc.setAttribute("content", desc)
+    let canonical = document.querySelector('link[rel="canonical"]')
+    if (!canonical) {
+      canonical = document.createElement("link")
+      canonical.setAttribute("rel", "canonical")
+      document.head.appendChild(canonical)
+    }
+    canonical.setAttribute("href", url)
+  }, [project])
 
   if (!project) {
     return (
@@ -51,7 +110,7 @@ export default function ProjectPage() {
 
           {/* Meta */}
           <div className="tui-cell">
-            <TuiGrid className={cn("grid-cols-1 gap-6", project.links.length > 0 && "md:grid-cols-[2fr_1fr]")}>
+            <TuiGrid className={cn("grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4")}>
               <div>
                 <span className="text-label block mb-3">stack</span>
                 <div className="flex flex-wrap gap-1.5">
@@ -65,8 +124,18 @@ export default function ProjectPage() {
                   ))}
                 </div>
               </div>
-              {project.links.length > 0 && (
+              {(project.role || project.year || project.status) && (
                 <div>
+                  <span className="text-label block mb-3">info</span>
+                  <div className="flex flex-col gap-1 text-small text-muted-foreground">
+                    {project.role && <span>Rol: {project.role}</span>}
+                    {project.year && <span>Año: {project.year}</span>}
+                    {project.status && <span>Estado: {project.status}</span>}
+                  </div>
+                </div>
+              )}
+              {project.links.length > 0 && (
+                <div className={cn((project.role || project.year || project.status) ? "lg:col-span-2" : "md:col-span-1")}>
                   <span className="text-label block mb-3">links</span>
                   <div className="flex flex-wrap gap-3">
                     {project.links.map((link, i) => (
@@ -103,6 +172,8 @@ export default function ProjectPage() {
                     src={img}
                     alt={`${project.title} screenshot ${i + 1}`}
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
               ))}
@@ -188,7 +259,9 @@ export default function ProjectPage() {
 
       {/* Contacto */}
       <TuiSection id="contacto" className="h-[calc(100dvh-var(--navbar-height))]">
-        <ContactFooter />
+        <Suspense fallback={<div className="h-full w-full" />}>
+          <ContactFooter />
+        </Suspense>
       </TuiSection>
     </Layout>
   )

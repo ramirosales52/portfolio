@@ -10,6 +10,9 @@ export interface Project {
   images?: string[]
   /** Preview image shown at the top of the card (optional) */
   preview?: string
+  role?: string
+  year?: string
+  status?: string
 }
 
 export const projects: Project[] = [
@@ -28,7 +31,10 @@ export const projects: Project[] = [
       "Calculo automatico de IVA con multiples alicuotas por item",
       "Gestion de certificados digitales para entorno de desarrollo y produccion"
     ],
-    links: [{ label: "Facturacil", href: "https://facturacil.com.ar" }]
+    links: [{ label: "Facturacil", href: "https://facturacil.com.ar" }],
+    role: "Full Stack Developer",
+    year: "2025",
+    status: "En producción"
   },
   {
     id: "salonix",
@@ -45,7 +51,10 @@ export const projects: Project[] = [
       "Catalogo de tratamientos con historial de precios",
       "Dashboard con estadisticas diarias de turnos, ingresos y confirmaciones pendientes"
     ],
-    links: []
+    links: [],
+    role: "Full Stack Developer",
+    year: "2024",
+    status: "En desarrollo"
   },
   {
     id: "patitas",
@@ -62,7 +71,10 @@ export const projects: Project[] = [
       "Backend con NestJS containerizado con Docker",
       "Interfaz nativa con Expo y React Native"
     ],
-    links: []
+    links: [],
+    role: "Full Stack Developer",
+    year: "2024",
+    status: "En desarrollo"
   },
   {
     id: "gastos",
@@ -79,7 +91,10 @@ export const projects: Project[] = [
       "Estado de conexion del bot en tiempo real via Server-Sent Events",
       "Soporte para multiples usuarios autorizados por numero de WhatsApp"
     ],
-    links: []
+    links: [],
+    role: "Full Stack Developer",
+    year: "2024",
+    status: "En desarrollo"
   }
 ]
 

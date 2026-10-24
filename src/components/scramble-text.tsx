@@ -5,6 +5,9 @@ interface ScrambleTextProps {
   className?: string
   as?: "span" | "a" | "h1"
   href?: string
+  target?: string
+  rel?: string
+  ariaLabel?: string
   onClick?: () => void
   /** Keep scrambling while hovering */
   loop?: boolean
@@ -19,6 +22,9 @@ export function ScrambleText({
   className,
   as: Component = "span",
   href,
+  target,
+  rel,
+  ariaLabel,
   onClick,
   loop = false,
   autoScramble
@@ -110,7 +116,9 @@ export function ScrambleText({
     onMouseEnter: !autoScramble ? handleMouseEnter : undefined,
     onMouseLeave: !autoScramble ? handleMouseLeave : undefined,
     onClick,
-    ...(Component === "a" ? { href } : {})
+    ...(Component === "a"
+      ? { href, target, rel, "aria-label": ariaLabel }
+      : {})
   }
 
   return <Component {...props}>{displayText}</Component>
