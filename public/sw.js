@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ramiro-portfolio-v2';
+const CACHE_VERSION = 'ramiro-portfolio-v3';
 const PRECACHE = [
   '/',
   '/index.html',

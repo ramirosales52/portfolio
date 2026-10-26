@@ -56,6 +56,16 @@ const stackItems: StackItem[] = [
   { name: "OpenCode", src: opencodeLogo, srcDark: opencodeLogoDark },
 ]
 
+const mainTechnologies = [
+  "React",
+  "React Native",
+  "NestJS",
+  "Node.js",
+  "JavaScript",
+  "TypeScript",
+  "SQL / NoSQL",
+]
+
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null)
   const aboutRef = useRef<HTMLDivElement>(null)
@@ -147,22 +157,22 @@ export default function HomePage() {
               height="144"
               className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-none border border-border relative z-10"
             />
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold mt-6 relative z-10">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] mt-8 relative z-10">
               RAMIRO ROSALES
             </h1>
 
             {/* Description */}
-            <p className="text-muted-foreground text-sm sm:text-base max-w-md leading-relaxed mt-3 relative z-10">
-              Desarrollador Full-Stack • Córdoba, Argentina • Disponible para oportunidades
+            <p className="text-foreground text-base sm:text-lg max-w-xl leading-relaxed mt-4 relative z-10 text-pretty">
+              Desarrollador Full-Stack
             </p>
 
             {/* Separator */}
-            <div className="text-lg tracking-wider relative z-10 mt-4">
+            <div className="text-lg tracking-wider relative z-10 mt-5">
               //////////////////
             </div>
 
 
-            <div className="flex gap-6 mt-6 text-muted-foreground relative z-10">
+            <div className="flex flex-wrap gap-6 sm:gap-8 mt-8 text-foreground relative z-10">
               <ScrambleText
                 as="a"
                 href={site.github}
@@ -170,7 +180,7 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 ariaLabel="GitHub de Ramiro (abre en una pestaña nueva)"
                 text="Github"
-                className="nav-link text-sm"
+                className="link-hover text-sm"
               />
               <ScrambleText
                 as="a"
@@ -179,7 +189,7 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 ariaLabel="LinkedIn de Ramiro (abre en una pestaña nueva)"
                 text="LinkedIn"
-                className="nav-link text-sm"
+                className="link-hover text-sm"
               />
               <ScrambleText
                 as="a"
@@ -188,8 +198,14 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 ariaLabel="Ver CV en PDF (abre en una pestaña nueva)"
                 text="Ver CV"
-                className="nav-link text-sm"
+                className="link-hover text-sm"
               />
+            </div>
+
+            {/* Availability status */}
+            <div className="relative z-10 mt-5 inline-flex w-fit self-start items-center gap-2 border border-border px-3 py-1.5 text-small text-muted-foreground">
+              <span className="status-dot h-1.5 w-1.5 shrink-0 rounded-full bg-foreground" aria-hidden="true" />
+              <span>Disponible para oportunidades</span>
             </div>
           </div>
         </Container>
@@ -202,36 +218,42 @@ export default function HomePage() {
       <TuiSection ref={aboutRef} data-section="sobre-mi" id="sobre-mi">
         <Container>
           <div className="tui-cell border-b border-border">
-            <span className="text-label">SOBRE MÍ</span>
+            <span className="text-label">/// SOBRE MÍ</span>
           </div>
-          <TuiGrid className="grid-cols-1 md:grid-cols-[auto_1fr]">
-            <GridCell className="tui-cell" borders={["right"]}>
-              <span className="text-label">info</span>
-            </GridCell>
-            <GridCell className="tui-cell">
-              <div className="flex flex-col gap-4 max-w-3xl">
-                <p className="text-body text-muted-foreground text-pretty leading-relaxed">
-                  Soy de Córdoba, Argentina. Estudiante de Ingeniería en Sistemas con experiencia en el desarrollo de aplicaciones web, móviles y de escritorio. Trabajo principalmente con React, React Native y NestJS, construyendo soluciones completas tanto en frontend como backend.
-                </p>
-                <p className="text-body text-muted-foreground text-pretty leading-relaxed">
-                  Me enfoco en desarrollar aplicaciones funcionales, eficientes y adaptadas a las necesidades del usuario, abarcando desde la idea inicial hasta la implementación final. También cuento con una sólida base en soporte técnico, lo que me permite tener una visión integral de los sistemas y resolver problemas de manera práctica.
-                </p>
-                <p className="text-body text-muted-foreground text-pretty leading-relaxed">
-                  Actualmente me encuentro en búsqueda de oportunidades para crecer profesionalmente en el área de desarrollo de software y el soporte IT, aportando valor en proyectos reales.
-                </p>
-                <div>
-                  <span className="text-label block mb-2">Tecnologías principales</span>
-                  <p className="text-small text-muted-foreground">
-                    React • React Native • NestJS • Node.js • JavaScript • TypeScript • SQL / NoSQL
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-x-4 gap-y-1 text-small text-muted-foreground">
-                  <span>Ubicación: Córdoba, Argentina</span>
-                  <span>Disponibilidad: Abierto a oportunidades</span>
+          <div className="tui-cell">
+            <div className="flex flex-col gap-4">
+              <p className="text-body text-muted-foreground text-pretty leading-relaxed">
+                Soy de <strong className="font-semibold text-foreground">Córdoba, Argentina</strong>. Estudiante de <strong className="font-semibold text-foreground">Ingeniería en Sistemas</strong> con experiencia en el desarrollo de <strong className="font-semibold text-foreground">aplicaciones web, móviles y de escritorio</strong>. Trabajo principalmente con <strong className="font-semibold text-foreground">React, React Native y NestJS</strong>, construyendo soluciones completas tanto en frontend como backend.
+              </p>
+              <p className="text-body text-muted-foreground text-pretty leading-relaxed">
+                Me enfoco en desarrollar aplicaciones funcionales, eficientes y adaptadas a las necesidades del usuario, abarcando desde la idea inicial hasta la implementación final. También cuento con una sólida base en <strong className="font-semibold text-foreground">soporte técnico</strong>, lo que me permite tener una visión integral de los sistemas y resolver problemas de manera práctica.
+              </p>
+              <p className="text-body text-muted-foreground text-pretty leading-relaxed">
+                Actualmente me encuentro en <strong className="font-semibold text-foreground">búsqueda de oportunidades</strong> para crecer profesionalmente en el área de desarrollo de software y el soporte IT, aportando valor en proyectos reales.
+              </p>
+              <div>
+                <span className="text-label block mb-2 font-semibold">Tecnologías principales</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {mainTechnologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-small px-1.5 py-0.5 border border-border font-semibold text-foreground"
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
-            </GridCell>
-          </TuiGrid>
+              <div className="flex flex-wrap gap-x-4 gap-y-1 text-small text-muted-foreground">
+                <span>
+                  Ubicación: <strong className="font-semibold text-foreground">Córdoba, Argentina</strong>
+                </span>
+                <span>
+                  Disponibilidad: <strong className="font-semibold text-foreground">Abierto a oportunidades</strong>
+                </span>
+              </div>
+            </div>
+          </div>
         </Container>
       </TuiSection>
 
@@ -242,61 +264,44 @@ export default function HomePage() {
       <TuiSection ref={experienciaRef} data-section="experiencia" id="experiencia">
         <Container>
           <div className="tui-cell border-b border-border">
-            <span className="text-label">EXPERIENCIA</span>
+            <span className="text-label">/// EXPERIENCIA</span>
           </div>
           <div className="divide-y divide-border">
             <div className="tui-cell">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
                 <div>
                   <h3 className="text-heading">Desarrollador de páginas web autónomo</h3>
-                  <p className="text-small text-muted-foreground">Autónomo · Autónomo</p>
                 </div>
-                <div className="text-small text-muted-foreground text-right">
-                  <p>2023 – Actualidad</p>
-                  <p>Marcos Juárez, Córdoba, Argentina · Presencial</p>
+                <div className="text-small text-foreground/80 text-right">
+                  <p>2021 – Actualidad</p>
+                  <p>Córdoba, Argentina</p>
                 </div>
               </div>
-              <p className="text-body text-muted-foreground text-pretty max-w-3xl leading-relaxed mb-4">
-                Desarrollo de aplicaciones web, móviles y de escritorio con React, React Native y NestJS. Experiencia en diseño e implementación de APIs, bases de datos y soluciones escalables. Trabajo en proyectos personalizados, desde la idea hasta la implementación.
+              <p className="text-body text-muted-foreground text-pretty max-w-2xl leading-relaxed">
+                Desarrollo de aplicaciones web, móviles y de escritorio con React, React Native y NestJS. Experiencia en diseño e implementación de APIs, bases de datos y soluciones escalables. Trabajo en proyectos personalizados, desde la idea inicial y el relevamiento de necesidades hasta la implementación, el despliegue y el soporte posterior.
               </p>
-              <div className="max-w-3xl">
-                <span className="text-label block mb-2">Proyectos destacados</span>
-                <div className="flex flex-col gap-3">
-                  <div>
-                    <p className="text-body">Aplicación de Facturación (ARCA)</p>
-                    <ul className="mt-1 space-y-1 text-small text-muted-foreground">
-                      <li>• Desarrollo de app de escritorio para emisión de facturas A y B</li>
-                      <li>• Consulta y validación de contribuyentes mediante CUIT/DNI</li>
-                      <li>• Generación de PDFs y tickets</li>
-                      <li>• Integración con impresoras térmicas</li>
-                      <li>• Historial de facturación con filtros y búsqueda</li>
-                    </ul>
-                  </div>
-                  <div>
-                    <p className="text-body">Sistema de Gestión para Salón de Belleza</p>
-                    <ul className="mt-1 space-y-1 text-small text-muted-foreground">
-                      <li>• Agenda de turnos con sugerencias automáticas</li>
-                      <li>• Gestión de clientes e historial de pagos</li>
-                      <li>• Envío automático de recordatorios vía WhatsApp</li>
-                      <li>• Control financiero y registro de pagos</li>
-                      <li>• Dashboard con métricas del negocio</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+              <ul className="mt-4 space-y-1.5 text-small text-muted-foreground leading-relaxed max-w-2xl">
+                <li>• Desarrollo full-stack web, móvil y de escritorio (React, React Native, Electron y NestJS)</li>
+                <li>• Diseño de APIs REST y modelado de bases de datos SQL y NoSQL</li>
+                <li>• Integración con servicios externos: ARCA/AFIP, WhatsApp, Google Maps e IA</li>
+                <li>• Automatización de procesos, reportes y paneles de control</li>
+                <li>• Despliegue, mantenimiento y mejora continua de las aplicaciones</li>
+              </ul>
             </div>
             <div className="tui-cell">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
                 <div>
                   <h3 className="text-heading">Técnico Informático Independiente</h3>
-                  <p className="text-small text-muted-foreground">Autónomo · Autónomo</p>
                 </div>
-                <div className="text-small text-muted-foreground text-right">
+                <div className="text-small text-foreground/80 text-right">
                   <p>2018 – Actualidad</p>
-                  <p>Presencial</p>
+                  <p>Córdoba, Argentina</p>
                 </div>
               </div>
-              <ul className="space-y-1 text-small text-muted-foreground max-w-3xl">
+              <p className="text-body text-muted-foreground text-pretty max-w-2xl leading-relaxed">
+                Servicio técnico para particulares, comercios y pequeñas empresas. Realizo diagnóstico y reparación de equipos, instalación y configuración de sistemas operativos, armado de PCs a medida y optimización de rendimiento, con atención personalizada y seguimiento de cada equipo.
+              </p>
+              <ul className="mt-4 space-y-1.5 text-small text-muted-foreground leading-relaxed max-w-2xl">
                 <li>• Reparación y mantenimiento de PCs</li>
                 <li>• Instalación y configuración de sistemas operativos</li>
                 <li>• Armado de computadoras personalizadas</li>
@@ -316,7 +321,7 @@ export default function HomePage() {
       <TuiSection ref={stackRef} data-section="stack" id="stack">
         <Container>
           <div className="tui-cell border-b border-border">
-            <span className="text-label">STACK</span>
+            <span className="text-label">/// STACK</span>
           </div>
 
           <TuiGrid cols={4}>
@@ -333,18 +338,18 @@ export default function HomePage() {
                     ...(hasRightBorder ? ["right" as const] : []),
                     ...(!isTopRow ? ["top" as const] : []),
                   ]}
-                  className="flex flex-col items-center justify-center gap-2 min-h-24 sm:min-h-28 px-2"
+                  className="group flex flex-col items-center justify-center gap-2 min-h-24 sm:min-h-28 px-2 transition-colors duration-150 hover:[border-color:var(--foreground)]"
                 >
                   <img
                     src={logoSrc}
                     alt={item.name}
-                    className="h-8 w-8 sm:h-10 sm:w-10 object-contain"
+                    className="h-9 w-9 sm:h-11 sm:w-11 object-contain"
                     loading="lazy"
                     decoding="async"
-                    width="40"
-                    height="40"
+                    width="44"
+                    height="44"
                   />
-                  <span className="text-small text-muted-foreground text-center leading-tight">
+                  <span className="text-small text-muted-foreground text-center leading-tight transition-colors duration-150 group-hover:text-foreground">
                     {item.name}
                   </span>
                 </GridCell>
@@ -362,7 +367,7 @@ export default function HomePage() {
         <Container>
           {/* Section header */}
           <div className="tui-cell border-b border-border">
-            <span className="text-label">TRABAJOS</span>
+            <span className="text-label">/// PROYECTOS</span>
           </div>
 
           {/* Project cards - 2 column grid */}
@@ -399,7 +404,7 @@ export default function HomePage() {
 
                       {/* Hover overlay */}
                       <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 transition-opacity duration-150 group-hover/card:opacity-100">
-                        <span className="inline-flex items-center gap-2 border border-border bg-background px-3 py-1.5 text-small text-accent">
+                        <span className="inline-flex items-center gap-2 border border-border bg-background px-3 py-1.5 text-small text-foreground">
                           Ver proyecto
                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                             <path d="M7 17L17 7" />
@@ -419,10 +424,10 @@ export default function HomePage() {
                           {project.tech}
                         </span>
                       </div>
-                      <h3 className="text-heading text-balance group-hover/card:text-accent transition-colors duration-150">
+                      <h3 className="text-heading text-balance group-hover/card:underline group-hover/card:underline-offset-4 group-hover/card:decoration-[var(--accent)]">
                         {project.title}
                       </h3>
-                      <p className="text-small text-muted-foreground text-pretty mt-2 line-clamp-3">
+                      <p className="text-body text-muted-foreground text-pretty mt-2 line-clamp-3 leading-relaxed">
                         {project.description}
                       </p>
                     </div>
@@ -437,7 +442,7 @@ export default function HomePage() {
                       to={`/proyectos/${project.id}`}
                       aria-hidden="true"
                       tabIndex={-1}
-                      className="text-small text-accent group-hover/card:translate-x-1 transition-transform duration-150"
+                      className="text-small text-foreground group-hover/card:translate-x-1 transition-transform duration-150"
                     >
                       Ver proyecto →
                     </Link>
