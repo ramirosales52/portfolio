@@ -338,7 +338,7 @@ export default function HomePage() {
                     ...(hasRightBorder ? ["right" as const] : []),
                     ...(!isTopRow ? ["top" as const] : []),
                   ]}
-                  className="group flex flex-col items-center justify-center gap-2 min-h-24 sm:min-h-28 px-2 transition-colors duration-150 hover:[border-color:var(--foreground)]"
+                  className="flex flex-col items-center justify-center gap-2 min-h-24 sm:min-h-28 px-2"
                 >
                   <img
                     src={logoSrc}
@@ -349,7 +349,7 @@ export default function HomePage() {
                     width="44"
                     height="44"
                   />
-                  <span className="text-small text-muted-foreground text-center leading-tight transition-colors duration-150 group-hover:text-foreground">
+                  <span className="text-small text-muted-foreground text-center leading-tight">
                     {item.name}
                   </span>
                 </GridCell>
