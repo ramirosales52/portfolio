@@ -1,11 +1,10 @@
 import { useParams, Link } from "react-router-dom"
-import { lazy, Suspense, useEffect } from "react"
+import { useEffect } from "react"
 import { getProject } from "@/data/projects"
-import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
 import { Layout } from "@/components/layout"
 import { cn } from "@/lib/utils"
-
-const ContactFooter = lazy(() => import("@/components/contact-footer").then(module => ({ default: module.ContactFooter })))
+import { Container, TuiSection } from "@/components/tui-grid"
+import { contactMailtoHref, site } from "@/data/site"
 
 export default function ProjectPage() {
   const { id } = useParams<{ id: string }>()
@@ -71,12 +70,15 @@ export default function ProjectPage() {
   if (!project) {
     return (
       <Layout>
-        <TuiSection className="pt-[var(--navbar-height)]">
-          <Container className="tui-cell">
-            <p className="text-muted-foreground">Proyecto no encontrado</p>
-            <Link to="/" className="text-accent link-hover mt-4 inline-block">
-              ← Volver al inicio
-            </Link>
+        <div className="h-[var(--navbar-height)]" />
+        <TuiSection className="border-t-0">
+          <Container>
+            <div className="tui-cell border-b border-border">
+              <p className="text-muted-foreground">Proyecto no encontrado</p>
+              <Link to="/" className="text-accent link-hover mt-4 inline-block">
+                ← Volver al inicio
+              </Link>
+            </div>
           </Container>
         </TuiSection>
       </Layout>
@@ -90,179 +92,246 @@ export default function ProjectPage() {
       <div className="h-[var(--navbar-height)]" />
 
       {/* Back link */}
-      <TuiSection>
+      <TuiSection className="border-t-0">
         <Container>
           <div className="tui-cell">
-            <Link to="/#proyectos" className="text-small text-muted-foreground link-hover">
-              ← Volver a trabajos
+            <Link to="/#proyectos" className="text-small text-muted-foreground link-hover inline-flex items-center gap-1.5">
+              <span className="text-accent">←</span>
+              <span>Volver a proyectos</span>
             </Link>
           </div>
         </Container>
       </TuiSection>
 
-      {/* Header */}
+      {/* Divider */}
+      <div className="tui-divider" />
+
+      {/* Hero */}
       <TuiSection>
         <Container>
-          <div className="tui-cell border-b border-border">
-            <span className="text-label tabular-nums">{project.number}</span>
-            <h1 className="text-display text-balance mt-3">{project.title}</h1>
-          </div>
-
-          {/* Meta */}
           <div className="tui-cell">
-            <TuiGrid className={cn("grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4")}>
-              <div>
-                <span className="text-label block mb-3">stack</span>
-                <div className="flex flex-wrap gap-1.5">
-                  {techItems.map((tech, i) => (
-                    <span
-                      key={i}
-                      className="text-small px-1.5 py-0.5 border border-border text-muted-foreground"
-                    >
-                      {tech.trim()}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              {(project.role || project.year || project.status) && (
-                <div>
-                  <span className="text-label block mb-3">info</span>
-                  <div className="flex flex-col gap-1 text-small text-muted-foreground">
-                    {project.role && <span>Rol: {project.role}</span>}
-                    {project.year && <span>Año: {project.year}</span>}
-                    {project.status && <span>Estado: {project.status}</span>}
+            <div className="relative border border-border">
+              <div className="absolute -top-px left-6 right-6 h-px bg-border" />
+              <div className="absolute -bottom-px left-6 right-6 h-px bg-border" />
+              <div className="absolute -left-px top-6 bottom-6 w-px bg-border" />
+              <div className="absolute -right-px top-6 bottom-6 w-px bg-border" />
+              <div className="px-6 sm:px-10 lg:px-14 py-10 sm:py-14 lg:py-18">
+                <div className="flex flex-col gap-6 sm:gap-8">
+                <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-8 lg:gap-12 items-start">
+                  <div className="flex flex-col gap-6">
+                    <h1 className="text-display text-balance leading-[0.9]">{project.title}</h1>
+                    {project.description && (
+                      <p className="text-body text-muted-foreground max-w-2xl text-pretty leading-relaxed">
+                        {project.description}
+                      </p>
+                    )}
+                  </div>
+                  <div className="relative border border-border bg-muted/5 aspect-[16/10] w-full flex items-center justify-center text-muted-foreground">
+                    <div className="flex flex-col items-center gap-2">
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                        <rect x="2" y="4" width="20" height="16" rx="2" />
+                        <circle cx="9" cy="10" r="2" />
+                        <path d="M22 14l-4-4-6 6-4-4-4 4" />
+                      </svg>
+                      <span className="text-small">preview</span>
+                    </div>
                   </div>
                 </div>
-              )}
-              {project.links.length > 0 && (
-                <div className={cn((project.role || project.year || project.status) ? "lg:col-span-2" : "md:col-span-1")}>
-                  <span className="text-label block mb-3">links</span>
-                  <div className="flex flex-wrap gap-3">
-                    {project.links.map((link, i) => (
-                      <a
+                  {project.links.length > 0 && (
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {project.links.map((link, i) => (
+                        <a
+                          key={i}
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="tui-button"
+                        >
+                          <span className="text-accent">→</span>
+                          {link.label}
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </TuiSection>
+
+      {/* Divider */}
+      <div className="tui-divider" />
+
+      {/* Content */}
+      <TuiSection>
+        <Container>
+          <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-0">
+            {/* Sidebar */}
+            <aside className="flex flex-col border-r border-border lg:sticky lg:top-[calc(var(--navbar-height)+1px)] h-fit">
+              <div className="tui-cell border-b border-border">
+                <span className="text-label">/// DETALLES</span>
+              </div>
+              <div className="divide-y divide-border">
+                <div className="tui-cell flex flex-col gap-2">
+                  <span className="text-label text-muted-foreground">stack</span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {techItems.map((tech, i) => (
+                      <span
                         key={i}
-                        href={link.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="tui-button"
+                        className="text-small px-1.5 py-0.5 border border-border text-muted-foreground"
                       >
-                        <span className="text-accent">→</span>
-                        {link.label}
-                      </a>
+                        {tech.trim()}
+                      </span>
                     ))}
                   </div>
                 </div>
+                {(project.role || project.year || project.status) && (
+                  <div className="tui-cell flex flex-col gap-2">
+                    <span className="text-label text-muted-foreground">info</span>
+                    <div className="flex flex-col gap-1.5 text-small text-muted-foreground">
+                      {project.role && <span>Rol: {project.role}</span>}
+                      {project.year && <span>Año: {project.year}</span>}
+                      {project.status && <span>Estado: {project.status}</span>}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </aside>
+
+            {/* Main */}
+            <main className="flex flex-col">
+              {/* Gallery */}
+              {project.images && project.images.length > 0 ? (
+                <div className="tui-cell border-b border-border">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-3 text-label text-muted-foreground">
+                      <span>/// GALERÍA</span>
+                      <span className="h-px flex-1 bg-border/70" />
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {project.images.map((img, i) => (
+                        <div key={i} className={cn("relative overflow-hidden border border-border bg-muted/5", project.images && project.images.length === 1 ? "sm:col-span-2" : "")}>
+                          <div className="aspect-[16/10] sm:aspect-[16/9]">
+                            <img
+                              src={img}
+                              alt={`${project.title} screenshot ${i + 1}`}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="tui-cell border-b border-border">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-center gap-3 text-label text-muted-foreground">
+                      <span>/// GALERÍA</span>
+                      <span className="h-px flex-1 bg-border/70" />
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {[1, 2].map((i) => (
+                        <div key={i} className="relative aspect-[16/10] sm:aspect-[16/9] border border-border flex items-center justify-center text-muted-foreground bg-muted/5">
+                          <div className="flex flex-col items-center gap-2">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                              <rect x="2" y="4" width="20" height="16" rx="2" />
+                              <circle cx="9" cy="10" r="2" />
+                              <path d="M22 14l-4-4-6 6-4-4-4 4" />
+                            </svg>
+                            <span className="text-small">screenshot</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               )}
-            </TuiGrid>
-          </div>
-        </Container>
-      </TuiSection>
 
-      {/* Screenshots / Preview */}
-      <TuiSection>
-        <Container>
-          <div className="tui-cell border-b border-border">
-            <span className="text-label">preview</span>
-          </div>
-          {project.images && project.images.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border">
-              {project.images.map((img, i) => (
-                <div key={i} className="min-h-[220px] sm:min-h-[280px] flex items-center justify-center overflow-hidden">
-                  <img
-                    src={img}
-                    alt={`${project.title} screenshot ${i + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
+              {/* About */}
+              <div className="tui-cell border-b border-border">
+                <div className="flex flex-col gap-6">
+                  <div className="flex items-center gap-3 text-label text-muted-foreground">
+                    <span>/// SOBRE EL PROYECTO</span>
+                    <span className="h-px flex-1 bg-border/70" />
+                  </div>
+                  <p className="text-body text-muted-foreground text-pretty max-w-3xl leading-relaxed">
+                    {project.longDescription}
+                  </p>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-border">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="min-h-[180px] sm:min-h-[240px] flex items-center justify-center text-muted-foreground select-none"
-                >
-                  <div className="flex flex-col items-center gap-2">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                      <rect x="2" y="4" width="20" height="16" rx="2" />
-                      <circle cx="9" cy="10" r="2" />
-                      <path d="M22 14l-4-4-6 6-4-4-4 4" />
-                    </svg>
-                    <span className="text-small">screenshot</span>
+              </div>
+
+              {/* Features */}
+              <div className="tui-cell">
+                <div className="flex flex-col gap-6">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-3 text-label text-muted-foreground flex-1">
+                      <span>/// CARACTERÍSTICAS</span>
+                      <span className="h-px flex-1 bg-border/70" />
+                    </div>
+                    <span className="text-small text-muted-foreground tabular-nums">{project.features.length.toString().padStart(2, "0")}</span>
+                  </div>
+                  <div className="grid grid-cols-1 gap-3">
+                    {project.features.map((feature, i) => (
+                      <div key={i} className="group relative border border-border overflow-hidden">
+                        <div className="absolute inset-y-0 left-0 w-px bg-border" />
+                        <div className="flex items-start gap-4 px-5 sm:px-6 py-5 sm:py-6">
+                          <span className="text-accent text-small tabular-nums shrink-0 mt-0.5">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <p className="text-body text-muted-foreground text-pretty leading-relaxed">{feature}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </Container>
-      </TuiSection>
-
-      {/* Description */}
-      <TuiSection>
-        <Container>
-          <TuiGrid className="grid-cols-1 md:grid-cols-[auto_1fr]">
-            <GridCell className="tui-cell" borders={["right"]}>
-              <span className="text-label">sobre el proyecto</span>
-            </GridCell>
-            <GridCell className="tui-cell">
-              <p className="text-body text-muted-foreground text-pretty max-w-2xl leading-relaxed">
-                {project.longDescription}
-              </p>
-            </GridCell>
-          </TuiGrid>
-        </Container>
-      </TuiSection>
-
-      {/* Features */}
-      <TuiSection>
-        <Container>
-          <div className="tui-cell border-b border-border">
-            <span className="text-label">características</span>
+              </div>
+            </main>
           </div>
-          <TuiGrid className="features-grid grid-cols-1 md:grid-cols-2">
-            {project.features.map((feature, i) => {
-              const isLeft = i % 2 === 0
-              const isLastRow = i >= project.features.length - 2
-              // Odd count: the lone cell in the last row should not keep a right border
-              const isLoneLastCell = project.features.length % 2 === 1 && i === project.features.length - 1
-              return (
-                <GridCell
-                  key={i}
-                  className="tui-cell"
-                  borders={[
-                    ...(isLeft && !isLoneLastCell ? ["right" as const] : []),
-                    ...(!isLastRow ? ["bottom" as const] : []),
-                  ]}
-                  corners={
-                    isLeft && !isLastRow
-                      ? ["br"]
-                      : !isLeft && !isLastRow
-                        ? ["bl"]
-                        : []
-                  }
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="text-accent text-small tabular-nums shrink-0 mt-0.5">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <p className="text-body text-muted-foreground text-pretty">{feature}</p>
-                  </div>
-                </GridCell>
-              )
-            })}
-          </TuiGrid>
         </Container>
       </TuiSection>
 
-      {/* Contacto */}
-      <TuiSection id="contacto" className="h-[calc(100dvh-var(--navbar-height))]">
-        <Suspense fallback={<div className="h-full w-full" />}>
-          <ContactFooter />
-        </Suspense>
-      </TuiSection>
+      {/* Divider */}
+      <div className="tui-divider" />
+
+      {/* Footer */}
+      <footer>
+        <div className="tui-cell flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-small text-muted-foreground border-t border-border">
+          <span>&copy; 2026 {site.shortName}</span>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <a href={contactMailtoHref("Contacto desde el portfolio", "")} className="link-hover">
+              {site.email}
+            </a>
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-hover"
+            >
+              GitHub
+            </a>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-hover"
+            >
+              LinkedIn
+            </a>
+            <a
+              href={site.cv}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-hover"
+            >
+              CV
+            </a>
+          </div>
+        </div>
+      </footer>
     </Layout>
   )
 }
