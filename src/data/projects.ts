@@ -17,9 +17,9 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    id: "facturacil",
+    id: "facturador",
     number: "01",
-    title: "Facturacil",
+    title: "Facturador",
     description: "App de escritorio para facturacion electronica integrada con ARCA (AFIP). Genera facturas A/B y tickets con PDF, busqueda de contribuyentes y gestion de comprobantes.",
     tech: "Electron / React / NestJS / SQLite",
     longDescription: "Aplicacion de escritorio para Windows que permite emitir facturas electronicas (A, B y tickets) integrada directamente con ARCA a traves de AfipSDK. Genera PDFs listos para imprimir en A4 o formato ticket 80mm, almacena todos los comprobantes emitidos localmente y permite consultar contribuyentes por CUIT o DNI en tiempo real.",
@@ -31,15 +31,15 @@ export const projects: Project[] = [
       "Calculo automatico de IVA con multiples alicuotas por item",
       "Gestion de certificados digitales para entorno de desarrollo y produccion"
     ],
-    links: [{ label: "Facturacil", href: "https://facturacil.com.ar" }],
+    links: [{ label: "Facturador", href: "https://facturacil.com.ar" }],
     role: "Full Stack Developer",
     year: "2025",
     status: "En producción"
   },
   {
-    id: "salonix",
+    id: "agenda",
     number: "02",
-    title: "Salonix",
+    title: "Agenda",
     description: "App de escritorio para gestion de turnos de salon de belleza. Agenda inteligente, gestion de clientes y tratamientos, con recordatorios automaticos por WhatsApp.",
     tech: "Electron / React / NestJS / SQLite",
     longDescription: "Sistema de gestion integral para salones de belleza. Permite administrar turnos con recomendacion automatica de horarios segun disponibilidad y duracion de tratamientos, gestionar clientes con historial de pagos y deudas, y enviar recordatorios y confirmaciones de turnos automaticamente por WhatsApp.",
