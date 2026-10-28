@@ -104,6 +104,18 @@ export function ScrambleText({
     prevAutoScrambleRef.current = autoScramble
   }, [autoScramble, scramble])
 
+  // Update when text changes (e.g., language switch)
+  useEffect(() => {
+    if (intervalRef.current) clearInterval(intervalRef.current)
+    setIsAnimating(false)
+    const upperText = text.toUpperCase()
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setDisplayText(upperText)
+      return
+    }
+    setDisplayText(upperText)
+  }, [text])
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {

@@ -5,16 +5,24 @@ import { Layout } from "@/components/layout"
 import { cn } from "@/lib/utils"
 import { Container, TuiSection } from "@/components/tui-grid"
 import { contactMailtoHref, site } from "@/data/site"
+import { useLanguage } from "@/components/lang-context"
 
 export default function ProjectPage() {
   const { id } = useParams<{ id: string }>()
   const project = id ? getProject(id) : undefined
+  const { t, language } = useLanguage()
+
+  const projectDesc = project ? (language === "en" && project.descriptionEn ? project.descriptionEn : project.description) : ""
+  const projectLongDesc = project ? (language === "en" && project.longDescriptionEn ? project.longDescriptionEn : project.longDescription) : ""
+  const projectFeatures = project ? (language === "en" && project.featuresEn ? project.featuresEn : project.features) : []
+  const projectRole = project ? (language === "en" && project.roleEn ? project.roleEn : project.role) : undefined
+  const projectStatus = project ? (language === "en" && project.statusEn ? project.statusEn : project.status) : undefined
 
   useEffect(() => {
     if (!project) return
     const title = `${project.title} | Ramiro Rosales`
     document.title = title
-    const desc = project.description
+    const desc = projectDesc
     let metaDesc = document.querySelector('meta[name="description"]')
     if (!metaDesc) {
       metaDesc = document.createElement("meta")
@@ -65,7 +73,7 @@ export default function ProjectPage() {
       document.head.appendChild(canonical)
     }
     canonical.setAttribute("href", url)
-  }, [project])
+  }, [project, projectDesc])
 
   if (!project) {
     return (
@@ -74,9 +82,9 @@ export default function ProjectPage() {
         <TuiSection className="border-t-0">
           <Container>
             <div className="tui-cell border-b border-border">
-              <p className="text-muted-foreground">Proyecto no encontrado</p>
+              <p className="text-muted-foreground">{t("project.notFound")}</p>
               <Link to="/" className="text-accent link-hover mt-4 inline-block">
-                ← Volver al inicio
+                {t("project.backHome")}
               </Link>
             </div>
           </Container>
@@ -97,7 +105,7 @@ export default function ProjectPage() {
           <div className="tui-cell">
             <Link to="/#proyectos" className="text-small text-muted-foreground link-hover inline-flex items-center gap-1.5">
               <span className="text-accent">←</span>
-              <span>Volver a proyectos</span>
+              <span>{t("project.back")}</span>
             </Link>
           </div>
         </Container>
@@ -120,9 +128,9 @@ export default function ProjectPage() {
                   <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-8 lg:gap-12 items-start">
                     <div className="flex flex-col gap-5">
                       <h1 className="text-display text-balance leading-[0.9]">{project.title}</h1>
-                      {project.description && (
+                      {projectDesc && (
                         <p className="text-body text-muted-foreground max-w-2xl text-pretty leading-relaxed">
-                          {project.description}
+                          {projectDesc}
                         </p>
                       )}
                       {project.links.length > 0 && (
@@ -170,11 +178,11 @@ export default function ProjectPage() {
             {/* Sidebar */}
             <aside className="flex flex-col border-r border-border lg:sticky lg:top-[calc(var(--navbar-height)+1px)] h-fit">
               <div className="tui-cell border-b border-border">
-                <span className="text-label">/// DETALLES</span>
+                <span className="text-label">{t("project.details")}</span>
               </div>
               <div className="divide-y divide-border">
                 <div className="tui-cell flex flex-col gap-2">
-                  <span className="text-label text-muted-foreground">stack</span>
+                  <span className="text-label text-muted-foreground">{t("project.stack")}</span>
                   <div className="flex flex-wrap gap-1.5">
                     {techItems.map((tech, i) => (
                       <span
@@ -186,13 +194,13 @@ export default function ProjectPage() {
                     ))}
                   </div>
                 </div>
-                {(project.role || project.year || project.status) && (
+                {(projectRole || project.year || projectStatus) && (
                   <div className="tui-cell flex flex-col gap-2">
                     <span className="text-label text-muted-foreground">info</span>
                     <div className="flex flex-col gap-1.5 text-small text-muted-foreground">
-                      {project.role && <span>Rol: {project.role}</span>}
-                      {project.year && <span>Año: {project.year}</span>}
-                      {project.status && <span>Estado: {project.status}</span>}
+                      {projectRole && <span>{t("project.role")}: {projectRole}</span>}
+                      {project.year && <span>{t("project.year")}: {project.year}</span>}
+                      {projectStatus && <span>{t("project.status")}: {projectStatus}</span>}
                     </div>
                   </div>
                 )}
@@ -255,11 +263,11 @@ export default function ProjectPage() {
               <div className="tui-cell border-b border-border">
                 <div className="flex flex-col gap-6">
                   <div className="flex items-center gap-3 text-label text-muted-foreground">
-                    <span>/// SOBRE EL PROYECTO</span>
+                    <span>{t("project.about")}</span>
                     <span className="h-px flex-1 bg-border/70" />
                   </div>
                   <p className="text-body text-muted-foreground text-pretty max-w-3xl leading-relaxed">
-                    {project.longDescription}
+                    {projectLongDesc}
                   </p>
                 </div>
               </div>
@@ -269,13 +277,13 @@ export default function ProjectPage() {
                 <div className="flex flex-col gap-6">
                   <div className="flex items-center justify-between gap-3">
                     <div className="flex items-center gap-3 text-label text-muted-foreground flex-1">
-                      <span>/// CARACTERÍSTICAS</span>
+                      <span>{t("project.features")}</span>
                       <span className="h-px flex-1 bg-border/70" />
                     </div>
-                    <span className="text-small text-muted-foreground tabular-nums">{project.features.length.toString().padStart(2, "0")}</span>
+                    <span className="text-small text-muted-foreground tabular-nums">{projectFeatures.length.toString().padStart(2, "0")}</span>
                   </div>
                   <div className="grid grid-cols-1 gap-3">
-                    {project.features.map((feature, i) => (
+                    {projectFeatures.map((feature, i) => (
                       <div key={i} className="group relative border border-border overflow-hidden">
                         <div className="absolute inset-y-0 left-0 w-px bg-border" />
                         <div className="flex items-start gap-4 px-5 sm:px-6 py-5 sm:py-6">

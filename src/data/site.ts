@@ -6,6 +6,7 @@ export const site = {
   github: "https://github.com/ramirosales52",
   linkedin: "https://www.linkedin.com/in/ramiro-rosales1/",
   cv: "/cv.pdf",
+  cvEn: "/cv-en.pdf",
 } as const
 
 export const mailtoHref = `mailto:${site.email}`

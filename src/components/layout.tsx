@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, useNavigationType } from "react-router-
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
 import { useTheme } from "@/components/theme-context"
+import { useLanguage } from "@/components/lang-context"
 
 /**
  * Scroll positions per history entry (keyed by location.key) so the browser
@@ -38,6 +39,7 @@ export function Layout({ children }: LayoutProps) {
   const [logoScrambleKey, setLogoScrambleKey] = useState(0)
   const { showLogoInNav, activeSection } = useNav()
   const { theme, toggleTheme } = useTheme()
+  const { language, setLanguage, t } = useLanguage()
   const headerRef = useRef<HTMLElement>(null)
   const location = useLocation()
   const navigate = useNavigate()
@@ -160,7 +162,7 @@ export function Layout({ children }: LayoutProps) {
                 onClick={() => goToSection("sobre-mi")}
                 type="button"
               >
-                <ScrambleText text="Sobre mí" />
+                <ScrambleText text={t("nav.about")} loop={false} />
               </button>
               <button
                 className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "experiencia" ? "text-foreground" : "text-muted-foreground"
@@ -168,7 +170,7 @@ export function Layout({ children }: LayoutProps) {
                 onClick={() => goToSection("experiencia")}
                 type="button"
               >
-                <ScrambleText text="Experiencia" />
+                <ScrambleText text={t("nav.experience")} loop={false} />
               </button>
               <button
                 className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
@@ -176,7 +178,7 @@ export function Layout({ children }: LayoutProps) {
                 onClick={() => goToSection("proyectos")}
                 type="button"
               >
-                <ScrambleText text="Proyectos" />
+                <ScrambleText text={t("nav.projects")} loop={false} />
               </button>
               <button
                 className={`nav-link text-sm transition-colors duration-200 cursor-pointer touch-manipulation ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
@@ -184,13 +186,13 @@ export function Layout({ children }: LayoutProps) {
                 onClick={() => goToSection("contacto")}
                 type="button"
               >
-                <ScrambleText text="Contacto" />
+                <ScrambleText text={t("nav.contact")} loop={false} />
               </button>
               <button
                 onClick={toggleTheme}
                 type="button"
                 className="nav-link text-muted-foreground cursor-pointer touch-manipulation"
-                aria-label={theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+                aria-label={theme === "dark" ? t("nav.changeLight") : t("nav.changeDark")}
               >
                 {theme === "dark" ? (
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -210,13 +212,22 @@ export function Layout({ children }: LayoutProps) {
                   </svg>
                 )}
               </button>
+              <button
+                onClick={() => setLanguage(language === "es" ? "en" : "es")}
+                type="button"
+                className="nav-link text-muted-foreground cursor-pointer touch-manipulation text-xs font-medium"
+                aria-label={language === "es" ? "Switch to English" : "Cambiar a español"}
+                title={language === "es" ? "English" : "Español"}
+              >
+                {language === "es" ? "EN" : "ES"}
+              </button>
             </nav>
 
             {/* Mobile menu button */}
             <button
               className="tui-button inline-flex sm:!hidden"
               onClick={() => setMobileNavOpen(true)}
-              aria-label="Abrir menú"
+              aria-label={t("nav.openMenu")}
               aria-expanded={mobileNavOpen}
               aria-controls="mobile-nav-menu"
               type="button"
@@ -245,11 +256,11 @@ export function Layout({ children }: LayoutProps) {
             role="dialog"
           >
             <div className="flex justify-between items-center mb-8">
-              <span className="text-label">MENÚ</span>
+              <span className="text-label">{t("nav.menu")}</span>
               <button
                 className="tui-button"
                 onClick={() => setMobileNavOpen(false)}
-                aria-label="Cerrar menú"
+                aria-label={t("nav.closeMenu")}
                 type="button"
               >
                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -267,7 +278,7 @@ export function Layout({ children }: LayoutProps) {
                 }}
                 type="button"
               >
-                Sobre mí
+                {t("nav.about")}
               </button>
               <button
                 className={`block text-heading uppercase text-left cursor-pointer touch-manipulation ${activeSection === "experiencia" ? "text-foreground" : "text-muted-foreground"
@@ -278,36 +289,36 @@ export function Layout({ children }: LayoutProps) {
                 }}
                 type="button"
               >
-                Experiencia
+                {t("nav.experience")}
               </button>
               <button
                 className={`block text-heading uppercase text-left cursor-pointer touch-manipulation ${activeSection === "proyectos" ? "text-foreground" : "text-muted-foreground"
                   }`}
                 onClick={() => {
                   setMobileNavOpen(false)
-                  setTimeout(() => goToSection("proyectos"), 300) // Delay to allow mobile menu to close
+                  setTimeout(() => goToSection("proyectos"), 300)
                 }}
                 type="button"
               >
-                Proyectos
+                {t("nav.projects")}
               </button>
               <button
                 className={`block text-heading uppercase text-left cursor-pointer touch-manipulation ${activeSection === "contacto" ? "text-foreground" : "text-muted-foreground"
                   }`}
                 onClick={() => {
                   setMobileNavOpen(false)
-                  setTimeout(() => goToSection("contacto"), 300) // Delay to allow mobile menu to close
+                  setTimeout(() => goToSection("contacto"), 300)
                 }}
                 type="button"
               >
-                Contacto
+                {t("nav.contact")}
               </button>
-              <div className="pt-4 border-t border-border">
+              <div className="pt-4 border-t border-border space-y-3">
                 <button
                   onClick={toggleTheme}
                   type="button"
-                  className="flex items-center gap-3 text-muted-foreground cursor-pointer touch-manipulation"
-                  aria-label={theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+                  className="flex items-center gap-3 text-muted-foreground cursor-pointer touch-manipulation w-full"
+                  aria-label={theme === "dark" ? t("nav.changeLight") : t("nav.changeDark")}
                 >
                   {theme === "dark" ? (
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -326,7 +337,19 @@ export function Layout({ children }: LayoutProps) {
                       <path d="M14 9.5A6.5 6.5 0 0 1 6.5 2 6.5 6.5 0 1 0 14 9.5Z" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
                     </svg>
                   )}
-                  <span className="text-sm">{theme === "dark" ? "Tema claro" : "Tema oscuro"}</span>
+                  <span className="text-sm">{theme === "dark" ? t("nav.lightTheme") : t("nav.darkTheme")}</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setLanguage(language === "es" ? "en" : "es")
+                    setMobileNavOpen(false)
+                  }}
+                  type="button"
+                  className="flex items-center gap-3 text-muted-foreground cursor-pointer touch-manipulation w-full"
+                  aria-label={language === "es" ? "Switch to English" : "Cambiar a español"}
+                >
+                  <span className="text-sm font-medium w-4">{language === "es" ? "EN" : "ES"}</span>
+                  <span className="text-sm">{language === "es" ? "English" : "Español"}</span>
                 </button>
               </div>
             </div>

@@ -4,6 +4,7 @@ import { Layout } from "@/components/layout"
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
 import { useTheme } from "@/components/theme-context"
+import { useLanguage } from "@/components/lang-context"
 import { Container, GridCell, TuiGrid, TuiSection } from "@/components/tui-grid"
 import { projects } from "@/data/projects"
 import { site } from "@/data/site"
@@ -75,6 +76,7 @@ export default function HomePage() {
   const contactoRef = useRef<HTMLDivElement>(null)
   const { setShowLogoInNav, setActiveSection } = useNav()
   const { theme } = useTheme()
+  const { language, t } = useLanguage()
 
   // Theme-aware dither colors
   const ditherColors = useMemo(() => {
@@ -163,7 +165,7 @@ export default function HomePage() {
 
             {/* Description */}
             <p className="text-foreground text-base sm:text-lg max-w-xl leading-relaxed mt-4 relative z-10 text-pretty">
-              Desarrollador Full-Stack
+              {t("hero.role")}
             </p>
 
             {/* Separator */}
@@ -178,8 +180,8 @@ export default function HomePage() {
                 href={site.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                ariaLabel="GitHub de Ramiro (abre en una pestaña nueva)"
-                text="Github"
+                ariaLabel={language === "es" ? "GitHub de Ramiro (abre en una pestaña nueva)" : "Ramiro's GitHub (opens in new tab)"}
+                text={t("hero.github")}
                 className="link-hover text-sm"
               />
               <ScrambleText
@@ -187,25 +189,26 @@ export default function HomePage() {
                 href={site.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                ariaLabel="LinkedIn de Ramiro (abre en una pestaña nueva)"
-                text="LinkedIn"
+                ariaLabel={language === "es" ? "LinkedIn de Ramiro (abre en una pestaña nueva)" : "Ramiro's LinkedIn (opens in new tab)"}
+                text={t("hero.linkedin")}
                 className="link-hover text-sm"
               />
               <ScrambleText
                 as="a"
-                href={site.cv}
+                href={language === "en" && site.cvEn ? site.cvEn : site.cv}
                 target="_blank"
                 rel="noopener noreferrer"
-                ariaLabel="Ver CV en PDF (abre en una pestaña nueva)"
-                text="Ver CV"
+                ariaLabel={t("hero.cvAria")}
+                text={t("hero.cv")}
                 className="link-hover text-sm"
+                loop={false}
               />
             </div>
 
             {/* Availability status */}
             <div className="relative z-10 mt-5 inline-flex w-fit self-start items-center gap-2 border border-border px-3 py-1.5 text-small text-muted-foreground">
               <span className="status-dot h-1.5 w-1.5 shrink-0 rounded-full bg-foreground" aria-hidden="true" />
-              <span>Disponible para oportunidades</span>
+              <span>{t("hero.available")}</span>
             </div>
           </div>
         </Container>
@@ -218,21 +221,33 @@ export default function HomePage() {
       <TuiSection ref={aboutRef} data-section="sobre-mi" id="sobre-mi">
         <Container>
           <div className="tui-cell border-b border-border">
-            <span className="text-label">/// SOBRE MÍ</span>
+            <span className="text-label">{t("about.title")}</span>
           </div>
           <div className="tui-cell">
             <div className="flex flex-col gap-4">
               <p className="text-body text-muted-foreground text-pretty leading-relaxed">
-                Soy de <strong className="font-semibold text-foreground">Córdoba, Argentina</strong>. Estudiante de <strong className="font-semibold text-foreground">Ingeniería en Sistemas</strong> con experiencia en el desarrollo de <strong className="font-semibold text-foreground">aplicaciones web, móviles y de escritorio</strong>. Trabajo principalmente con <strong className="font-semibold text-foreground">React, React Native y NestJS</strong>, construyendo soluciones completas tanto en frontend como backend.
+                {language === "es" ? (
+                  <>Soy de <strong className="font-semibold text-foreground">Córdoba, Argentina</strong>. Estudiante de <strong className="font-semibold text-foreground">Ingeniería en Sistemas</strong> con experiencia en el desarrollo de <strong className="font-semibold text-foreground">aplicaciones web, móviles y de escritorio</strong>. Trabajo principalmente con <strong className="font-semibold text-foreground">React, React Native y NestJS</strong>, construyendo soluciones completas tanto en frontend como backend.</>
+                ) : (
+                  <>I'm from <strong className="font-semibold text-foreground">Córdoba, Argentina</strong>. Systems Engineering student with experience in developing <strong className="font-semibold text-foreground">web, mobile and desktop applications</strong>. I mainly work with <strong className="font-semibold text-foreground">React, React Native and NestJS</strong>, building complete solutions for both frontend and backend.</>
+                )}
               </p>
               <p className="text-body text-muted-foreground text-pretty leading-relaxed">
-                Me enfoco en desarrollar aplicaciones funcionales, eficientes y adaptadas a las necesidades del usuario, abarcando desde la idea inicial hasta la implementación final. También cuento con una sólida base en <strong className="font-semibold text-foreground">soporte técnico</strong>, lo que me permite tener una visión integral de los sistemas y resolver problemas de manera práctica.
+                {language === "es" ? (
+                  <>Me enfoco en desarrollar aplicaciones funcionales, eficientes y adaptadas a las necesidades del usuario, abarcando desde la idea inicial hasta la implementación final. También cuento con una sólida base en <strong className="font-semibold text-foreground">soporte técnico</strong>, lo que me permite tener una visión integral de los sistemas y resolver problemas de manera práctica.</>
+                ) : (
+                  <>I focus on developing functional, efficient applications tailored to user needs, covering everything from initial idea to final implementation. I also have a solid background in <strong className="font-semibold text-foreground">technical support</strong>, which allows me to have a comprehensive view of systems and solve problems practically.</>
+                )}
               </p>
               <p className="text-body text-muted-foreground text-pretty leading-relaxed">
-                Actualmente me encuentro en <strong className="font-semibold text-foreground">búsqueda de oportunidades</strong> para crecer profesionalmente en el área de desarrollo de software y el soporte IT, aportando valor en proyectos reales.
+                {language === "es" ? (
+                  <>Actualmente me encuentro en <strong className="font-semibold text-foreground">búsqueda de oportunidades</strong> para crecer profesionalmente en el área de desarrollo de software y el soporte IT, aportando valor en proyectos reales.</>
+                ) : (
+                  <>I'm currently looking for <strong className="font-semibold text-foreground">opportunities</strong> to grow professionally in software development and IT support, adding value to real projects.</>
+                )}
               </p>
               <div>
-                <span className="text-label block mb-2 font-semibold">Tecnologías principales</span>
+                <span className="text-label block mb-2 font-semibold">{t("about.techTitle")}</span>
                 <div className="flex flex-wrap gap-1.5">
                   {mainTechnologies.map((tech) => (
                     <span
@@ -246,10 +261,10 @@ export default function HomePage() {
               </div>
               <div className="flex flex-wrap gap-x-4 gap-y-1 text-small text-muted-foreground">
                 <span>
-                  Ubicación: <strong className="font-semibold text-foreground">Córdoba, Argentina</strong>
+                  {t("about.location")} <strong className="font-semibold text-foreground">{t("about.locationValue")}</strong>
                 </span>
                 <span>
-                  Disponibilidad: <strong className="font-semibold text-foreground">Abierto a oportunidades</strong>
+                  {t("about.availability")} <strong className="font-semibold text-foreground">{t("about.availabilityValue")}</strong>
                 </span>
               </div>
             </div>
@@ -264,50 +279,50 @@ export default function HomePage() {
       <TuiSection ref={experienciaRef} data-section="experiencia" id="experiencia">
         <Container>
           <div className="tui-cell border-b border-border">
-            <span className="text-label">/// EXPERIENCIA</span>
+            <span className="text-label">{t("exp.title")}</span>
           </div>
           <div className="divide-y divide-border">
             <div className="tui-cell">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
                 <div>
-                  <h3 className="text-heading">Desarrollador de páginas web autónomo</h3>
+                  <h3 className="text-heading">{t("exp.job1Title")}</h3>
                 </div>
                 <div className="text-small text-foreground/80 text-right">
-                  <p>2021 – Actualidad</p>
-                  <p>Córdoba, Argentina</p>
+                  <p>{t("exp.job1Period")}</p>
+                  <p>{t("exp.job1Location")}</p>
                 </div>
               </div>
               <p className="text-body text-muted-foreground text-pretty max-w-2xl leading-relaxed">
-                Desarrollo de aplicaciones web, móviles y de escritorio con React, React Native y NestJS. Experiencia en diseño e implementación de APIs, bases de datos y soluciones escalables. Trabajo en proyectos personalizados, desde la idea inicial y el relevamiento de necesidades hasta la implementación, el despliegue y el soporte posterior.
+                {t("exp.job1Desc")}
               </p>
               <ul className="mt-4 space-y-1.5 text-small text-muted-foreground leading-relaxed max-w-2xl">
-                <li>• Desarrollo full-stack web, móvil y de escritorio (React, React Native, Electron y NestJS)</li>
-                <li>• Diseño de APIs REST y modelado de bases de datos SQL y NoSQL</li>
-                <li>• Integración con servicios externos: ARCA/AFIP, WhatsApp, Google Maps e IA</li>
-                <li>• Automatización de procesos, reportes y paneles de control</li>
-                <li>• Despliegue, mantenimiento y mejora continua de las aplicaciones</li>
+                <li>{t("exp.job1Item1")}</li>
+                <li>{t("exp.job1Item2")}</li>
+                <li>{t("exp.job1Item3")}</li>
+                <li>{t("exp.job1Item4")}</li>
+                <li>{t("exp.job1Item5")}</li>
               </ul>
             </div>
             <div className="tui-cell">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-2 mb-3">
                 <div>
-                  <h3 className="text-heading">Técnico Informático Independiente</h3>
+                  <h3 className="text-heading">{t("exp.job2Title")}</h3>
                 </div>
                 <div className="text-small text-foreground/80 text-right">
-                  <p>2018 – Actualidad</p>
-                  <p>Córdoba, Argentina</p>
+                  <p>{t("exp.job2Period")}</p>
+                  <p>{t("exp.job2Location")}</p>
                 </div>
               </div>
               <p className="text-body text-muted-foreground text-pretty max-w-2xl leading-relaxed">
-                Servicio técnico para particulares, comercios y pequeñas empresas. Realizo diagnóstico y reparación de equipos, instalación y configuración de sistemas operativos, armado de PCs a medida y optimización de rendimiento, con atención personalizada y seguimiento de cada equipo.
+                {t("exp.job2Desc")}
               </p>
               <ul className="mt-4 space-y-1.5 text-small text-muted-foreground leading-relaxed max-w-2xl">
-                <li>• Reparación y mantenimiento de PCs</li>
-                <li>• Instalación y configuración de sistemas operativos</li>
-                <li>• Armado de computadoras personalizadas</li>
-                <li>• Limpieza y optimización de equipos</li>
-                <li>• Instalación de software y drivers</li>
-                <li>• Desbloqueo de notebooks (programa Conectar Igualdad)</li>
+                <li>{t("exp.job2Item1")}</li>
+                <li>{t("exp.job2Item2")}</li>
+                <li>{t("exp.job2Item3")}</li>
+                <li>{t("exp.job2Item4")}</li>
+                <li>{t("exp.job2Item5")}</li>
+                <li>{t("exp.job2Item6")}</li>
               </ul>
             </div>
           </div>
@@ -321,7 +336,7 @@ export default function HomePage() {
       <TuiSection ref={stackRef} data-section="stack" id="stack">
         <Container>
           <div className="tui-cell border-b border-border">
-            <span className="text-label">/// STACK</span>
+            <span className="text-label">{t("stack.title")}</span>
           </div>
 
           <TuiGrid cols={4}>
@@ -367,7 +382,7 @@ export default function HomePage() {
         <Container>
           {/* Section header */}
           <div className="tui-cell border-b border-border">
-            <span className="text-label">/// PROYECTOS</span>
+            <span className="text-label">{t("projects.title")}</span>
           </div>
 
           {/* Project cards - 2 column grid */}
@@ -405,7 +420,7 @@ export default function HomePage() {
                       {/* Hover overlay */}
                       <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 transition-opacity duration-150 group-hover/card:opacity-100">
                         <span className="inline-flex items-center gap-2 border border-border bg-background px-3 py-1.5 text-small text-foreground">
-                          Ver proyecto
+                          {t("projects.viewProject")}
                           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
                             <path d="M7 17L17 7" />
                             <path d="M7 7h10v10" />
@@ -428,7 +443,7 @@ export default function HomePage() {
                         {project.title}
                       </h3>
                       <p className="text-body text-muted-foreground text-pretty mt-2 line-clamp-3 leading-relaxed">
-                        {project.description}
+                        {(language === "en" && project.descriptionEn) ? project.descriptionEn : project.description}
                       </p>
                     </div>
                   </Link>
@@ -440,11 +455,9 @@ export default function HomePage() {
                   >
                     <Link
                       to={`/proyectos/${project.id}`}
-                      aria-hidden="true"
-                      tabIndex={-1}
                       className="text-small text-foreground group-hover/card:translate-x-1 transition-transform duration-150"
                     >
-                      Ver proyecto →
+                      {t("projects.viewProjectArrow")}
                     </Link>
                     {project.links.length > 0 && (
                       <a
@@ -453,7 +466,7 @@ export default function HomePage() {
                         rel="noopener noreferrer"
                         className="text-small text-muted-foreground link-hover"
                       >
-                        Abrir en la web ↗
+                        {t("projects.openWeb")} ↗
                       </a>
                     )}
                   </div>
