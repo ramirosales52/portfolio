@@ -116,43 +116,43 @@ export default function ProjectPage() {
               <div className="absolute -left-px top-6 bottom-6 w-px bg-border" />
               <div className="absolute -right-px top-6 bottom-6 w-px bg-border" />
               <div className="px-6 sm:px-10 lg:px-14 py-10 sm:py-14 lg:py-18">
-                <div className="flex flex-col gap-6 sm:gap-8">
-                <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-8 lg:gap-12 items-start">
-                  <div className="flex flex-col gap-6">
-                    <h1 className="text-display text-balance leading-[0.9]">{project.title}</h1>
-                    {project.description && (
-                      <p className="text-body text-muted-foreground max-w-2xl text-pretty leading-relaxed">
-                        {project.description}
-                      </p>
-                    )}
-                  </div>
-                  <div className="relative border border-border bg-muted/5 aspect-[16/10] w-full flex items-center justify-center text-muted-foreground">
-                    <div className="flex flex-col items-center gap-2">
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                        <rect x="2" y="4" width="20" height="16" rx="2" />
-                        <circle cx="9" cy="10" r="2" />
-                        <path d="M22 14l-4-4-6 6-4-4-4 4" />
-                      </svg>
-                      <span className="text-small">preview</span>
+                <div className="flex flex-col gap-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-8 lg:gap-12 items-start">
+                    <div className="flex flex-col gap-5">
+                      <h1 className="text-display text-balance leading-[0.9]">{project.title}</h1>
+                      {project.description && (
+                        <p className="text-body text-muted-foreground max-w-2xl text-pretty leading-relaxed">
+                          {project.description}
+                        </p>
+                      )}
+                      {project.links.length > 0 && (
+                        <div className="flex flex-wrap gap-2">
+                          {project.links.map((link, i) => (
+                            <a
+                              key={i}
+                              href={link.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="tui-button"
+                            >
+                              <span className="text-accent">→</span>
+                              {link.label}
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div className="relative border border-border bg-muted/5 aspect-[16/10] w-full flex items-center justify-center text-muted-foreground">
+                      <div className="flex flex-col items-center gap-2">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                          <rect x="2" y="4" width="20" height="16" rx="2" />
+                          <circle cx="9" cy="10" r="2" />
+                          <path d="M22 14l-4-4-6 6-4-4-4 4" />
+                        </svg>
+                        <span className="text-small">preview</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                  {project.links.length > 0 && (
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {project.links.map((link, i) => (
-                        <a
-                          key={i}
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="tui-button"
-                        >
-                          <span className="text-accent">→</span>
-                          {link.label}
-                        </a>
-                      ))}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
