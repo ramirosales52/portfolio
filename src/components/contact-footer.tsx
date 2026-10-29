@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Container } from "@/components/tui-grid"
-import { contactMailtoHref, site } from "@/data/site"
+import { site } from "@/data/site"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/components/lang-context"
 
@@ -16,20 +16,23 @@ interface ContactFooterProps {
   className?: string
 }
 
-function isValidEmail(value: string) {
-  const trimmed = value.trim()
-  if (!trimmed) return false
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)
-}
-
 export function ContactFooter({ className }: ContactFooterProps) {
-  const [emailInput, setEmailInput] = useState("")
   const [gifIndex, setGifIndex] = useState(0)
-  const [status, setStatus] = useState<"idle" | "invalid" | "opening">("idle")
   const [isVisible, setIsVisible] = useState(false)
   const [gifUrls, setGifUrls] = useState<string[]>([])
   const [loaded, setLoaded] = useState(false)
+  const [copied, setCopied] = useState(false)
   const { language, t } = useLanguage()
+
+  const handleCopyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(site.email)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
+    } catch {
+      // ignore
+    }
+  }
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -63,26 +66,11 @@ export function ContactFooter({ className }: ContactFooterProps) {
           setGifIndex(nextIndex)
         }
       })
-      .catch(() => {})
+      .catch(() => { })
     return () => {
       cancelled = true
     }
   }, [isVisible, loaded])
-
-  const handleSubmit = () => {
-    if (!isValidEmail(emailInput)) {
-      setStatus("invalid")
-      return
-    }
-
-    const subject = language === "es" ? "Contacto desde el portfolio" : "Contact from portfolio"
-    const body = language === "es" 
-      ? `Hola Ramiro,\n\nTe dejo mi email: ${emailInput.trim()}\n\nMensaje:\n`
-      : `Hi Ramiro,\n\nHere's my email: ${emailInput.trim()}\n\nMessage:\n`
-
-    setStatus("opening")
-    window.location.href = contactMailtoHref(subject, body)
-  }
 
   return (
     <div className={cn("flex flex-col h-full w-full", className)}>
@@ -91,67 +79,17 @@ export function ContactFooter({ className }: ContactFooterProps) {
           <div className="flex-[3] flex items-center justify-center text-center py-10">
             <div>
               <h2 className="text-display">{t("contact.title")}</h2>
-              <p className="text-body text-muted-foreground mt-3 mb-8">
-                {t("contact.subtitle")}
-              </p>
 
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  handleSubmit()
-                }}
-                className="flex gap-2 max-w-md mx-auto"
-                noValidate
-              >
-                <label htmlFor="contact-email" className="sr-only">
-                  {language === "es" ? "Tu email" : "Your email"}
-                </label>
-                <input
-                  id="contact-email"
-                  type="email"
-                  name="email"
-                  value={emailInput}
-                  onChange={e => {
-                    setEmailInput(e.target.value)
-                    if (status !== "idle") setStatus("idle")
-                  }}
-                  placeholder={t("contact.emailPlaceholder")}
-                  autoComplete="email"
-                  aria-invalid={status === "invalid"}
-                  aria-describedby="contact-status"
-                  required
-                  className="flex-1 min-w-0 bg-transparent border border-border px-3 py-2 text-sm text-foreground outline-none focus:border-accent transition-colors duration-150"
-                />
+              <div className="flex flex-col items-center gap-3 mt-8">
                 <button
-                  type="submit"
-                  className="tui-button shrink-0"
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="tui-button !bg-foreground !text-background border-foreground hover:!bg-background hover:!text-foreground"
                 >
                   <span>→</span>
-                  {t("contact.send")}
+                  {copied ? (language === "es" ? "COPIADO" : "COPIED") : "CORREO"}
                 </button>
-              </form>
-
-              <div id="contact-status" role="status" aria-live="polite">
-                {status === "invalid" && (
-                  <p className="text-small text-accent mt-2">{t("contact.invalidEmail")}</p>
-                )}
-                {status === "opening" && (
-                  <p className="text-small text-muted-foreground mt-2">
-                    {t("contact.opening")}{" "}
-                    <a href={contactMailtoHref(language === "es" ? "Contacto desde el portfolio" : "Contact from portfolio", "")} className="text-accent link-hover">
-                      {site.email}
-                    </a>
-                    .
-                  </p>
-                )}
               </div>
-
-              <a
-                href={contactMailtoHref(language === "es" ? "Contacto desde el portfolio" : "Contact from portfolio", "")}
-                className="text-small text-muted-foreground link-hover mt-4 inline-block"
-              >
-                {t("contact.orWrite")} {site.email}
-              </a>
             </div>
           </div>
 
@@ -175,7 +113,7 @@ export function ContactFooter({ className }: ContactFooterProps) {
       <div className="tui-cell flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-small text-muted-foreground border-t border-border">
         <span>&copy; 2026 {site.shortName}</span>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
-          <a href={contactMailtoHref("Contacto desde el portfolio", "")} className="link-hover">
+          <a href="mailto:ramirosales52@gmail.com" className="link-hover">
             {site.email}
           </a>
           <a

@@ -22,7 +22,7 @@ const translations = {
     "nav.changeDark": "Cambiar a tema oscuro",
     "nav.lightTheme": "Tema claro",
     "nav.darkTheme": "Tema oscuro",
-    
+
     // Hero
     "hero.role": "Desarrollador Full-Stack",
     "hero.github": "Github",
@@ -30,7 +30,7 @@ const translations = {
     "hero.cv": "Ver CV",
     "hero.cvAria": "Ver CV en PDF (abre en una pestaña nueva)",
     "hero.available": "Disponible para oportunidades",
-    
+
     // About
     "about.title": "/// SOBRE MÍ",
     "about.p1": "Soy de Córdoba, Argentina. Estudiante de Ingeniería en Sistemas con experiencia en el desarrollo de aplicaciones web, móviles y de escritorio. Trabajo principalmente con React, React Native y NestJS, construyendo soluciones completas tanto en frontend como backend.",
@@ -41,7 +41,7 @@ const translations = {
     "about.locationValue": "Córdoba, Argentina",
     "about.availability": "Disponibilidad:",
     "about.availabilityValue": "Abierto a oportunidades",
-    
+
     // Experience
     "exp.title": "/// EXPERIENCIA",
     "exp.job1Title": "Desarrollador de páginas web autónomo",
@@ -63,16 +63,16 @@ const translations = {
     "exp.job2Item4": "• Limpieza y optimización de equipos",
     "exp.job2Item5": "• Instalación de software y drivers",
     "exp.job2Item6": "• Desbloqueo de notebooks (programa Conectar Igualdad)",
-    
+
     // Stack
     "stack.title": "/// STACK",
-    
+
     // Projects
     "projects.title": "/// PROYECTOS",
     "projects.viewProject": "Ver proyecto",
     "projects.openWeb": "Abrir en la web",
-    "projects.viewProjectArrow": "Ver proyecto →",
-    
+    "projects.viewProjectArrow": "VER PROYECTO →",
+
     // Contact
     "contact.title": "trabajemos juntos :)",
     "contact.subtitle": "deja aca tu email",
@@ -81,7 +81,7 @@ const translations = {
     "contact.invalidEmail": "Ingresá un email válido.",
     "contact.opening": "Abriendo tu cliente de correo. Si no pasa nada, escribime a",
     "contact.orWrite": "o escribime directo a",
-    
+
     // Project page
     "project.back": "Volver a proyectos",
     "project.notFound": "Proyecto no encontrado",
@@ -94,7 +94,7 @@ const translations = {
     "project.about": "/// ACERCA DEL PROYECTO",
     "project.features": "/// CARACTERÍSTICAS",
     "project.links": "/// LINKS",
-    
+
     // Not found
     "notFound.title": "404",
     "notFound.message": "Página no encontrada",
@@ -113,7 +113,7 @@ const translations = {
     "nav.changeDark": "Switch to dark theme",
     "nav.lightTheme": "Light theme",
     "nav.darkTheme": "Dark theme",
-    
+
     // Hero
     "hero.role": "Full-Stack Developer",
     "hero.github": "Github",
@@ -121,7 +121,7 @@ const translations = {
     "hero.cv": "View CV",
     "hero.cvAria": "View CV in PDF (opens in new tab)",
     "hero.available": "Available for opportunities",
-    
+
     // About
     "about.title": "/// ABOUT ME",
     "about.p1": "I'm from Córdoba, Argentina. Systems Engineering student with experience in developing web, mobile and desktop applications. I mainly work with React, React Native and NestJS, building complete solutions for both frontend and backend.",
@@ -132,7 +132,7 @@ const translations = {
     "about.locationValue": "Córdoba, Argentina",
     "about.availability": "Availability:",
     "about.availabilityValue": "Open to opportunities",
-    
+
     // Experience
     "exp.title": "/// EXPERIENCE",
     "exp.job1Title": "Freelance Web Developer",
@@ -154,16 +154,16 @@ const translations = {
     "exp.job2Item4": "• Equipment cleaning and optimization",
     "exp.job2Item5": "• Software and driver installation",
     "exp.job2Item6": "• Notebook unlocking (Conectar Igualdad program)",
-    
+
     // Stack
     "stack.title": "/// STACK",
-    
+
     // Projects
     "projects.title": "/// PROJECTS",
     "projects.viewProject": "View project",
     "projects.openWeb": "Open website",
-    "projects.viewProjectArrow": "View project →",
-    
+    "projects.viewProjectArrow": "VIEW PROJECT →",
+
     // Contact
     "contact.title": "let's work together :)",
     "contact.subtitle": "leave your email here",
@@ -172,7 +172,7 @@ const translations = {
     "contact.invalidEmail": "Enter a valid email.",
     "contact.opening": "Opening your mail client. If nothing happens, write me at",
     "contact.orWrite": "or write me directly at",
-    
+
     // Project page
     "project.back": "Back to projects",
     "project.notFound": "Project not found",
@@ -185,7 +185,7 @@ const translations = {
     "project.about": "/// ABOUT THE PROJECT",
     "project.features": "/// FEATURES",
     "project.links": "/// LINKS",
-    
+
     // Not found
     "notFound.title": "404",
     "notFound.message": "Page not found",

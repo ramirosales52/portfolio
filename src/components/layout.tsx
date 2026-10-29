@@ -212,15 +212,25 @@ export function Layout({ children }: LayoutProps) {
                   </svg>
                 )}
               </button>
-              <button
-                onClick={() => setLanguage(language === "es" ? "en" : "es")}
-                type="button"
-                className="nav-link text-muted-foreground cursor-pointer touch-manipulation text-xs font-medium"
-                aria-label={language === "es" ? "Switch to English" : "Cambiar a español"}
-                title={language === "es" ? "English" : "Español"}
-              >
-                {language === "es" ? "EN" : "ES"}
-              </button>
+              <div className="flex items-center gap-2 text-xs font-medium">
+                <button
+                  onClick={() => setLanguage("es")}
+                  type="button"
+                  className={`cursor-pointer touch-manipulation transition-colors ${language === "es" ? "text-foreground underline underline-offset-2" : "text-muted-foreground hover:text-foreground"}`}
+                  aria-label="Cambiar a español"
+                >
+                  ES
+                </button>
+                <span className="text-muted-foreground">/</span>
+                <button
+                  onClick={() => setLanguage("en")}
+                  type="button"
+                  className={`cursor-pointer touch-manipulation transition-colors ${language === "en" ? "text-foreground underline underline-offset-2" : "text-muted-foreground hover:text-foreground"}`}
+                  aria-label="Switch to English"
+                >
+                  EN
+                </button>
+              </div>
             </nav>
 
             {/* Mobile menu button */}
@@ -339,18 +349,29 @@ export function Layout({ children }: LayoutProps) {
                   )}
                   <span className="text-sm">{theme === "dark" ? t("nav.lightTheme") : t("nav.darkTheme")}</span>
                 </button>
-                <button
-                  onClick={() => {
-                    setLanguage(language === "es" ? "en" : "es")
-                    setMobileNavOpen(false)
-                  }}
-                  type="button"
-                  className="flex items-center gap-3 text-muted-foreground cursor-pointer touch-manipulation w-full"
-                  aria-label={language === "es" ? "Switch to English" : "Cambiar a español"}
-                >
-                  <span className="text-sm font-medium w-4">{language === "es" ? "EN" : "ES"}</span>
-                  <span className="text-sm">{language === "es" ? "English" : "Español"}</span>
-                </button>
+                <div className="flex items-center gap-2 text-sm">
+                  <button
+                    onClick={() => {
+                      setLanguage("es")
+                      setMobileNavOpen(false)
+                    }}
+                    type="button"
+                    className={`cursor-pointer touch-manipulation transition-colors ${language === "es" ? "text-foreground underline underline-offset-2" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    ES
+                  </button>
+                  <span className="text-muted-foreground">/</span>
+                  <button
+                    onClick={() => {
+                      setLanguage("en")
+                      setMobileNavOpen(false)
+                    }}
+                    type="button"
+                    className={`cursor-pointer touch-manipulation transition-colors ${language === "en" ? "text-foreground underline underline-offset-2" : "text-muted-foreground hover:text-foreground"}`}
+                  >
+                    EN
+                  </button>
+                </div>
               </div>
             </div>
           </nav>

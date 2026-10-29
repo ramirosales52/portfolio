@@ -220,7 +220,7 @@ export default function HomePage() {
       {/* Sobre mí Section */}
       <TuiSection ref={aboutRef} data-section="sobre-mi" id="sobre-mi">
         <Container>
-          <div className="tui-cell border-b border-border">
+          <div className="px-4 py-1.5 sm:px-6 sm:py-2 border-b border-border">
             <span className="text-label">{t("about.title")}</span>
           </div>
           <div className="tui-cell">
@@ -278,7 +278,7 @@ export default function HomePage() {
       {/* Experiencia Section */}
       <TuiSection ref={experienciaRef} data-section="experiencia" id="experiencia">
         <Container>
-          <div className="tui-cell border-b border-border">
+          <div className="px-4 py-1.5 sm:px-6 sm:py-2 border-b border-border">
             <span className="text-label">{t("exp.title")}</span>
           </div>
           <div className="divide-y divide-border">
@@ -335,7 +335,7 @@ export default function HomePage() {
       {/* Stack Section */}
       <TuiSection ref={stackRef} data-section="stack" id="stack">
         <Container>
-          <div className="tui-cell border-b border-border">
+          <div className="px-4 py-1.5 sm:px-6 sm:py-2 border-b border-border">
             <span className="text-label">{t("stack.title")}</span>
           </div>
 
@@ -381,12 +381,12 @@ export default function HomePage() {
       <TuiSection ref={proyectosRef} data-section="proyectos" id="proyectos">
         <Container>
           {/* Section header */}
-          <div className="tui-cell border-b border-border">
+          <div className="px-4 py-1.5 sm:px-6 sm:py-2 border-b border-border">
             <span className="text-label">{t("projects.title")}</span>
           </div>
 
-          {/* Project cards - 2 column grid */}
-          <TuiGrid className="grid-cols-1 md:grid-cols-2">
+          {/* Project cards - 4 column grid */}
+          <TuiGrid className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => {
               return (
                 <GridCell
@@ -398,51 +398,53 @@ export default function HomePage() {
                     className="block"
                   >
                     {/* Preview image */}
-                    <div className="relative aspect-[16/10] overflow-hidden border-b border-border bg-muted/20">
-                      {project.preview ? (
-                        <img
-                          src={project.preview}
-                          alt={`Preview de ${project.title}`}
-                          loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover/card:scale-[1.03]"
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center gap-2 text-muted-foreground select-none">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                            <rect x="2" y="4" width="20" height="16" rx="2" />
-                            <circle cx="9" cy="10" r="2" />
-                            <path d="M22 14l-4-4-6 6-4-4-4 4" />
-                          </svg>
-                          <span className="text-small">preview</span>
-                        </div>
-                      )}
+                    <div className="p-2.5 sm:p-3">
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-lg border border-border bg-muted/20">
+                        {project.preview ? (
+                          <img
+                            src={project.preview}
+                            alt={`Preview de ${project.title}`}
+                            loading="lazy"
+                            className="h-full w-full object-cover transition-transform duration-300 group-hover/card:scale-[1.03]"
+                          />
+                        ) : (
+                          <div className="flex h-full w-full items-center justify-center gap-2 text-muted-foreground select-none">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                              <rect x="2" y="4" width="20" height="16" rx="2" />
+                              <circle cx="9" cy="10" r="2" />
+                              <path d="M22 14l-4-4-6 6-4-4-4 4" />
+                            </svg>
+                            <span className="text-[10px]">preview</span>
+                          </div>
+                        )}
 
-                      {/* Hover overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 transition-opacity duration-150 group-hover/card:opacity-100">
-                        <span className="inline-flex items-center gap-2 border border-border bg-background px-3 py-1.5 text-small text-foreground">
-                          {t("projects.viewProject")}
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                            <path d="M7 17L17 7" />
-                            <path d="M7 7h10v10" />
-                          </svg>
-                        </span>
+                        {/* Hover overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 transition-opacity duration-150 group-hover/card:opacity-100">
+                          <span className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2 py-1 text-[10px] text-foreground">
+                            {t("projects.viewProject")}
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                              <path d="M7 17L17 7" />
+                              <path d="M7 7h10v10" />
+                            </svg>
+                          </span>
+                        </div>
                       </div>
                     </div>
 
                     {/* Content */}
-                    <div className="tui-cell">
-                      <div className="flex items-baseline justify-between gap-4 mb-3">
-                        <span className="text-label tabular-nums">
+                    <div className="px-2.5 pt-1 pb-2 sm:px-3 sm:pt-1.5 sm:pb-2.5">
+                      <div className="flex items-baseline justify-between gap-2 mb-1">
+                        <span className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground tabular-nums">
                           {project.number}
                         </span>
-                        <span className="text-label truncate hidden sm:block">
+                        <span className="text-[10px] uppercase tracking-[0.1em] text-muted-foreground truncate hidden md:block">
                           {project.tech}
                         </span>
                       </div>
-                      <h3 className="text-heading text-balance group-hover/card:underline group-hover/card:underline-offset-4 group-hover/card:decoration-[var(--accent)]">
+                      <h3 className="text-sm sm:text-[15px] font-semibold leading-tight text-balance group-hover/card:underline group-hover/card:underline-offset-4 group-hover/card:decoration-[var(--accent)]">
                         {project.title}
                       </h3>
-                      <p className="text-body text-muted-foreground text-pretty mt-2 line-clamp-3 leading-relaxed">
+                      <p className="text-[10px] sm:text-[11px] text-muted-foreground text-pretty mt-0.5 line-clamp-4 leading-tight">
                         {(language === "en" && project.descriptionEn) ? project.descriptionEn : project.description}
                       </p>
                     </div>
@@ -450,8 +452,7 @@ export default function HomePage() {
 
                   {/* Actions */}
                   <div
-                    className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2"
-                    style={{ padding: `0 var(--cell-padding) var(--cell-padding)` }}
+                    className="mt-auto flex flex-wrap items-center gap-x-2.5 gap-y-1 px-2.5 pb-2 sm:px-3 sm:pb-2.5"
                   >
                     <Link
                       to={`/proyectos/${project.id}`}
