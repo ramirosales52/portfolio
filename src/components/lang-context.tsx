@@ -94,6 +94,12 @@ const translations = {
     "project.about": "/// ACERCA DEL PROYECTO",
     "project.features": "/// CARACTERÍSTICAS",
     "project.links": "/// LINKS",
+    "project.gallery": "/// GALERÍA",
+    "project.zoom": "Ampliar",
+    "project.image": "imagen",
+    "project.close": "Cerrar",
+    "project.previous": "Imagen anterior",
+    "project.next": "Imagen siguiente",
 
     // Not found
     "notFound.title": "404",
@@ -185,6 +191,12 @@ const translations = {
     "project.about": "/// ABOUT THE PROJECT",
     "project.features": "/// FEATURES",
     "project.links": "/// LINKS",
+    "project.gallery": "/// GALLERY",
+    "project.zoom": "Zoom",
+    "project.image": "image",
+    "project.close": "Close",
+    "project.previous": "Previous image",
+    "project.next": "Next image",
 
     // Not found
     "notFound.title": "404",

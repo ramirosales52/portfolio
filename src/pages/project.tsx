@@ -1,7 +1,8 @@
 import { useParams, Link } from "react-router-dom"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { getProject } from "@/data/projects"
 import { Layout } from "@/components/layout"
+import { Lightbox } from "@/components/lightbox"
 import { cn } from "@/lib/utils"
 import { Container, TuiSection } from "@/components/tui-grid"
 import { contactMailtoHref, site } from "@/data/site"
@@ -11,6 +12,7 @@ export default function ProjectPage() {
   const { id } = useParams<{ id: string }>()
   const project = id ? getProject(id) : undefined
   const { t, language } = useLanguage()
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
 
   const projectDesc = project ? (language === "en" && project.descriptionEn ? project.descriptionEn : project.description) : ""
   const projectLongDesc = project ? (language === "en" && project.longDescriptionEn ? project.longDescriptionEn : project.longDescription) : ""
@@ -75,6 +77,10 @@ export default function ProjectPage() {
     canonical.setAttribute("href", url)
   }, [project, projectDesc])
 
+  useEffect(() => {
+    setLightboxIndex(null)
+  }, [project?.id])
+
   if (!project) {
     return (
       <Layout>
@@ -94,6 +100,15 @@ export default function ProjectPage() {
   }
 
   const techItems = project.tech.split(" / ")
+
+  const lightboxImages = [
+    ...(project.preview ? [{ src: project.preview, alt: `Preview de ${project.title}` }] : []),
+    ...(project.images ?? []).map((img, i) => ({
+      src: img,
+      alt: `${project.title} screenshot ${i + 1}`,
+    })),
+  ]
+  const galleryOffset = project.preview ? 1 : 0
 
   return (
     <Layout>
@@ -150,15 +165,43 @@ export default function ProjectPage() {
                         </div>
                       )}
                     </div>
-                    <div className="relative border border-border bg-muted/5 aspect-[16/10] w-full flex items-center justify-center text-muted-foreground">
-                      <div className="flex flex-col items-center gap-2">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                          <rect x="2" y="4" width="20" height="16" rx="2" />
-                          <circle cx="9" cy="10" r="2" />
-                          <path d="M22 14l-4-4-6 6-4-4-4 4" />
-                        </svg>
-                        <span className="text-small">preview</span>
-                      </div>
+                    <div className="relative border border-border bg-muted/5 aspect-[16/10] w-full overflow-hidden">
+                      {project.preview ? (
+                        <button
+                          type="button"
+                          onClick={() => setLightboxIndex(0)}
+                          aria-label={`${t("project.zoom")}: ${project.title}`}
+                          className="group/preview relative block h-full w-full cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+                        >
+                          <img
+                            src={project.preview}
+                            alt={`Preview de ${project.title}`}
+                            className="h-full w-full object-cover transition-transform duration-300 group-hover/preview:scale-[1.02]"
+                            loading="eager"
+                            decoding="async"
+                          />
+                          <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background/50 opacity-0 transition-opacity duration-150 group-hover/preview:opacity-100">
+                            <span className="inline-flex items-center gap-1.5 border border-border bg-background px-2 py-1 text-[10px] uppercase tracking-wider text-foreground">
+                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7" />
+                                <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" />
+                              </svg>
+                              {t("project.zoom")}
+                            </span>
+                          </span>
+                        </button>
+                      ) : (
+                        <div className="flex h-full w-full items-center justify-center text-muted-foreground">
+                          <div className="flex flex-col items-center gap-2">
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                              <rect x="2" y="4" width="20" height="16" rx="2" />
+                              <circle cx="9" cy="10" r="2" />
+                              <path d="M22 14l-4-4-6 6-4-4-4 4" />
+                            </svg>
+                            <span className="text-small">preview</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -176,9 +219,9 @@ export default function ProjectPage() {
         <Container>
           <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-0">
             {/* Sidebar */}
-            <aside className="flex flex-col border-r border-border lg:sticky lg:top-[calc(var(--navbar-height)+1px)] h-fit">
+            <aside className="flex flex-col border-b border-border lg:border-b-0 h-fit">
               <div className="tui-cell border-b border-border">
-                <span className="text-label">{t("project.details")}</span>
+                <span className="text-label block">{t("project.details")}</span>
               </div>
               <div className="divide-y divide-border">
                 <div className="tui-cell flex flex-col gap-2">
@@ -208,28 +251,47 @@ export default function ProjectPage() {
             </aside>
 
             {/* Main */}
-            <main className="flex flex-col">
+            <main className="flex flex-col lg:border-l border-border">
               {/* Gallery */}
               {project.images && project.images.length > 0 ? (
                 <div className="tui-cell border-b border-border">
                   <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-3 text-label text-muted-foreground">
-                      <span>/// GALERÍA</span>
+                      <span>{t("project.gallery")}</span>
                       <span className="h-px flex-1 bg-border/70" />
+                      <span className="tabular-nums">{project.images.length.toString().padStart(2, "0")}</span>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {project.images.map((img, i) => (
-                        <div key={i} className={cn("relative overflow-hidden border border-border bg-muted/5", project.images && project.images.length === 1 ? "sm:col-span-2" : "")}>
+                        <button
+                          key={i}
+                          type="button"
+                          onClick={() => setLightboxIndex(galleryOffset + i)}
+                          aria-label={`${t("project.zoom")}: ${project.title} screenshot ${i + 1}`}
+                          className={cn(
+                            "group/img relative block overflow-hidden border border-border bg-muted/5 cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent",
+                            project.images && project.images.length === 1 ? "sm:col-span-2" : ""
+                          )}
+                        >
                           <div className="aspect-[16/10] sm:aspect-[16/9]">
                             <img
                               src={img}
                               alt={`${project.title} screenshot ${i + 1}`}
-                              className="w-full h-full object-cover"
+                              className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-[1.02]"
                               loading="lazy"
                               decoding="async"
                             />
                           </div>
-                        </div>
+                          <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background/50 opacity-0 transition-opacity duration-150 group-hover/img:opacity-100">
+                            <span className="inline-flex items-center gap-1.5 border border-border bg-background px-2 py-1 text-[10px] uppercase tracking-wider text-foreground">
+                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                                <circle cx="11" cy="11" r="7" />
+                                <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" />
+                              </svg>
+                              {t("project.zoom")}
+                            </span>
+                          </span>
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -238,7 +300,7 @@ export default function ProjectPage() {
                 <div className="tui-cell border-b border-border">
                   <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-3 text-label text-muted-foreground">
-                      <span>/// GALERÍA</span>
+                      <span>{t("project.gallery")}</span>
                       <span className="h-px flex-1 bg-border/70" />
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -266,7 +328,7 @@ export default function ProjectPage() {
                     <span>{t("project.about")}</span>
                     <span className="h-px flex-1 bg-border/70" />
                   </div>
-                  <p className="text-body text-muted-foreground text-pretty max-w-3xl leading-relaxed">
+                  <p className="text-body text-muted-foreground text-pretty leading-relaxed">
                     {projectLongDesc}
                   </p>
                 </div>
@@ -340,6 +402,19 @@ export default function ProjectPage() {
           </div>
         </div>
       </footer>
+
+      <Lightbox
+        images={lightboxImages}
+        index={lightboxIndex}
+        onIndexChange={setLightboxIndex}
+        onClose={() => setLightboxIndex(null)}
+        labels={{
+          image: t("project.image"),
+          close: t("project.close"),
+          previous: t("project.previous"),
+          next: t("project.next"),
+        }}
+      />
     </Layout>
   )
 }

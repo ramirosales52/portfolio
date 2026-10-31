@@ -1,3 +1,8 @@
+import elSupremoPreview from "@/assets/projects/el-supremo/preview.webp"
+import elSupremo01 from "@/assets/projects/el-supremo/01.webp"
+import elSupremo02 from "@/assets/projects/el-supremo/02.webp"
+import facturadorPreview from "@/assets/projects/facturador/preview.webp"
+
 export interface Project {
   id: string
   number: string
@@ -47,6 +52,7 @@ export const projects: Project[] = [
       "Digital certificate management for development and production environments"
     ],
     links: [{ label: "Facturador", href: "https://facturacil.com.ar" }],
+    preview: facturadorPreview,
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
     year: "2025",
@@ -148,6 +154,43 @@ export const projects: Project[] = [
     year: "2024",
     status: "En desarrollo",
     statusEn: "In development"
+  },
+  {
+    id: "el-supremo",
+    number: "05",
+    title: "El Supremo",
+    description: "E-commerce para carniceria con catalogo por categoria, combos personalizables y checkout con turnos de entrega. Panel admin con gestion de productos, pedidos y precios en tiempo real.",
+    descriptionEn: "E-commerce for a butcher shop with category catalog, customizable combos and checkout with delivery slots. Admin panel with product, order and price management in real time.",
+    tech: "React / Vite / Tailwind / Supabase / NestJS",
+    longDescription: "Tienda online para una carniceria con catalogo organizado por categorias (vacuno, cerdo, pollo, elaborados, chacinados y menudencias). Cada producto permite elegir corte, grosor y cantidad, y los combos se pueden personalizar componente por componente con imagen propia. El checkout maneja turnos de entrega con horario de corte, pago en efectivo o transferencia con descuento, y un panel de administracion protegido para gestionar productos, categorias, cortes, combos y pedidos con actualizacion en tiempo real.",
+    longDescriptionEn: "Online store for a butcher shop with a catalog organized by categories (beef, pork, chicken, prepared meats, cold cuts and offal). Each product lets you choose cut, thickness and quantity, and combos can be customized component by component with a custom image. Checkout handles delivery slots with a daily cutoff time, cash or bank transfer payment with a discount, and a protected admin panel to manage products, categories, cuts, combos and orders with real-time updates.",
+    features: [
+      "Catalogo por categorias con buscador, productos destacados y seccion de ofertas",
+      "Detalle de producto con seleccion de corte, grosor y cantidad",
+      "Combos personalizables con editor visual y subida de imagenes",
+      "Carrito persistente y checkout con turnos de entrega y cutoff horario",
+      "Pago en efectivo o transferencia bancaria con 5% de descuento",
+      "Panel admin con login, CRUD completo y gestion de pedidos en tiempo real"
+    ],
+    featuresEn: [
+      "Category catalog with search, featured products and sale section",
+      "Product detail with cut, thickness and quantity selection",
+      "Customizable combos with visual editor and image upload",
+      "Persistent cart and checkout with delivery slots and daily cutoff",
+      "Cash or bank transfer payment with 5% discount",
+      "Admin panel with login, full CRUD and real-time order management"
+    ],
+    links: [
+      { label: "El Supremo", href: "https://el-supremo.vercel.app" },
+      { label: "GitHub", href: "https://github.com/ramirosales52/el-supremo" }
+    ],
+    preview: elSupremoPreview,
+    images: [elSupremo01, elSupremo02],
+    role: "Full Stack Developer",
+    roleEn: "Full Stack Developer",
+    year: "2026",
+    status: "En producción",
+    statusEn: "In production"
   }
 ]
 
