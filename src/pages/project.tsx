@@ -1,9 +1,8 @@
 import { useParams, Link } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { getProject } from "@/data/projects"
 import { Layout } from "@/components/layout"
 import { Lightbox } from "@/components/lightbox"
-import { cn } from "@/lib/utils"
 import { Container, TuiSection } from "@/components/tui-grid"
 import { contactMailtoHref, site } from "@/data/site"
 import { useLanguage } from "@/components/lang-context"
@@ -13,6 +12,8 @@ export default function ProjectPage() {
   const project = id ? getProject(id) : undefined
   const { t, language } = useLanguage()
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const galleryViewportRef = useRef<HTMLDivElement>(null)
+  const [galleryScroll, setGalleryScroll] = useState({ prev: false, next: false })
 
   const projectDesc = project ? (language === "en" && project.descriptionEn ? project.descriptionEn : project.description) : ""
   const projectLongDesc = project ? (language === "en" && project.longDescriptionEn ? project.longDescriptionEn : project.longDescription) : ""
@@ -81,6 +82,32 @@ export default function ProjectPage() {
     setLightboxIndex(null)
   }, [project?.id])
 
+  // Track the gallery carousel scroll bounds to show/hide the arrows
+  useEffect(() => {
+    const viewport = galleryViewportRef.current
+    if (!viewport) return
+
+    const update = () => {
+      const maxScroll = viewport.scrollWidth - viewport.clientWidth
+      setGalleryScroll({
+        prev: viewport.scrollLeft > 2,
+        next: viewport.scrollLeft < maxScroll - 2,
+      })
+    }
+
+    update()
+    viewport.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    const observer = new ResizeObserver(update)
+    observer.observe(viewport)
+
+    return () => {
+      viewport.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+      observer.disconnect()
+    }
+  }, [project?.id, project?.images?.length])
+
   if (!project) {
     return (
       <Layout>
@@ -109,6 +136,20 @@ export default function ProjectPage() {
     })),
   ]
   const galleryOffset = project.preview ? 1 : 0
+
+  const scrollGallery = (direction: 1 | -1) => {
+    const viewport = galleryViewportRef.current
+    if (!viewport) return
+    const slides = Array.from(viewport.children) as HTMLElement[]
+    const current = viewport.scrollLeft
+    const target =
+      direction === 1
+        ? slides.find((slide) => slide.offsetLeft > current + 4)
+        : [...slides].reverse().find((slide) => slide.offsetLeft < current - 4)
+    if (!target) return
+    const smooth = !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    viewport.scrollTo({ left: target.offsetLeft, behavior: smooth ? "smooth" : "auto" })
+  }
 
   return (
     <Layout>
@@ -261,38 +302,68 @@ export default function ProjectPage() {
                       <span className="h-px flex-1 bg-border/70" />
                       <span className="tabular-nums">{project.images.length.toString().padStart(2, "0")}</span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {project.images.map((img, i) => (
-                        <button
-                          key={i}
-                          type="button"
-                          onClick={() => setLightboxIndex(galleryOffset + i)}
-                          aria-label={`${t("project.zoom")}: ${project.title} screenshot ${i + 1}`}
-                          className={cn(
-                            "group/img relative block overflow-hidden border border-border bg-muted/5 cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent",
-                            project.images && project.images.length === 1 ? "sm:col-span-2" : ""
-                          )}
-                        >
-                          <div className="aspect-[16/10] sm:aspect-[16/9]">
-                            <img
-                              src={img}
-                              alt={`${project.title} screenshot ${i + 1}`}
-                              className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-[1.02]"
-                              loading="lazy"
-                              decoding="async"
-                            />
-                          </div>
-                          <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background/50 opacity-0 transition-opacity duration-150 group-hover/img:opacity-100">
-                            <span className="inline-flex items-center gap-1.5 border border-border bg-background px-2 py-1 text-[10px] uppercase tracking-wider text-foreground">
-                              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
-                                <circle cx="11" cy="11" r="7" />
-                                <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" />
-                              </svg>
-                              {t("project.zoom")}
+                    <div className="relative">
+                      <div
+                        ref={galleryViewportRef}
+                        className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-smooth"
+                      >
+                        {project.images.map((img, i) => (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => setLightboxIndex(galleryOffset + i)}
+                            aria-label={`${t("project.zoom")}: ${project.title} screenshot ${i + 1}`}
+                            className="group/img relative block w-full shrink-0 snap-start overflow-hidden border border-border bg-muted/5 cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+                          >
+                            <div className="aspect-[16/10] sm:aspect-[16/9]">
+                              <img
+                                src={img}
+                                alt={`${project.title} screenshot ${i + 1}`}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-[1.02]"
+                                loading="lazy"
+                                decoding="async"
+                              />
+                            </div>
+                            <span className="pointer-events-none absolute inset-0 flex items-center justify-center bg-background/50 opacity-0 transition-opacity duration-150 group-hover/img:opacity-100">
+                              <span className="inline-flex items-center gap-1.5 border border-border bg-background px-2 py-1 text-[10px] uppercase tracking-wider text-foreground">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                                  <circle cx="11" cy="11" r="7" />
+                                  <path d="M20 20l-3.5-3.5M11 8v6M8 11h6" />
+                                </svg>
+                                {t("project.zoom")}
+                              </span>
                             </span>
-                          </span>
+                          </button>
+                        ))}
+                      </div>
+
+                      {project.images.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => scrollGallery(-1)}
+                          disabled={!galleryScroll.prev}
+                          aria-label={t("project.previous")}
+                          className="absolute left-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-border bg-background/90 text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-30 sm:h-10 sm:w-10"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                            <path d="M15 5l-7 7 7 7" />
+                          </svg>
                         </button>
-                      ))}
+                      )}
+
+                      {project.images.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => scrollGallery(1)}
+                          disabled={!galleryScroll.next}
+                          aria-label={t("project.next")}
+                          className="absolute right-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-border bg-background/90 text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-30 sm:h-10 sm:w-10"
+                        >
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                            <path d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

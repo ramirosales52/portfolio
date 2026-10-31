@@ -244,6 +244,16 @@
       var(--border) 5px);
 }
 
+/* Horizontal carousels: scrollable but without a visible scrollbar */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 @media (max-width: 640px) {
   .container-content {
     border-left: none;
