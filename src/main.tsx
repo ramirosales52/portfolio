@@ -1,4 +1,5 @@
 import { StrictMode, lazy, Suspense } from 'react'
+import { ArrowLeft } from 'lucide-react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { NavProvider } from './components/nav-context'
@@ -16,7 +17,9 @@ function NotFound() {
       <div className="text-center">
         <h1 className="text-display">404</h1>
         <p className="text-body text-muted-foreground mt-2">Página no encontrada / Page not found</p>
-        <a href="/" className="text-accent link-hover mt-4 inline-block">← Volver al inicio / Back to home</a>
+        <a href="/" className="text-foreground link-hover mt-4 inline-flex items-center gap-1.5">
+          <ArrowLeft size={14} aria-hidden="true" /> Volver al inicio / Back to home
+        </a>
       </div>
     </div>
   )

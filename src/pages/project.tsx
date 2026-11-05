@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
+import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { getProject } from "@/data/projects"
 import { Layout } from "@/components/layout"
 import { Lightbox } from "@/components/lightbox"
@@ -116,7 +117,8 @@ export default function ProjectPage() {
           <Container>
             <div className="tui-cell border-b border-border">
               <p className="text-muted-foreground">{t("project.notFound")}</p>
-              <Link to="/" className="text-accent link-hover mt-4 inline-block">
+              <Link to="/" className="inline-flex items-center gap-1.5 text-foreground link-hover mt-4">
+                <ArrowLeft size={14} aria-hidden="true" />
                 {t("project.backHome")}
               </Link>
             </div>
@@ -160,7 +162,7 @@ export default function ProjectPage() {
         <Container>
           <div className="tui-cell">
             <Link to="/#proyectos" className="text-small text-muted-foreground link-hover inline-flex items-center gap-1.5">
-              <span className="text-accent">←</span>
+              <ArrowLeft size={14} aria-hidden="true" />
               <span>{t("project.back")}</span>
             </Link>
           </div>
@@ -179,9 +181,9 @@ export default function ProjectPage() {
               <div className="absolute -bottom-px left-6 right-6 h-px bg-border" />
               <div className="absolute -left-px top-6 bottom-6 w-px bg-border" />
               <div className="absolute -right-px top-6 bottom-6 w-px bg-border" />
-              <div className="px-6 sm:px-10 lg:px-14 py-10 sm:py-14 lg:py-18">
+              <div className="px-5 sm:px-8 lg:px-10 py-8 sm:py-10 lg:py-12">
                 <div className="flex flex-col gap-6">
-                  <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_380px] gap-8 lg:gap-12 items-start">
+                  <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] gap-8 lg:gap-10 items-start">
                     <div className="flex flex-col gap-5">
                       <h1 className="text-display text-balance leading-[0.9]">{project.title}</h1>
                       {projectDesc && (
@@ -199,7 +201,7 @@ export default function ProjectPage() {
                               rel="noopener noreferrer"
                               className="tui-button"
                             >
-                              <span className="text-accent">→</span>
+                              <ArrowRight size={13} aria-hidden="true" />
                               {link.label}
                             </a>
                           ))}
@@ -212,7 +214,7 @@ export default function ProjectPage() {
                           type="button"
                           onClick={() => setLightboxIndex(0)}
                           aria-label={`${t("project.zoom")}: ${project.title}`}
-                          className="group/preview relative block h-full w-full cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+                          className="group/preview relative block h-full w-full cursor-zoom-in overflow-hidden focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-foreground"
                         >
                           <img
                             src={project.preview}
@@ -313,7 +315,7 @@ export default function ProjectPage() {
                             type="button"
                             onClick={() => setLightboxIndex(galleryOffset + i)}
                             aria-label={`${t("project.zoom")}: ${project.title} screenshot ${i + 1}`}
-                            className="group/img relative block w-full shrink-0 snap-start overflow-hidden border border-border bg-muted/5 cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-accent"
+                            className="group/img relative block w-full shrink-0 snap-start overflow-hidden border border-border bg-muted/5 cursor-zoom-in focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-foreground"
                           >
                             <div className="aspect-[16/10] sm:aspect-[16/9]">
                               <img
@@ -343,11 +345,9 @@ export default function ProjectPage() {
                           onClick={() => scrollGallery(-1)}
                           disabled={!galleryScroll.prev}
                           aria-label={t("project.previous")}
-                          className="absolute left-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-border bg-background/90 text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-30 sm:h-10 sm:w-10"
+                          className="absolute left-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-border bg-background/90 text-foreground transition-colors hover:border-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground disabled:pointer-events-none disabled:opacity-30 sm:h-10 sm:w-10"
                         >
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                            <path d="M15 5l-7 7 7 7" />
-                          </svg>
+                          <ChevronLeft size={16} aria-hidden="true" />
                         </button>
                       )}
 
@@ -357,11 +357,9 @@ export default function ProjectPage() {
                           onClick={() => scrollGallery(1)}
                           disabled={!galleryScroll.next}
                           aria-label={t("project.next")}
-                          className="absolute right-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-border bg-background/90 text-foreground transition-colors hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-30 sm:h-10 sm:w-10"
+                          className="absolute right-2 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center border border-border bg-background/90 text-foreground transition-colors hover:border-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground disabled:pointer-events-none disabled:opacity-30 sm:h-10 sm:w-10"
                         >
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                            <path d="M9 5l7 7-7 7" />
-                          </svg>
+                          <ChevronRight size={16} aria-hidden="true" />
                         </button>
                       )}
                     </div>
@@ -420,7 +418,7 @@ export default function ProjectPage() {
                       <div key={i} className="group relative border border-border overflow-hidden">
                         <div className="absolute inset-y-0 left-0 w-px bg-border" />
                         <div className="flex items-start gap-4 px-5 sm:px-6 py-5 sm:py-6">
-                          <span className="text-accent text-small tabular-nums shrink-0 mt-0.5">
+                          <span className="text-foreground text-small tabular-nums shrink-0 mt-0.5">
                             {String(i + 1).padStart(2, "0")}
                           </span>
                           <p className="text-body text-muted-foreground text-pretty leading-relaxed">{feature}</p>

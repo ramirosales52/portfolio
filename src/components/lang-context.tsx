@@ -71,7 +71,7 @@ const translations = {
     "projects.title": "/// PROYECTOS",
     "projects.viewProject": "Ver proyecto",
     "projects.openWeb": "Abrir en la web",
-    "projects.viewProjectArrow": "VER PROYECTO →",
+    "projects.viewProjectArrow": "VER PROYECTO",
 
     // Contact
     "contact.title": "trabajemos juntos :)",
@@ -81,11 +81,13 @@ const translations = {
     "contact.invalidEmail": "Ingresá un email válido.",
     "contact.opening": "Abriendo tu cliente de correo. Si no pasa nada, escribime a",
     "contact.orWrite": "o escribime directo a",
+    "contact.copyEmail": "copiar",
+    "contact.copied": "copiado",
 
     // Project page
     "project.back": "Volver a proyectos",
     "project.notFound": "Proyecto no encontrado",
-    "project.backHome": "← Volver al inicio",
+    "project.backHome": "Volver al inicio",
     "project.details": "/// DETALLES",
     "project.stack": "stack",
     "project.role": "rol",
@@ -104,7 +106,7 @@ const translations = {
     // Not found
     "notFound.title": "404",
     "notFound.message": "Página no encontrada",
-    "notFound.back": "← Volver al inicio",
+    "notFound.back": "Volver al inicio",
   },
   en: {
     // Nav
@@ -168,7 +170,7 @@ const translations = {
     "projects.title": "/// PROJECTS",
     "projects.viewProject": "View project",
     "projects.openWeb": "Open website",
-    "projects.viewProjectArrow": "VIEW PROJECT →",
+    "projects.viewProjectArrow": "VIEW PROJECT",
 
     // Contact
     "contact.title": "let's work together :)",
@@ -178,11 +180,13 @@ const translations = {
     "contact.invalidEmail": "Enter a valid email.",
     "contact.opening": "Opening your mail client. If nothing happens, write me at",
     "contact.orWrite": "or write me directly at",
+    "contact.copyEmail": "copy",
+    "contact.copied": "copied",
 
     // Project page
     "project.back": "Back to projects",
     "project.notFound": "Project not found",
-    "project.backHome": "← Back to home",
+    "project.backHome": "Back to home",
     "project.details": "/// DETAILS",
     "project.stack": "stack",
     "project.role": "role",
@@ -201,7 +205,7 @@ const translations = {
     // Not found
     "notFound.title": "404",
     "notFound.message": "Page not found",
-    "notFound.back": "← Back to home",
+    "notFound.back": "Back to home",
   }
 } as const
 

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useCallback, Suspense, lazy, useMemo } from "react"
 import { Link } from "react-router-dom"
+import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { Layout } from "@/components/layout"
 import { ScrambleText } from "@/components/scramble-text"
 import { useNav } from "@/components/nav-context"
@@ -137,7 +138,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0 relative">
         <Container corners={["bl", "br"]} className="h-full relative">
-          <div className="tui-cell h-full flex flex-col justify-center relative">
+          <div className="h-full flex flex-col justify-center relative px-4 py-5 sm:px-6 sm:py-6">
 
             <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
               <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
@@ -155,9 +156,9 @@ export default function HomePage() {
             <img
               src={profileImage}
               alt="Ramiro Rosales"
-              width="144"
-              height="144"
-              className="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-none border border-border relative z-10"
+              width="208"
+              height="208"
+              className="w-40 h-40 sm:w-52 sm:h-52 object-cover rounded-none border border-border relative z-10"
             />
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] mt-8 relative z-10">
               RAMIRO ROSALES
@@ -422,10 +423,7 @@ export default function HomePage() {
                         <div className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 transition-opacity duration-150 group-hover/card:opacity-100">
                           <span className="inline-flex items-center gap-1.5 rounded-md border border-border bg-background px-2 py-1 text-[10px] text-foreground">
                             {t("projects.viewProject")}
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                              <path d="M7 17L17 7" />
-                              <path d="M7 7h10v10" />
-                            </svg>
+                            <ArrowUpRight size={10} strokeWidth={2} aria-hidden="true" />
                           </span>
                         </div>
                       </div>
@@ -441,7 +439,7 @@ export default function HomePage() {
                           {project.tech}
                         </span>
                       </div>
-                      <h3 className="text-sm sm:text-[15px] font-semibold leading-tight text-balance group-hover/card:underline group-hover/card:underline-offset-4 group-hover/card:decoration-[var(--accent)]">
+                      <h3 className="text-sm sm:text-[15px] font-semibold leading-tight text-balance group-hover/card:underline group-hover/card:underline-offset-4 group-hover/card:decoration-foreground">
                         {project.title}
                       </h3>
                       <p className="text-[10px] sm:text-[11px] text-muted-foreground text-pretty mt-0.5 line-clamp-4 leading-tight">
@@ -456,18 +454,20 @@ export default function HomePage() {
                   >
                     <Link
                       to={`/proyectos/${project.id}`}
-                      className="text-small text-foreground group-hover/card:translate-x-1 transition-transform duration-150"
+                      className="inline-flex items-center gap-1 text-small text-foreground group-hover/card:translate-x-1 transition-transform duration-150"
                     >
                       {t("projects.viewProjectArrow")}
+                      <ArrowRight size={12} aria-hidden="true" />
                     </Link>
                     {project.links.length > 0 && (
                       <a
                         href={project.links[0].href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-small text-muted-foreground link-hover"
+                        className="inline-flex items-center gap-1 text-small text-muted-foreground link-hover"
                       >
-                        {t("projects.openWeb")} ↗
+                        {t("projects.openWeb")}
+                        <ArrowUpRight size={12} aria-hidden="true" />
                       </a>
                     )}
                   </div>

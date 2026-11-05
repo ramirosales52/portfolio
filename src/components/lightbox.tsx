@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef } from "react"
 import { createPortal } from "react-dom"
+import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export interface LightboxImage {
@@ -130,9 +131,11 @@ export function Lightbox({ images, index, onIndexChange, onClose, labels }: Ligh
           variant === "side" && (isPrev ? "left-2 sm:left-6" : "right-2 sm:right-6")
         )}
       >
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-          <path d={isPrev ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7"} />
-        </svg>
+        {isPrev ? (
+          <ChevronLeft size={18} aria-hidden="true" />
+        ) : (
+          <ChevronRight size={18} aria-hidden="true" />
+        )}
       </button>
     )
   }
@@ -166,9 +169,7 @@ export function Lightbox({ images, index, onIndexChange, onClose, labels }: Ligh
           aria-label={labels.close}
           className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/20 bg-black/40 text-white/70 transition-colors hover:border-white/60 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
         >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-            <path d="M3 3l8 8M11 3l-8 8" />
-          </svg>
+          <X size={16} aria-hidden="true" />
         </button>
       </div>
 

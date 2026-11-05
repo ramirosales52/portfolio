@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
+import { Check, Copy } from "lucide-react"
 import { Container } from "@/components/tui-grid"
-import { site } from "@/data/site"
+import { mailtoHref, site } from "@/data/site"
 import { cn } from "@/lib/utils"
 import { useLanguage } from "@/components/lang-context"
 
@@ -80,14 +81,26 @@ export function ContactFooter({ className }: ContactFooterProps) {
             <div>
               <h2 className="text-display">{t("contact.title")}</h2>
 
-              <div className="flex flex-col items-center gap-3 mt-8">
+              <div className="mt-8 flex flex-row items-center justify-center gap-2 sm:gap-4">
+                <a href={mailtoHref} className="email-link text-lg sm:text-2xl lowercase">
+                  {site.email}
+                </a>
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="tui-button !bg-foreground !text-background border-foreground hover:!bg-background hover:!text-foreground"
+                  aria-live="polite"
+                  aria-label={copied ? t("contact.copied") : t("contact.copyEmail")}
+                  className={cn(
+                    "tui-button w-28 shrink-0 justify-center uppercase !bg-foreground !text-background border-foreground hover:!bg-background hover:!text-foreground sm:w-32",
+                    copied && "!bg-background !text-foreground !border-foreground"
+                  )}
                 >
-                  <span>→</span>
-                  {copied ? (language === "es" ? "COPIADO" : "COPIED") : "CORREO"}
+                  {copied ? (
+                    <Check size={14} strokeWidth={2.5} className="copy-tick" aria-hidden="true" />
+                  ) : (
+                    <Copy size={14} strokeWidth={2} aria-hidden="true" />
+                  )}
+                  {copied ? t("contact.copied") : t("contact.copyEmail")}
                 </button>
               </div>
             </div>

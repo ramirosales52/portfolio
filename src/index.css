@@ -391,14 +391,14 @@
   left: 0;
   width: 100%;
   height: 1px;
-  background-color: var(--accent);
+  background-color: var(--foreground);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.2s ease;
 }
 
 .link-hover:hover {
-  color: var(--accent);
+  color: var(--foreground);
 }
 
 .link-hover:hover::after {
@@ -408,6 +408,56 @@
 @media (prefers-reduced-motion: reduce) {
   .link-hover::after {
     transition: none;
+  }
+}
+
+/* Email link */
+.email-link {
+  color: var(--foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.email-link:hover,
+.email-link:focus-visible,
+.email-link:active {
+  color: var(--foreground);
+  text-decoration-color: var(--foreground);
+}
+
+/* Copy confirmation tick */
+@keyframes copy-tick-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.copy-tick {
+  display: inline-block;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: copy-tick-pop 0.25s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .email-link {
+    transition: none;
+  }
+
+  .copy-tick {
+    animation: none;
   }
 }
 
@@ -436,17 +486,18 @@
 }
 
 .tui-button:hover {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: var(--accent-foreground);
+  background: var(--foreground);
+  border-color: var(--foreground);
+  color: var(--background);
 }
 
 /* Focus states for accessibility */
 .tui-button:focus-visible,
 .project-card:focus-visible,
 .link-hover:focus-visible,
-.nav-link:focus-visible {
-  outline: 2px solid var(--accent);
+.nav-link:focus-visible,
+.email-link:focus-visible {
+  outline: 2px solid var(--foreground);
   outline-offset: 2px;
 }
 
@@ -511,8 +562,8 @@
 }
 
 .modal-close:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--foreground);
+  color: var(--foreground);
 }
 
 /* ============================================
