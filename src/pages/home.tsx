@@ -139,8 +139,8 @@ export default function HomePage() {
       <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0 relative">
         <Container corners={["bl", "br"]} className="h-full relative">
           <div className="h-full flex flex-col justify-center relative px-4 py-5 sm:px-6 sm:py-6">
-
             <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
+              <div className="tui-divider border-b-border border-b" />
               <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
                 <Dither
                   waveColor={ditherColors.waveColor}
@@ -152,6 +152,7 @@ export default function HomePage() {
                   className="w-full h-full"
                 />
               </Suspense>
+              <div className="tui-divider border-border border" />
             </div>
             <img
               src={profileImage}
