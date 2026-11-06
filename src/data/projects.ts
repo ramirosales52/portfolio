@@ -2,6 +2,16 @@ import elSupremoPreview from "@/assets/projects/el-supremo/preview.webp"
 import elSupremo01 from "@/assets/projects/el-supremo/01.webp"
 import elSupremo02 from "@/assets/projects/el-supremo/02.webp"
 import facturadorPreview from "@/assets/projects/facturador/preview.webp"
+import facturador01 from "@/assets/projects/facturador/01.webp"
+import facturador02 from "@/assets/projects/facturador/02.webp"
+import facturador03 from "@/assets/projects/facturador/03.webp"
+import facturador04 from "@/assets/projects/facturador/04.webp"
+import facturador05 from "@/assets/projects/facturador/05.webp"
+import facturador06 from "@/assets/projects/facturador/06.webp"
+import facturador07 from "@/assets/projects/facturador/07.webp"
+import facturador08 from "@/assets/projects/facturador/08.webp"
+import facturador09 from "@/assets/projects/facturador/09.webp"
+import facturador10 from "@/assets/projects/facturador/10.webp"
 
 export interface Project {
   id: string
@@ -51,8 +61,20 @@ export const projects: Project[] = [
       "Automatic VAT calculation with multiple tax rates per item",
       "Digital certificate management for development and production environments"
     ],
-    links: [{ label: "Facturador", href: "https://facturacil.com.ar" }],
+    links: [],
     preview: facturadorPreview,
+    images: [
+      facturador01,
+      facturador02,
+      facturador03,
+      facturador04,
+      facturador05,
+      facturador06,
+      facturador07,
+      facturador08,
+      facturador09,
+      facturador10
+    ],
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
     year: "2025",

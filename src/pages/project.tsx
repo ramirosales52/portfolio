@@ -321,7 +321,7 @@ export default function ProjectPage() {
                               <img
                                 src={img}
                                 alt={`${project.title} screenshot ${i + 1}`}
-                                className="w-full h-full object-cover transition-transform duration-300 group-hover/img:scale-[1.02]"
+                                className="w-full h-full object-contain transition-transform duration-300 group-hover/img:scale-[1.02]"
                                 loading="lazy"
                                 decoding="async"
                               />
