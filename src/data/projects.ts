@@ -107,36 +107,38 @@ export const projects: Project[] = [
     statusEn: "In production"
   },
   {
-    id: "agenda",
+    id: "myminformatica",
     number: "02",
-    title: "Agenda",
-    description: "App de escritorio para gestion de turnos de salon de belleza. Agenda inteligente, gestion de clientes y tratamientos, con recordatorios automaticos por WhatsApp.",
-    descriptionEn: "Desktop app for managing appointments in beauty salons. Smart agenda, client and treatment management, with automatic WhatsApp reminders.",
-    tech: "Electron / React / NestJS / SQLite",
-    longDescription: "Sistema de gestion integral para salones de belleza. Permite administrar turnos con recomendacion automatica de horarios segun disponibilidad y duracion de tratamientos, gestionar clientes con historial de pagos y deudas, y enviar recordatorios y confirmaciones de turnos automaticamente por WhatsApp.",
-    longDescriptionEn: "Comprehensive management system for beauty salons. Allows managing appointments with automatic schedule recommendations based on availability and treatment duration, managing clients with payment history and debt tracking, and sending automatic appointment reminders and confirmations via WhatsApp.",
+    title: "MyM Informática",
+    description: "App web para gestionar turnos y cobros de un equipo de servicio tecnico remoto. Agenda compartida, clientes, pagos parciales y comprobantes para compartir por WhatsApp.",
+    descriptionEn: "Web app for managing appointments and payments for a remote technical support team. Shared calendar, clients, partial payments and receipts to share via WhatsApp.",
+    tech: "React / TypeScript / Tailwind / Supabase / PostgreSQL",
+    longDescription: "Sistema de gestion para un equipo de servicio tecnico remoto, desarrollado con React, TypeScript y Supabase y desplegado en Vercel. Centraliza clientes, servicios y turnos en una agenda compartida con vistas diaria, semanal y mensual, sincronizada en tiempo real. Permite registrar anticipos, pagos parciales, devoluciones y correcciones con historial auditable, generar comprobantes PNG/PDF y compartirlos por WhatsApp mediante enlaces temporales a archivos privados. Incluye reportes y exportacion CSV, con importes en ARS y USD separados.",
+    longDescriptionEn: "Management system for a remote technical support team, built with React, TypeScript and Supabase and deployed on Vercel. Centralizes clients, services and appointments in a shared calendar with daily, weekly and monthly views, synchronized in real time. Supports deposits, partial payments, refunds and corrections with an auditable history, generates PNG/PDF receipts and shares them via WhatsApp using temporary links to private files. Includes reports and CSV exports, keeping ARS and USD amounts separate.",
     features: [
-      "Agenda de turnos con recomendacion automatica segun disponibilidad y duracion",
-      "Gestion de clientes con historial de pagos y seguimiento de deudas",
-      "Integracion con WhatsApp para recordatorios y confirmacion de turnos automatica",
-      "Calendario visual con horarios configurables por temporada y dias especiales",
-      "Catalogo de tratamientos con historial de precios",
-      "Dashboard con estadisticas diarias de turnos, ingresos y confirmaciones pendientes"
+      "Agenda diaria, semanal y mensual con responsables y control de superposiciones",
+      "Clientes e historial compartidos con sincronizacion en tiempo real",
+      "Anticipos, pagos parciales, devoluciones y correcciones con historial auditable",
+      "Comprobantes PNG/PDF y enlaces privados temporales para compartir por WhatsApp",
+      "Catalogo de servicios y plantillas de mensajes con variables",
+      "Reportes y exportacion CSV con importes en ARS y USD separados"
     ],
     featuresEn: [
-      "Appointment agenda with automatic recommendations based on availability and duration",
-      "Client management with payment history and debt tracking",
-      "WhatsApp integration for automatic appointment reminders and confirmations",
-      "Visual calendar with configurable hours by season and special days",
-      "Treatment catalog with price history",
-      "Dashboard with daily stats for appointments, income and pending confirmations"
+      "Daily, weekly and monthly calendar with staff assignment and overlap prevention",
+      "Shared clients and history with real-time synchronization",
+      "Deposits, partial payments, refunds and corrections with an auditable history",
+      "PNG/PDF receipts and temporary private links to share via WhatsApp",
+      "Service catalog and message templates with variables",
+      "Reports and CSV exports with separate ARS and USD amounts"
     ],
-    links: [],
+    links: [
+      { label: "GitHub", href: "https://github.com/ramirosales52/myminformatica" }
+    ],
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
-    year: "2024",
-    status: "En desarrollo",
-    statusEn: "In development"
+    year: "2026",
+    status: "En producción",
+    statusEn: "In production"
   },
   {
     id: "patitas",
