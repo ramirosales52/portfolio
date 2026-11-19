@@ -136,9 +136,9 @@ export default function HomePage() {
   return (
     <Layout>
       {/* Hero Section */}
-      <TuiSection ref={heroRef} data-section="hero" className="h-dvh border-t-0 relative">
-        <Container corners={["bl", "br"]} className="h-full relative">
-          <div className="h-full flex flex-col justify-center relative px-4 py-5 sm:px-6 sm:py-6">
+      <TuiSection ref={heroRef} data-section="hero" className="min-h-dvh flex flex-col border-t-0 relative">
+        <Container corners={["bl", "br"]} className="w-full flex flex-1 flex-col relative">
+          <div className="flex flex-1 flex-col justify-center relative px-4 pt-[calc(var(--navbar-height)+1.5rem)] pb-6 sm:px-6">
             <div className="absolute inset-x-0 top-[20%] bottom-[15%] -z-10 border-t border-b border-border">
               <div className="tui-divider border-b-border border-b" />
               <Suspense fallback={<div className="w-full h-full bg-muted/10" />}>
@@ -159,9 +159,9 @@ export default function HomePage() {
               alt="Ramiro Rosales"
               width="208"
               height="208"
-              className="w-40 h-40 sm:w-52 sm:h-52 object-cover rounded-none border border-border relative z-10"
+              className="size-[clamp(6rem,18dvh,9rem)] shrink-0 object-cover rounded-none border border-border relative z-10"
             />
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-[-0.02em] mt-8 relative z-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-[-0.02em] mt-6 relative z-10">
               RAMIRO ROSALES
             </h1>
 
@@ -175,8 +175,18 @@ export default function HomePage() {
               //////////////////
             </div>
 
+            <div className="flex flex-wrap gap-3 mt-6 relative z-10">
+              <a href="#proyectos" className="tui-button tui-button-filled min-h-11">
+                {t("nav.projects")}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </a>
+              <a href="#contacto" className="tui-button min-h-11">
+                {t("nav.contact")}
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+              </a>
+            </div>
 
-            <div className="flex flex-wrap gap-6 sm:gap-8 mt-8 text-foreground relative z-10">
+            <div className="flex flex-wrap gap-6 sm:gap-8 mt-6 text-foreground relative z-10">
               <ScrambleText
                 as="a"
                 href={site.github}
