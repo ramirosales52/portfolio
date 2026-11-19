@@ -12,7 +12,7 @@ interface ScrambleTextProps {
   /** Keep scrambling while hovering */
   loop?: boolean
   /** Auto scramble on mount or when this prop changes */
-  autoScramble?: any
+  autoScramble?: number
 }
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*"

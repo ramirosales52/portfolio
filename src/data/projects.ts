@@ -1,6 +1,21 @@
 import elSupremoPreview from "@/assets/projects/el-supremo/preview.webp"
 import elSupremo01 from "@/assets/projects/el-supremo/01.webp"
 import elSupremo02 from "@/assets/projects/el-supremo/02.webp"
+import elSupremo03 from "@/assets/projects/el-supremo/03.webp"
+import elSupremo04 from "@/assets/projects/el-supremo/04.webp"
+import elSupremo05 from "@/assets/projects/el-supremo/05.webp"
+import elSupremo06 from "@/assets/projects/el-supremo/06.webp"
+import elSupremo07 from "@/assets/projects/el-supremo/07.webp"
+import elSupremo08 from "@/assets/projects/el-supremo/08.webp"
+import elSupremo09 from "@/assets/projects/el-supremo/09.webp"
+import elSupremo10 from "@/assets/projects/el-supremo/10.webp"
+import elSupremo11 from "@/assets/projects/el-supremo/11.webp"
+import elSupremo12 from "@/assets/projects/el-supremo/12.webp"
+import elSupremo13 from "@/assets/projects/el-supremo/13.webp"
+import elSupremo14 from "@/assets/projects/el-supremo/14.webp"
+import elSupremo15 from "@/assets/projects/el-supremo/15.webp"
+import elSupremo16 from "@/assets/projects/el-supremo/16.webp"
+import elSupremo17 from "@/assets/projects/el-supremo/17.webp"
 import facturadorPreview from "@/assets/projects/facturador/preview.webp"
 import facturador01 from "@/assets/projects/facturador/01.webp"
 import facturador02 from "@/assets/projects/facturador/02.webp"
@@ -12,6 +27,16 @@ import facturador07 from "@/assets/projects/facturador/07.webp"
 import facturador08 from "@/assets/projects/facturador/08.webp"
 import facturador09 from "@/assets/projects/facturador/09.webp"
 import facturador10 from "@/assets/projects/facturador/10.webp"
+import gastosPreview from "@/assets/projects/gastos/preview.webp"
+import gastos01 from "@/assets/projects/gastos/01.webp"
+import gastos02 from "@/assets/projects/gastos/02.webp"
+import gastos03 from "@/assets/projects/gastos/03.webp"
+import gastos04 from "@/assets/projects/gastos/04.webp"
+import gastos05 from "@/assets/projects/gastos/05.webp"
+import gastos06 from "@/assets/projects/gastos/06.webp"
+import gastos07 from "@/assets/projects/gastos/07.webp"
+import gastos08 from "@/assets/projects/gastos/08.webp"
+import gastos09 from "@/assets/projects/gastos/09.webp"
 
 export interface Project {
   id: string
@@ -171,6 +196,18 @@ export const projects: Project[] = [
       "Support for multiple authorized users by WhatsApp number"
     ],
     links: [],
+    preview: gastosPreview,
+    images: [
+      gastos01,
+      gastos02,
+      gastos03,
+      gastos04,
+      gastos05,
+      gastos06,
+      gastos07,
+      gastos08,
+      gastos09
+    ],
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
     year: "2024",
@@ -207,7 +244,25 @@ export const projects: Project[] = [
       { label: "GitHub", href: "https://github.com/ramirosales52/el-supremo" }
     ],
     preview: elSupremoPreview,
-    images: [elSupremo01, elSupremo02],
+    images: [
+      elSupremo01,
+      elSupremo02,
+      elSupremo03,
+      elSupremo04,
+      elSupremo05,
+      elSupremo06,
+      elSupremo07,
+      elSupremo08,
+      elSupremo09,
+      elSupremo10,
+      elSupremo11,
+      elSupremo12,
+      elSupremo13,
+      elSupremo14,
+      elSupremo15,
+      elSupremo16,
+      elSupremo17
+    ],
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
     year: "2026",
