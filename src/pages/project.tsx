@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom"
 import { useEffect, useRef, useState } from "react"
-import { ArrowLeft, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowLeft, ChevronLeft, ChevronRight, Link2 } from "lucide-react"
 import { getProject } from "@/data/projects"
 import { Layout } from "@/components/layout"
 import { Lightbox } from "@/components/lightbox"
@@ -199,9 +199,15 @@ export default function ProjectPage() {
                               href={link.href}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="tui-button"
+                              className={`tui-button${new URL(link.href).hostname === "github.com" ? " tui-button-filled" : ""}`}
                             >
-                              <ArrowRight size={13} aria-hidden="true" />
+                              {new URL(link.href).hostname === "github.com" ? (
+                                <svg width={13} height={13} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                  <path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.104.768-.244.768-.542 0-.267-.01-.974-.015-1.912-3.13.68-3.791-1.508-3.791-1.508-.512-1.3-1.25-1.646-1.25-1.646-1.022-.699.077-.685.077-.685 1.13.08 1.725 1.16 1.725 1.16 1.004 1.72 2.633 1.223 3.274.935.102-.727.393-1.223.715-1.504-2.498-.284-5.124-1.249-5.124-5.563 0-1.229.44-2.233 1.16-3.02-.116-.285-.503-1.43.11-2.98 0 0 .945-.302 3.094 1.153A10.79 10.79 0 0 1 12 6.182c.956.004 1.918.13 2.816.379 2.148-1.455 3.092-1.153 3.092-1.153.615 1.55.228 2.695.112 2.98.722.787 1.158 1.791 1.158 3.02 0 4.326-2.63 5.276-5.136 5.555.404.35.765 1.042.765 2.1 0 1.516-.014 2.74-.014 3.112 0 .3.203.65.774.54A11.252 11.252 0 0 0 12 .75Z" />
+                                </svg>
+                              ) : (
+                                <Link2 size={13} aria-hidden="true" />
+                              )}
                               {link.label}
                             </a>
                           ))}
