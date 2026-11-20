@@ -16,6 +16,7 @@ import elSupremo14 from "@/assets/projects/el-supremo/14.webp"
 import elSupremo15 from "@/assets/projects/el-supremo/15.webp"
 import elSupremo16 from "@/assets/projects/el-supremo/16.webp"
 import elSupremo17 from "@/assets/projects/el-supremo/17.webp"
+import elSupremo18 from "@/assets/projects/el-supremo/18.webp"
 import facturadorPreview from "@/assets/projects/facturador/preview.webp"
 import facturador01 from "@/assets/projects/facturador/01.webp"
 import facturador02 from "@/assets/projects/facturador/02.webp"
@@ -27,6 +28,7 @@ import facturador07 from "@/assets/projects/facturador/07.webp"
 import facturador08 from "@/assets/projects/facturador/08.webp"
 import facturador09 from "@/assets/projects/facturador/09.webp"
 import facturador10 from "@/assets/projects/facturador/10.webp"
+import facturador11 from "@/assets/projects/facturador/11.webp"
 import gastosPreview from "@/assets/projects/gastos/preview.webp"
 import gastos01 from "@/assets/projects/gastos/01.webp"
 import gastos02 from "@/assets/projects/gastos/02.webp"
@@ -37,6 +39,21 @@ import gastos06 from "@/assets/projects/gastos/06.webp"
 import gastos07 from "@/assets/projects/gastos/07.webp"
 import gastos08 from "@/assets/projects/gastos/08.webp"
 import gastos09 from "@/assets/projects/gastos/09.webp"
+import gastos10 from "@/assets/projects/gastos/10.webp"
+import myminformaticaPreview from "@/assets/projects/myminformatica/preview.webp"
+import myminformatica01 from "@/assets/projects/myminformatica/01.webp"
+import myminformatica02 from "@/assets/projects/myminformatica/02.webp"
+import myminformatica03 from "@/assets/projects/myminformatica/03.webp"
+import myminformatica04 from "@/assets/projects/myminformatica/04.webp"
+import myminformatica05 from "@/assets/projects/myminformatica/05.webp"
+import myminformatica06 from "@/assets/projects/myminformatica/06.webp"
+import myminformatica07 from "@/assets/projects/myminformatica/07.webp"
+import myminformatica08 from "@/assets/projects/myminformatica/08.webp"
+import myminformatica09 from "@/assets/projects/myminformatica/09.webp"
+import myminformatica10 from "@/assets/projects/myminformatica/10.webp"
+import myminformatica11 from "@/assets/projects/myminformatica/11.webp"
+import myminformatica12 from "@/assets/projects/myminformatica/12.webp"
+import patitasPreview from "@/assets/projects/patitas/preview.webp"
 
 export interface Project {
   id: string
@@ -98,7 +115,8 @@ export const projects: Project[] = [
       facturador07,
       facturador08,
       facturador09,
-      facturador10
+      facturador10,
+      facturador11
     ],
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
@@ -134,6 +152,21 @@ export const projects: Project[] = [
     links: [
       { label: "GitHub", href: "https://github.com/ramirosales52/myminformatica" }
     ],
+    preview: myminformaticaPreview,
+    images: [
+      myminformatica01,
+      myminformatica02,
+      myminformatica03,
+      myminformatica04,
+      myminformatica05,
+      myminformatica06,
+      myminformatica07,
+      myminformatica08,
+      myminformatica09,
+      myminformatica10,
+      myminformatica11,
+      myminformatica12
+    ],
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
     year: "2026",
@@ -166,6 +199,7 @@ export const projects: Project[] = [
       "Native interface with Expo and React Native"
     ],
     links: [],
+    preview: patitasPreview,
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
     year: "2024",
@@ -208,7 +242,8 @@ export const projects: Project[] = [
       gastos06,
       gastos07,
       gastos08,
-      gastos09
+      gastos09,
+      gastos10
     ],
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
@@ -263,7 +298,8 @@ export const projects: Project[] = [
       elSupremo14,
       elSupremo15,
       elSupremo16,
-      elSupremo17
+      elSupremo17,
+      elSupremo18
     ],
     role: "Full Stack Developer",
     roleEn: "Full Stack Developer",
