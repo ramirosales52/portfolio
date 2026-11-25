@@ -3,13 +3,29 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: "Obel Mono";
+  src: url("/fonts/obel-mono/ObelMono-VF.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Obel Mono";
+  src: url("/fonts/obel-mono/ObelMono-Italic-VF.woff2") format("woff2");
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+}
+
 /* ============================================
    TUI Grid System - Portfolio
    ============================================ */
 
 @theme inline {
-  /* Font - Geist Mono loaded via Google Fonts in index.html */
-  --font-mono: "Geist Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+  /* Font - self-hosted variable Obel Mono */
+  --font-mono: "Obel Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
 
   /* Colors */
   --color-background: var(--background);
@@ -57,7 +73,7 @@
   }
 
   html {
-    font-family: "Geist Mono", monospace;
+    font-family: var(--font-mono);
     font-feature-settings: "liga" 1, "calt" 1;
     overflow-x: hidden;
   }
@@ -82,6 +98,14 @@
   body {
     @apply bg-background text-foreground antialiased overflow-x-hidden;
     font-feature-settings: "liga" 1, "calt" 1;
+  }
+
+  code,
+  pre {
+    font-family: var(--font-mono);
+    font-feature-settings: "ss01";
+    line-height: 1.5;
+    letter-spacing: 0;
   }
 
   /* Theme transition - only on background/color, not layout props */
